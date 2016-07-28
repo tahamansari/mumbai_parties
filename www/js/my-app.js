@@ -93,7 +93,7 @@ myApp.onPageInit('listview', function (page) {
 
 myApp.onPageInit('mapview', function (page) {
         
-        get_initial_map_data(1);
+        get_initial_map_data(Lockr.get('loc_id'));
 
         $("#owl-demo-map").owlCarousel({
       

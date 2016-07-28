@@ -253,9 +253,6 @@ $(document).on('click','#login_button',function(event){
 function get_location(){
 
 
-    console.log('ajax location called');
-
-
   $.ajax({
 
         url: base_url+"get_location/",
@@ -346,6 +343,7 @@ function get_initial_map_data(loc_id){
 		},
 		success:function(result){
 
+
 			var locations = "[";
 
 			$.each(result, function(i){
@@ -375,14 +373,14 @@ function get_initial_map_data(loc_id){
 
 					marker = new google.maps.Marker({
 			        position: new google.maps.LatLng(result[i]['latitude'], result[i]['longitude']),
-			        map: map,
-			        icon: casa_img_url+result[i]['marker']
+			        map: map
+			        // icon: casa_img_url+result[i]['marker']
 
 			      });
 
 			      google.maps.event.addListener(marker, 'click', (function(marker, i) {
 			        return function() {
-			          infowindow.setContent(result[i]['entity_name']);
+			          infowindow.setContent(result[i]['name']);
 			          infowindow.open(map, marker);
 			        }
 			      })(marker, i));
@@ -401,7 +399,9 @@ function get_initial_map_data(loc_id){
 
 $(document).on('change','#select_location',function(){
 
+	var loc_id = $("#select_location").val();
 
+	Lockr.set("loc_id",loc_id);
 	mainView.router.loadPage('mapview.html');
 
 
