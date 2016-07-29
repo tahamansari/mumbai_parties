@@ -408,7 +408,7 @@ a{
 
     color: white;
     background-color: #423f3f;
-    margin: 15px 15px;
+    margin: 15px 10px;
 
 }
 
@@ -416,8 +416,8 @@ a{
 
     background-color: #515050;
     color: white;
-    margin: 15px;
-    margin-bottom: 60px;
+    margin: 5px 10px;
+    font-weight: bold;
 
 }
 
@@ -597,4 +597,22 @@ a{
 .card-header{
 
   padding: 0;
+}
+
+.float-right{
+
+  float: right;
+}
+
+.content-block-inner{
+  
+    padding: 5px 15px;
+
+
+}
+
+.active-dot{
+
+  color:yellow;
+
 }

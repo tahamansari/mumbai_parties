@@ -295,8 +295,16 @@ function get_location(){
 //   title: 'Hello World!'
 // });
 
+function geteventsbyentity(para1){
+
+
+	alert(para1);
+}
+
 
 function get_initial_map_data(loc_id){
+
+	// Lockr.get('loc_id');
 
 	var styles = [
                 {
@@ -344,6 +352,9 @@ function get_initial_map_data(loc_id){
 		success:function(result){
 
 
+			// var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+   //    		var labelIndex = 0;
+
 			var locations = "[";
 
 			$.each(result, function(i){
@@ -356,34 +367,38 @@ function get_initial_map_data(loc_id){
 
 			// result[0]['zoom']
 		    var map = new google.maps.Map(document.getElementById('map'), {
+
 		      zoom: 14,
 		      center: new google.maps.LatLng(result[0]['center_latitute'], result[0]['center_longitute']),
 		      mapTypeId: google.maps.MapTypeId.ROADMAP
+
 		    });
 
 		    map.setOptions({styles: styles});
 
 		    var infowindow = new google.maps.InfoWindow();
 
-		    var marker, i;
+		    var marker, i,value;
 
-		    $.each(result, function(i){
+		    $.each(result, function(i,value){
 
 				// locations += "['"+result[i]['name']+"', "+result[i]['latitude']+", "+result[i]['longitude']+"],";
 
 					marker = new google.maps.Marker({
+
 			        position: new google.maps.LatLng(result[i]['latitude'], result[i]['longitude']),
 			        map: map
+			        // label: labels[labelIndex++ % labels.length]
 			        // icon: casa_img_url+result[i]['marker']
 
 			      });
 
-			      google.maps.event.addListener(marker, 'click', (function(marker, i) {
-			        return function() {
-			          infowindow.setContent(result[i]['name']);
-			          infowindow.open(map, marker);
-			        }
-			      })(marker, i));
+				 google.maps.event.addListener(marker, 'click', function(marker, i) {
+
+                        geteventsbyentity(value.id);
+
+                 });
+
 
 			});
 
@@ -400,7 +415,6 @@ function get_initial_map_data(loc_id){
 $(document).on('change','#select_location',function(){
 
 	var loc_id = $("#select_location").val();
-
 	Lockr.set("loc_id",loc_id);
 	mainView.router.loadPage('mapview.html');
 
@@ -475,7 +489,7 @@ $(document).on('click','.get_map_data',function(event){
 			
 		    var map = new google.maps.Map(document.getElementById('map'), {
 		      zoom: 14,
-		      center: new google.maps.LatLng(19.136364, 72.827997),
+		      center: new google.maps.LatLng(result[0]['center_latitude'], result[0]['center_longitude']),
 		      mapTypeId: google.maps.MapTypeId.ROADMAP
 		    });
 
@@ -491,16 +505,21 @@ $(document).on('click','.get_map_data',function(event){
 
 					marker = new google.maps.Marker({
 			        position: new google.maps.LatLng(result[i]['latitude'], result[i]['longitude']),
-			        map: map,
-			        icon: casa_img_url+result[i]['marker']
+			        map: map
+			        // icon: casa_img_url+result[i]['marker']
 
 			      });
 
+
 			      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+
+
 			        return function() {
 			          infowindow.setContent(result[i]['name']);
 			          infowindow.open(map, marker);
+
 			        }
+
 			      })(marker, i));
 
 			});
@@ -508,7 +527,7 @@ $(document).on('click','.get_map_data',function(event){
 
 	 	}
 	})
-})
+});
 
 
 
@@ -528,7 +547,7 @@ $(document).on("click","#signout",function(event){
 	mainView.router.loadPage("index.html");
 
 
-})
+});
 
 
 
@@ -550,7 +569,7 @@ function get_event_type(){
 				 
 				list += "<div class='col-50 list-box'>"+
 				// "+img_url+json[i]['img_name']+"
-						"<a id='"+json[i]['id']+"' class='get_list_event'><img src='img/event.jpeg' width='100%' alt='img error'>"+
+						"<a id='type"+json[i]['id']+"' class='get-event-data'><img src='img/event.jpeg' width='100%' alt='img error'>"+
 						"<div class='list-overlay'>"+json[i]['type']+"</div></a>"+
 						"</div>";
 			})
@@ -563,16 +582,20 @@ function get_event_type(){
 	})
 }
 
-$(document).on('click','.get_list_event',function(event){
+$(document).on('click','.get-event-data',function(event){
 
 	 event.preventDefault();
-	 // call get event
-	 var id = $(this).attr('id');
+	 // call get event    
+
+	 var full_id = $(this).attr('id');
+	 // console.log(full_id);
+	 var id = full_id.slice(4);
+	 // console.log(id);
 
 	 $.ajax({
 
 	 	type:"POST",
-	 	url: base_url+"get_list_data/",
+	 	url: base_url+"get_event_data/",
 	 	dataType:"json",
 	 	data:{
 
@@ -587,7 +610,8 @@ $(document).on('click','.get_list_event',function(event){
 
 
 	 				// console.log(result[i]['name']);
-	 			html +="<div class='card demo-card-header-pic' style='margin: 0;margin-bottom: 10px;width:100%'>"+
+	 				// <a href='#' >
+	 			html +="<div id='event"+result[i]['id']+"' class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 10px;width:100%'>"+
 		                  "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
 		                  "<h3 class='no-mar list-name'>"+result[i]['name']+"</h3>" +
 		                  "</div>"+
@@ -597,6 +621,7 @@ $(document).on('click','.get_list_event',function(event){
 		                    "<span class='footer-text'>"+result[i]['start']+" to "+result[i]['end']+"</span>"+
 		                  "</div>"+
 		                "</div>";
+		                // </a>
 	 			
 	 			
 	 		});
@@ -604,6 +629,71 @@ $(document).on('click','.get_list_event',function(event){
 	 		$('#event_box').html(html);
 	 	}
 	})
-})
+});
 
 
+
+$(document).on('click','.get-event',function(event){
+
+	var full_id =  $(this).attr('id');
+	var id = full_id.slice(5);
+
+	Lockr.set("event_id",id);
+	mainView.loadPage('event.html');
+
+
+
+});
+
+function get_event(event_id){
+
+
+		$.ajax({
+
+			type: 'POST',
+			url: base_url+"get_event/",
+			dataType: 'json',
+			data:{
+
+				"event_id": event_id
+
+			},
+			success:function(result){
+
+
+			var html = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
+						result[0]['event_name']+
+                           "<br>"+
+                           "<i class='fa fa-star' aria-hidden='true'></i>"+
+                           "<i class='fa fa-star' aria-hidden='true'></i>"+
+                           "<i class='fa fa-star' aria-hidden='true'></i>"+
+                        "</h3>";
+
+
+            $("#event_data").html(html);
+				
+
+
+			}
+		});
+
+}
+
+
+// function get_entitie(){
+
+// 	$.ajax({
+// 		type: 'POST',
+// 		url: base_url+"get_entitie/",
+// 		dataType: 'json',
+// 		data:{
+
+// 			"enitite_id": 1
+
+// 		},
+// 		success:function(result){
+		
+// 			console.log(result);
+// 		}
+// 	});
+// }

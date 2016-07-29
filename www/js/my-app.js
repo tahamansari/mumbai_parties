@@ -46,13 +46,13 @@ myApp.onPageInit('index', function (page) {
 
         console.log("value in index "+Lockr.get("is_logged_in"));
 
-})
+});
 
 myApp.onPageInit('register', function (page) {
 
     // myApp.myApp.alert('this is login page');
 
-})
+});
 
 
 
@@ -70,7 +70,7 @@ myApp.onPageInit('location', function (page) {
 
     }
     
-})
+});
 
 
 // function onMapInit(map) {
@@ -89,7 +89,7 @@ myApp.onPageInit('listview', function (page) {
    
       });
       
-})
+});
 
 myApp.onPageInit('mapview', function (page) {
         
@@ -100,10 +100,15 @@ myApp.onPageInit('mapview', function (page) {
              items : 4,
              itemsDesktop : [1199,3],
              itemsDesktopSmall : [979,3],
-            
-   
         });
+});
+
+myApp.onPageInit('event', function (page) {
+
+        var event_id = Lockr.get("event_id"); 
+        // alert("event id is "+event_id);    
+        get_event(event_id);
+
 
         
-
-})
+});
