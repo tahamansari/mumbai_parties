@@ -33,20 +33,13 @@
     
     <preference name="android-build-tool" value="gradle" />
 
-<<<<<<< HEAD
     <plugin spec="https://github.com/Wizcorp/phonegap-facebook-plugin.git#v0.12.0" source="git">
-=======
-    <plugin spec="https://github.com/Wizcorp/phonegap-facebook-plugin.git#v0.12.0"  source="git">
->>>>>>> 23a225c8b8d5490d9b449dd9ed182b073e1ffc46
         <param name="APP_ID" value="272656089759518" />
         <param name="APP_NAME" value="pg_connect" />
     </plugin>
 
-<<<<<<< HEAD
     <plugin spec="https://github.com/Rohfosho/CordovaCallNumberPlugin.git" source="git" />
 
-=======
->>>>>>> 23a225c8b8d5490d9b449dd9ed182b073e1ffc46
 <!--     <plugin spec="https://github.com/mapsplugin/cordova-plugin-googlemaps.git#1.3.4" source="git">
         <param name="API_KEY_FOR_ANDROID" value="AIzaSyDCGxWQDpfQ2erARAl0RHwKkqfEDYq6rvU" />
         <param name="API_KEY_FOR_IOS" value="AIzaSyDh3yAgZdRDYMJf74QhKPx-6twKr6Q2Fis" />
