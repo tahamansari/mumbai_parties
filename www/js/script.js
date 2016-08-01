@@ -30,6 +30,7 @@ $(document).on('click','.tab',function(event){
 	 
 })
 
+<<<<<<< HEAD
 function onSuccess(result){
   console.log("Success:"+result);
 }
@@ -47,5 +48,7 @@ function call(){
 
 }
 
+=======
+>>>>>>> 23a225c8b8d5490d9b449dd9ed182b073e1ffc46
 
 
