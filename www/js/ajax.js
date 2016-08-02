@@ -9,7 +9,7 @@ $(window).load(function () {
 	 // initMap();
 // 	 alert("window loeeded");
 
-})
+});
 
 $(document).ready(function(){	
  
@@ -660,61 +660,61 @@ function get_event(event_id){
 			},
 			success:function(result){
 
-			var start_time = result[0]['time_event_start'].split(':');
-			start_time[0] = start_time[0] % 12;
-			var start = start_time.join(':');
+			// var start_time = result[0]['time_event_start'].split(':');
+			// start_time[0] = start_time[0] % 12;
+			// var start = start_time.join(':');
 
-			var end_time = result[0]['time_event_ends'].split(':');
-			end_time[0] = end_time[0] % 12;
-			var end = end_time.join(':');
-
-
-
-			var event_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
-
-			var html = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
-						result[0]['event_name']+
-                           "<br>"+
-                           "<i class='fa fa-star' aria-hidden='true'></i>"+
-                           "<i class='fa fa-star' aria-hidden='true'></i>"+
-                           "<i class='fa fa-star' aria-hidden='true'></i>"+
-                        "</h3>";
+			// var end_time = result[0]['time_event_ends'].split(':');
+			// end_time[0] = end_time[0] % 12;
+			// var end = end_time.join(':');
 
 
-            var event_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
+
+			// var event_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
+
+			// var html = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
+			// 			result[0]['event_name']+
+   //                         "<br>"+
+   //                         "<i class='fa fa-star' aria-hidden='true'></i>"+
+   //                         "<i class='fa fa-star' aria-hidden='true'></i>"+
+   //                         "<i class='fa fa-star' aria-hidden='true'></i>"+
+   //                      "</h3>";
+
+
+   //          var event_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
 					               
-					               "<p style='margin:8px'>Open from 5pm 12pm </p>"+
+			// 		               "<p style='margin:8px'>Open from 5pm 12pm </p>"+
 
-					               "<table style='float: right'>"+
-					                  "<thead>"+
-					                     "<tr style='font-size: 10px;'>"+
-					                        "<th>S</th>"+
-					                        "<th>M</th>"+
-					                        "<th>T</th>"+
-					                        "<th>W</th>"+
-					                        "<th>T</th>"+
-					                        "<th>F</th>"+
-					                        "<th>S</th>"+
-					                     "</tr>"+
-					                  "</thead>"+
-					                  "<tbody>"+
-					                     "<tr style='font-size: 10px;'>"+
-					                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
-					                        "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>"+
-					                        "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>"+
-					                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
-					                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
-					                        "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>"+
-					                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
-					                     "</tr>"+
-					                  "</tbody>"+
-					               "</table>";
+			// 		               "<table style='float: right'>"+
+			// 		                  "<thead>"+
+			// 		                     "<tr style='font-size: 10px;'>"+
+			// 		                        "<th>S</th>"+
+			// 		                        "<th>M</th>"+
+			// 		                        "<th>T</th>"+
+			// 		                        "<th>W</th>"+
+			// 		                        "<th>T</th>"+
+			// 		                        "<th>F</th>"+
+			// 		                        "<th>S</th>"+
+			// 		                     "</tr>"+
+			// 		                  "</thead>"+
+			// 		                  "<tbody>"+
+			// 		                     "<tr style='font-size: 10px;'>"+
+			// 		                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
+			// 		                        "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>"+
+			// 		                        "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>"+
+			// 		                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
+			// 		                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
+			// 		                        "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>"+
+			// 		                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
+			// 		                     "</tr>"+
+			// 		                  "</tbody>"+
+			// 		               "</table>";
 
 
 
-            $("#event_heading").html(event_heading);
-            $("#event_timming").html(event_timming);
-            $("#event_data").html(html);
+   //          $("#event_heading").html(event_heading);
+   //          $("#event_timming").html(event_timming);
+   //          $("#event_data").html(html);
 				
 
 
