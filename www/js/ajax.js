@@ -651,7 +651,7 @@ function get_event(event_id){
 		$.ajax({
 
 			type: 'POST',
-			url: base_url+"get_event/",
+			url: base_url+"get_events/",
 			dataType: 'json',
 			data:{
 
@@ -660,62 +660,49 @@ function get_event(event_id){
 			},
 			success:function(result){
 
-			// var start_time = result[0]['time_event_start'].split(':');
-			// start_time[0] = start_time[0] % 12;
-			// var start = start_time.join(':');
+			console.log(result);	
 
-			// var end_time = result[0]['time_event_ends'].split(':');
-			// end_time[0] = end_time[0] % 12;
-			// var end = end_time.join(':');
-
-
-
-			// var event_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
-
-			// var html = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
-			// 			result[0]['event_name']+
-   //                         "<br>"+
-   //                         "<i class='fa fa-star' aria-hidden='true'></i>"+
-   //                         "<i class='fa fa-star' aria-hidden='true'></i>"+
-   //                         "<i class='fa fa-star' aria-hidden='true'></i>"+
-   //                      "</h3>";
+			var event_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
+						result.content[0]['event_name']+
+                           "<br>"+
+                           "<i class='fa fa-star' aria-hidden='true'></i>"+
+                           "<i class='fa fa-star' aria-hidden='true'></i>"+
+                           "<i class='fa fa-star' aria-hidden='true'></i>"+
+                        "</h3>";
 
 
-   //          var event_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
+            var entitie_add = "<h3 style='margin: 5px 0;'>"+result.content[0]['entity_name']+"</h3>"+
+                              "<p>"+result.content[0]['address']+"</p>";
+
+
+            var event_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
 					               
-			// 		               "<p style='margin:8px'>Open from 5pm 12pm </p>"+
+					               "<p style='margin:8px'>Open from "+result.content[0]['event_start']+" to "+result.content[0]['event_end']+" </p>"+
 
-			// 		               "<table style='float: right'>"+
-			// 		                  "<thead>"+
-			// 		                     "<tr style='font-size: 10px;'>"+
-			// 		                        "<th>S</th>"+
-			// 		                        "<th>M</th>"+
-			// 		                        "<th>T</th>"+
-			// 		                        "<th>W</th>"+
-			// 		                        "<th>T</th>"+
-			// 		                        "<th>F</th>"+
-			// 		                        "<th>S</th>"+
-			// 		                     "</tr>"+
-			// 		                  "</thead>"+
-			// 		                  "<tbody>"+
-			// 		                     "<tr style='font-size: 10px;'>"+
-			// 		                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
-			// 		                        "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>"+
-			// 		                        "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>"+
-			// 		                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
-			// 		                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
-			// 		                        "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>"+
-			// 		                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
-			// 		                     "</tr>"+
-			// 		                  "</tbody>"+
-			// 		               "</table>";
+					               // $.each(result.content[0]['week_days'],function(key,value){
+					               // 		console.log(value);
+					               // });
+
+					               "<table style='float: right'>"+
+					                  "<thead>"+
+					                     "<tr style='font-size: 10px;'>"+
+					                        "<th>S</th>"+
+					                     "</tr>"+
+					                  "</thead>"+
+					                  "<tbody>"+
+					                     "<tr style='font-size: 10px;'>"+
+					                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
+					                        "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>"+
+					                       
+					                     "</tr>"+
+					                  "</tbody>"+
+					               "</table>";
 
 
 
-   //          $("#event_heading").html(event_heading);
-   //          $("#event_timming").html(event_timming);
-   //          $("#event_data").html(html);
-				
+            $("#event_heading").html(event_heading);
+            $("#entitie_add").html(entitie_add);
+            $("#event_timming").html(event_timming);
 
 
 			}

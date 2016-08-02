@@ -9,7 +9,7 @@ $(window).load(function () {
 	 // initMap();
 // 	 alert("window loeeded");
 
-})
+});
 
 $(document).ready(function(){	
  
@@ -645,14 +645,13 @@ $(document).on('click','.get-event',function(event){
 
 });
 
-
 function get_event(event_id){
 
 
 		$.ajax({
 
 			type: 'POST',
-			url: base_url+"get_event/",
+			url: base_url+"get_events/",
 			dataType: 'json',
 			data:{
 
@@ -661,23 +660,20 @@ function get_event(event_id){
 			},
 			success:function(result){
 
-			var start_time = result[0]['time_event_start'].split(':');
-			start_time[0] = start_time[0] % 12;
-			var start = start_time.join(':');
-
-			var end_time = result[0]['time_event_ends'].split(':');
-			end_time[0] = end_time[0] % 12;
-			var end = end_time.join(':');
-
-
+				// console.log(result.content[0]['event_name']);
+				
 
 			var event_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
-						result[0]['event_name']+
+						result.content[0]['event_name']+
                            "<br>"+
                            "<i class='fa fa-star' aria-hidden='true'></i>"+
                            "<i class='fa fa-star' aria-hidden='true'></i>"+
                            "<i class='fa fa-star' aria-hidden='true'></i>"+
                         "</h3>";
+
+
+            var entitie_add = "<h3 style='margin: 5px 0;'>"+result.content[0]['entity_name']+"</h3>"+
+                              "<p>"+result.content[0]['address']+"</p>";
 
 
             var event_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
@@ -712,8 +708,8 @@ function get_event(event_id){
 
 
             $("#event_heading").html(event_heading);
+            $("#entitie_add").html(entitie_add);
             $("#event_timming").html(event_timming);
-				
 
 
 			}

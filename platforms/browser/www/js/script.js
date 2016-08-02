@@ -30,5 +30,22 @@ $(document).on('click','.tab',function(event){
 	 
 })
 
+function onSuccess(result){
+  console.log("Success:"+result);
+}
+
+function onError(result) {
+  console.log("Error:"+result);
+}
+
+function call(){
+
+
+	// alert('clicked');
+
+	window.plugins.CallNumber.callNumber(onSuccess, onError, "8976321674", bypassAppChooser);
+
+}
+
 
 
