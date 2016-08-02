@@ -645,10 +645,6 @@ $(document).on('click','.get-event',function(event){
 
 });
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 23a225c8b8d5490d9b449dd9ed182b073e1ffc46
 function get_event(event_id){
 
 
@@ -664,7 +660,6 @@ function get_event(event_id){
 			},
 			success:function(result){
 
-<<<<<<< HEAD
 			var start_time = result[0]['time_event_start'].split(':');
 			start_time[0] = start_time[0] % 12;
 			var start = start_time.join(':');
@@ -676,10 +671,8 @@ function get_event(event_id){
 
 
 			var event_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
-=======
 
 			var html = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
->>>>>>> 23a225c8b8d5490d9b449dd9ed182b073e1ffc46
 						result[0]['event_name']+
                            "<br>"+
                            "<i class='fa fa-star' aria-hidden='true'></i>"+
@@ -688,7 +681,6 @@ function get_event(event_id){
                         "</h3>";
 
 
-<<<<<<< HEAD
             var event_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
 					               
 					               "<p style='margin:8px'>Open from 5pm 12pm </p>"+
@@ -722,9 +714,7 @@ function get_event(event_id){
 
             $("#event_heading").html(event_heading);
             $("#event_timming").html(event_timming);
-=======
             $("#event_data").html(html);
->>>>>>> 23a225c8b8d5490d9b449dd9ed182b073e1ffc46
 				
 
 
