@@ -281,6 +281,68 @@ function get_location(){
     })
 }
 
+function get_location_map(){
+
+
+  $.ajax({
+
+        url: base_url+"get_location/",
+        type:"POST",
+        crossDomain : true,
+        success:function(result){
+
+          console.log(result);
+
+          var json = JSON.parse(result);
+          var select = "<option value=''>Select Location</option>";
+          // console.log(json);
+
+          $.each(json, function(i){
+
+                // console.log(json[i]['id']);
+                // console.log(json[i]['name']);
+                select += "<option value='"+json[i]['id']+"'>"+json[i]['name']+"</option>";
+
+          });
+
+          $('#select_location').html(select);
+          // console.log("printed value to dropdown");
+        }
+
+    })
+}
+
+function get_location_list(){
+
+
+  $.ajax({
+
+        url: base_url+"get_location/",
+        type:"POST",
+        crossDomain : true,
+        success:function(result){
+
+          console.log(result);
+
+          var json = JSON.parse(result);
+          var select = "<option value=''>Select Location</option>";
+          // console.log(json);
+
+          $.each(json, function(i){
+
+                // console.log(json[i]['id']);
+                // console.log(json[i]['name']);
+                select += "<option value='"+json[i]['id']+"'>"+json[i]['name']+"</option>";
+
+          });
+
+          $('#select_location').html(select);
+          // console.log("printed value to dropdown");
+        }
+
+    })
+}
+
 
 // var myLatLng = {lat: 18.977732, lng: 72.827325};
 
@@ -662,6 +724,9 @@ function get_event(event_id){
 
 			console.log(result);
 
+			var week_days =result.week_days;
+
+			var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 			var event_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
 						result.content[0]['event_name']+
                            "<br>"+
@@ -671,38 +736,157 @@ function get_event(event_id){
                         "</h3>";
 
 
+
+
+
             var entitie_add = "<h3 style='margin: 5px 0;'>"+result.content[0]['entity_name']+"</h3>"+
                               "<p>"+result.content[0]['address']+"</p>";
 
 
+
+
+
             var event_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
 					               
-					               "<p style='margin:8px'>Open from "+result.content[0]['event_start']+" to "+result.content[0]['event_end']+" </p>"+
+					  "<p style='margin:8px'>Open from "+result.content[0]['event_start']+" to "+result.content[0]['event_end']+"</p>"+
 
-					               // $.each(result.content[0]['week_days'],function(key,value){
-					               // 		console.log(value);
-					               // });
+									"<table style='float: right'>"+
 
-					               "<table style='float: right'>"+
 					                  "<thead>"+
 					                     "<tr style='font-size: 10px;'>"+
 					                        "<th>S</th>"+
+					                        "<th>M</th>"+
+					                        "<th>T</th>"+
+					                        "<th>W</th>"+
+					                        "<th>T</th>"+
+					                        "<th>F</th>"+
+					                        "<th>S</th>"+
 					                     "</tr>"+
 					                  "</thead>"+
+
 					                  "<tbody>"+
-					                     "<tr style='font-size: 10px;'>"+
-					                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
-					                        "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>"+
+					                     "<tr style='font-size: 10px;'>";
+
+
+					                     	if (week_days.indexOf('Sunday') > -1) {
+
+				                     		
+					                    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+					                    	}else{
+
+					                    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+					                    	}
+
+					                     	if (week_days.indexOf('Monday') > -1) {
+
+				                     		
+					                    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+					                    	}else{
+
+					                    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+					                    	}
+
+					                     	if (week_days.indexOf('Tuesday') > -1) {
+
+				                     		
+					                    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+					                    	}else{
+
+					                    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+					                    	}
+
+					                     	if (week_days.indexOf('Wednesday') > -1) {
+
+				                     		
+					                    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+					                    	}else{
+
+					                    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+					                    	}
+
+					                     	if (week_days.indexOf('Thursday') > -1) {
+
+				                     		
+					                    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+					                    	}else{
+
+					                    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+					                    	}
+
+					                     	if (week_days.indexOf('Friday') > -1) {
+
+				                     		
+					                    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+					                    	}else{
+
+					                    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+					                    	}
+
+					                    	if (week_days.indexOf('Saturday') > -1) {
+
+				                     		
+					                    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+					                    	}else{
+
+					                    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+					                    	}
+
 					                       
-					                     "</tr>"+
-					                  "</tbody>"+
-					               "</table>";
+					                     event_timming += "</tr>";
+					                  event_timming += "</tbody>";
+
+
+
+					               event_timming += "</table>";
+
+
+
+			var menu_data = "";
+
+			if(result.menu_images[0][0]['id'] == 0){
+
+				$("#menu_data").html("No Menu Available");
+
+			}else{
+
+				$.each(result.menu_images[0],function(key,value){
+
+				// console.log(result.menu_images[0][key]['url']);
+
+					menu_data += "<img width='100%' src='http://mumbaiparties.com/assets/uploads/"+result.menu_images[0][key]['url']+"' alt='no img'>";
+
+
+				})
+
+				$("#menu_data").html(menu_data);
+
+			}
+
+
+
+
+			
 
 
 
             $("#event_heading").html(event_heading);
             $("#entitie_add").html(entitie_add);
             $("#event_timming").html(event_timming);
+            
 
 
 			}
