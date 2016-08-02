@@ -660,8 +660,7 @@ function get_event(event_id){
 			},
 			success:function(result){
 
-				// console.log(result.content[0]['event_name']);
-				
+			console.log(result);
 
 			var event_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
 						result.content[0]['event_name']+
@@ -678,17 +677,15 @@ function get_event(event_id){
 
             var event_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
 					               
-					               "<p style='margin:8px'>Open from 5pm 12pm </p>"+
+					               "<p style='margin:8px'>Open from "+result.content[0]['event_start']+" to "+result.content[0]['event_end']+" </p>"+
+
+					               // $.each(result.content[0]['week_days'],function(key,value){
+					               // 		console.log(value);
+					               // });
 
 					               "<table style='float: right'>"+
 					                  "<thead>"+
 					                     "<tr style='font-size: 10px;'>"+
-					                        "<th>S</th>"+
-					                        "<th>M</th>"+
-					                        "<th>T</th>"+
-					                        "<th>W</th>"+
-					                        "<th>T</th>"+
-					                        "<th>F</th>"+
 					                        "<th>S</th>"+
 					                     "</tr>"+
 					                  "</thead>"+
@@ -696,11 +693,7 @@ function get_event(event_id){
 					                     "<tr style='font-size: 10px;'>"+
 					                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
 					                        "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>"+
-					                        "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>"+
-					                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
-					                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
-					                        "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>"+
-					                        "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>"+
+					                       
 					                     "</tr>"+
 					                  "</tbody>"+
 					               "</table>";
