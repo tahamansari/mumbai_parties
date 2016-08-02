@@ -660,7 +660,7 @@ function get_event(event_id){
 			},
 			success:function(result){
 
-			console.log(result);	
+			console.log(result);
 
 			var event_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
 						result.content[0]['event_name']+
