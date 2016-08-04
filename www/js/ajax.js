@@ -165,6 +165,10 @@ $(document).on('click','#register_button',function(event){
 
 			}
 
+		},
+		error: function(jqXHR, exception) {
+
+			alert("error");
 		}
 
 
@@ -242,6 +246,10 @@ $(document).on('click','#login_button',function(event){
 			}
 
 
+		},
+		error: function(jqXHR, exception) {
+			
+			alert("error");
 		}
 
 
@@ -249,37 +257,50 @@ $(document).on('click','#login_button',function(event){
 
 });
 
-
 function get_location(){
-
 
   $.ajax({
 
         url: base_url+"get_location/",
         type:"POST",
+        dataType:'json',
         crossDomain : true,
         success:function(result){
 
           console.log(result);
 
-          var json = JSON.parse(result);
-          var select = "<option value=''>Select Location</option>";
-          // console.log(json);
+ 			if(result['status']=="success"){
 
-          $.each(json, function(i){
+ 				  var select = "<option value=''>Select Location</option>";
+		          $.each(result['data'], function(key,value){
 
-                // console.log(json[i]['id']);
-                // console.log(json[i]['name']);
-                select += "<option value='"+json[i]['id']+"'>"+json[i]['name']+"</option>";
+		                select += "<option value='"+result['data'][key]['id']+"'>"+result['data'][key]['name']+"</option>";
 
-          });
+		          });
+		          $('#select_location').html(select);
 
-          $('#select_location').html(select);
-          // console.log("printed value to dropdown");
-        }
+ 			}else{
+
+ 				alert("failed");
+ 			}
+
+        },
+		error: function(jqXHR, exception) {
+			
+			alert("error");
+		}
 
     })
 }
+
+$(document).on('change','#select_location',function(){
+
+	var id = $("#select_location").val();
+	mainView.router.loadPage('mapview.html?id='+id);
+
+
+});
+
 
 function get_location_map(){
 
@@ -307,7 +328,11 @@ function get_location_map(){
 
           $('#select_location').html(select);
           // console.log("printed value to dropdown");
-        }
+        },
+		error: function(jqXHR, exception) {
+			
+			alert("error");
+		}
 
     })
 }
@@ -338,37 +363,76 @@ function get_location_list(){
 
           $('#select_location').html(select);
           // console.log("printed value to dropdown");
-        }
+        },
+		error: function(jqXHR, exception) {
+			
+			alert("error");
+		}
 
     })
 }
 
+function initial_marker_clicked_event(para1){
 
-// var myLatLng = {lat: 18.977732, lng: 72.827325};
-
-// var map = new google.maps.Map(document.getElementById('map'), {
-//   zoom: 14,
-//   center: myLatLng
-// });
-
-// var marker = new google.maps.Marker({
-//   position: myLatLng,
-//   map: map,
-//   title: 'Hello World!'
-// });
-
-function geteventsbyentity(para1){
-
-
-	alert(para1);
+	alert("entitie id is "+para1);
+	mainView.router.loadPage('entitie.html?id='+para1);
 }
 
 
-function get_initial_map_data(loc_id){
 
-	// Lockr.get('loc_id');
+
+function get_initial_map_data(id){
+
 
 	var styles = [
+
+                {
+                featureType: 'all',
+                elementType: 'all',
+                  stylers: [
+                    { hue: '#0800ff' },
+                    { invert_lightness: 'true' },
+                    { saturation: -100 }
+                  ]
+                },
+                {
+                featureType: 'all',
+                elementType: 'labels.icon',
+                  stylers: [
+                    { visibility: 'off' }
+                  ]
+                },
+                {
+                featureType: 'all',
+                elementType: 'labels.text',
+                  stylers: [
+                    { visibility: 'off' }
+                  ]
+                },
+                {
+                featureType: 'road.arterial',
+                elementType: 'labels',
+                  stylers: [
+                    { visibility: 'on' }
+                  ]
+                }
+            ];
+
+
+	$.ajax({
+
+		type:"POST",
+		url:base_url+"get_initial_map_data/",
+		dataType:'json',
+		data:{
+
+			id:id
+		},
+		success:function(result){
+
+			if(result['status'] == "success"){
+
+				var styles = [
                 {
                 featureType: 'all',
                 elementType: 'all',
@@ -401,94 +465,61 @@ function get_initial_map_data(loc_id){
                 },
             ];
 
-
-	$.ajax({
-
-		type:"POST",
-		url:base_url+"get_initial_map_data/",
-		dataType:'json',
-		data:{
-
-			"loc_id":loc_id
-		},
-		success:function(result){
-
-
-			// var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-   //    		var labelIndex = 0;
-
-			var locations = "[";
-
-			$.each(result, function(i){
-
-				locations += "['"+result[i]['name']+"', "+result[i]['latitude']+", "+result[i]['longitude']+"],";
-
-			});
-
-	        locations += "]";
-
-			// result[0]['zoom']
 		    var map = new google.maps.Map(document.getElementById('map'), {
-
 		      zoom: 14,
-		      center: new google.maps.LatLng(result[0]['center_latitute'], result[0]['center_longitute']),
+		      center: new google.maps.LatLng(result['center'][0]['latitute'], result['center'][0]['longitute']),
 		      mapTypeId: google.maps.MapTypeId.ROADMAP
-
 		    });
 
-		    map.setOptions({styles: styles});
+			map.setOptions({styles: styles});
 
-		    var infowindow = new google.maps.InfoWindow();
+		    var marker,i;
 
-		    var marker, i,value;
+	        $.each(result['data'],function(key, value) {
 
-		    $.each(result, function(i,value){
+		      marker = new google.maps.Marker({
+		        position: new google.maps.LatLng(value.latitude,value.longitude),
+		        map: map
+		      });
 
-				// locations += "['"+result[i]['name']+"', "+result[i]['latitude']+", "+result[i]['longitude']+"],";
+		      marker.addListener('click', function() {
 
-					marker = new google.maps.Marker({
+		          initial_marker_clicked_event(value.id);
 
-			        position: new google.maps.LatLng(result[i]['latitude'], result[i]['longitude']),
-			        map: map
-			        // label: labels[labelIndex++ % labels.length]
-			        // icon: casa_img_url+result[i]['marker']
-
-			      });
-
-				 google.maps.event.addListener(marker, 'click', function(marker, i) {
-
-                        geteventsbyentity(value.id);
-
-                 });
+		      });
 
 
 			});
+			 
 
+			}else{
+				alert("failed");
+			}
+		},
+		error: function(jqXHR, exception) {
+			alert("error");
 		}
+	});
+}
 
-	})
 
+
+
+
+
+
+function marker_clicked_event(para1){
+
+	alert("event id is "+para1);
+	mainView.router.loadPage("event.html?id="+para1);
 
 }
 
 
 
 
-$(document).on('change','#select_location',function(){
-
-	var loc_id = $("#select_location").val();
-	Lockr.set("loc_id",loc_id);
-	mainView.router.loadPage('mapview.html');
-
-
-});
-
-
-
 $(document).on('click','.get_map_data',function(event){
 
-	 event.preventDefault();
-	 // call get event
 
 	 var styles = [
                 {
@@ -524,7 +555,7 @@ $(document).on('click','.get_map_data',function(event){
             ];
 
 
-	 var id = $(this).attr('id');
+	 var id = $(this).attr('data-id');
 
 	 $.ajax({
 
@@ -533,61 +564,43 @@ $(document).on('click','.get_map_data',function(event){
 	 	dataType:"json",
 	 	data:{
 
-	 		"id":id
+	 		id:id
 	 	},
 	 	success:function(result){
 
+	 		console.log(result);
 
-	 		var locations = "[";
-
-			$.each(result, function(i){
-
-				locations += "['"+result[i]['name']+"', "+result[i]['latitude']+", "+result[i]['longitude']+"],";
-
-			});
-
-	        locations += "]";
-
-			
-		    var map = new google.maps.Map(document.getElementById('map'), {
+	 		var map = new google.maps.Map(document.getElementById('map'), {
 		      zoom: 14,
-		      center: new google.maps.LatLng(result[0]['center_latitude'], result[0]['center_longitude']),
+		      center: new google.maps.LatLng(result['center'][0]['latitute'], result['center'][0]['longitute']),
 		      mapTypeId: google.maps.MapTypeId.ROADMAP
 		    });
 
-		    map.setOptions({styles: styles});
+			map.setOptions({styles: styles});
 
-		    var infowindow = new google.maps.InfoWindow();
+		    var marker,i;
 
-		    var marker, i;
+	        $.each(result['data'],function(key, value) {
 
-		    $.each(result, function(i){
+		      marker = new google.maps.Marker({
+		        position: new google.maps.LatLng(value.latitude,value.longitude),
+		        map: map
+		      });
 
-				// locations += "['"+result[i]['name']+"', "+result[i]['latitude']+", "+result[i]['longitude']+"],";
+		      marker.addListener('click', function() {
 
-					marker = new google.maps.Marker({
-			        position: new google.maps.LatLng(result[i]['latitude'], result[i]['longitude']),
-			        map: map
-			        // icon: casa_img_url+result[i]['marker']
+		          marker_clicked_event(value.event_id);
 
-			      });
+		      });
 
-
-			      google.maps.event.addListener(marker, 'click', (function(marker, i) {
-
-
-			        return function() {
-			          infowindow.setContent(result[i]['name']);
-			          infowindow.open(map, marker);
-
-			        }
-
-			      })(marker, i));
 
 			});
 
-
-	 	}
+	 	},
+		error: function(jqXHR, exception) {
+			
+			alert("error");
+		}
 	})
 });
 
@@ -621,23 +634,28 @@ function get_event_type(){
 		type:"POST",
 		url:base_url+"get_event_type/",
 		crossDomain:true,
+		dataType:'json',
 		success:function(result){
 
-			// console.log(result);
-			var json = JSON.parse(result);
+			console.log(result);
 
 			var list = "";
-			$.each(json,function (i) {
+
+			$.each(result['data'],function(key,value) {
 				 
 				list += "<div class='col-50 list-box'>"+
 				// "+img_url+json[i]['img_name']+"
-						"<a id='type"+json[i]['id']+"' class='get-event-data'><img src='img/event.jpeg' width='100%' alt='img error'>"+
-						"<div class='list-overlay'>"+json[i]['type']+"</div></a>"+
+						"<a data-id='"+value.id+"' class='get-event-data'><img src='img/event.jpeg' width='100%' alt='img error'>"+
+						"<div class='list-overlay'>"+value.event_type+"</div></a>"+
 						"</div>";
 			})
 
 			$("#event_box").html(list);
 			
+		},
+		error: function(jqXHR, exception) {
+			
+			alert("error");
 		}
 
 
@@ -646,13 +664,8 @@ function get_event_type(){
 
 $(document).on('click','.get-event-data',function(event){
 
-	 event.preventDefault();
-	 // call get event    
 
-	 var full_id = $(this).attr('id');
-	 // console.log(full_id);
-	 var id = full_id.slice(4);
-	 // console.log(id);
+	 var id = $(this).attr("data-id");
 
 	 $.ajax({
 
@@ -661,29 +674,24 @@ $(document).on('click','.get-event-data',function(event){
 	 	dataType:"json",
 	 	data:{
 
-	 		"id":id
+	 		id:id
 	 	},
 	 	success:function(result){
 
-	 		console.log('res rec');
 
 	 		var html = "";
-	 		$.each(result,function(i) {
+	 		$.each(result['data'],function(key,value) {
 
-
-	 				// console.log(result[i]['name']);
-	 				// <a href='#' >
-	 			html +="<div id='event"+result[i]['id']+"' class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 10px;width:100%'>"+
+	 			html +="<div data-id="+value.event_id+" class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 10px;width:100%'>"+
 		                  "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
-		                  "<h3 class='no-mar list-name'>"+result[i]['name']+"</h3>" +
+		                  "<h3 class='no-mar list-name'>"+value.event_name+"</h3>" +
 		                  "</div>"+
 		                 
 		                  "<div class='card-footer color-white'>"+
 		                    "<span class='footer-text'>@woodside - All Day Bar & Eatery </span>"+
-		                    "<span class='footer-text'>"+result[i]['start']+" to "+result[i]['end']+"</span>"+
+		                    "<span class='footer-text'>"+value.time_event_start+" to "+value.time_event_ends+"</span>"+
 		                  "</div>"+
 		                "</div>";
-		                // </a>
 	 			
 	 			
 	 		});
@@ -697,56 +705,45 @@ $(document).on('click','.get-event-data',function(event){
 
 $(document).on('click','.get-event',function(event){
 
-	var full_id =  $(this).attr('id');
-	var id = full_id.slice(5);
-
-	Lockr.set("event_id",id);
-	mainView.loadPage('event.html');
-
-
+	var id = $(this).attr('data-id');
+	mainView.loadPage('event.html?id='+id);
 
 });
 
-function get_event(event_id){
 
+function get_event(id){
 
-		$.ajax({
+	$.ajax({
 
-			type: 'POST',
-			url: base_url+"get_events/",
-			dataType: 'json',
-			data:{
+		type: 'POST',
+		url: base_url+"get_events/",
+		dataType: 'json',
+		data:{
 
-				"event_id": event_id
+			id: id
 
-			},
-			success:function(result){
-
+		},
+		success:function(result){
+			
 			console.log(result);
 
 			var week_days =result.week_days;
 
 			var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
 			var event_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
 						result.content[0]['event_name']+
-                           "<br>"+
-                           "<i class='fa fa-star' aria-hidden='true'></i>"+
-                           "<i class='fa fa-star' aria-hidden='true'></i>"+
-                           "<i class='fa fa-star' aria-hidden='true'></i>"+
-                        "</h3>";
+	                       "<br>"+
+	                       "<i class='fa fa-star' aria-hidden='true'></i>"+
+	                       "<i class='fa fa-star' aria-hidden='true'></i>"+
+	                       "<i class='fa fa-star' aria-hidden='true'></i>"+
+	                    "</h3>";
+
+	        var entitie_add = "<h3 style='margin: 5px 0;'>"+result.content[0]['entity_name']+"</h3>"+
+	                          "<p>"+result.content[0]['address']+"</p>";
 
 
-
-
-
-            var entitie_add = "<h3 style='margin: 5px 0;'>"+result.content[0]['entity_name']+"</h3>"+
-                              "<p>"+result.content[0]['address']+"</p>";
-
-
-
-
-
-            var event_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
+	        var event_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
 					               
 					  "<p style='margin:8px'>Open from "+result.content[0]['event_start']+" to "+result.content[0]['event_end']+"</p>"+
 
@@ -768,90 +765,90 @@ function get_event(event_id){
 					                     "<tr style='font-size: 10px;'>";
 
 
-					                     	if (week_days.indexOf('Sunday') > -1) {
+	     	if (week_days.indexOf('Sunday') > -1) {
 
-				                     		
-					                    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+	 		
+	    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
 
-					                    	}else{
+	    	}else{
 
-					                    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+	    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
 
-					                    	}
+	    	}
 
-					                     	if (week_days.indexOf('Monday') > -1) {
+	     	if (week_days.indexOf('Monday') > -1) {
 
-				                     		
-					                    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+	 		
+	    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
 
-					                    	}else{
+	    	}else{
 
-					                    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+	    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
 
-					                    	}
+	    	}
 
-					                     	if (week_days.indexOf('Tuesday') > -1) {
+	     	if (week_days.indexOf('Tuesday') > -1) {
 
-				                     		
-					                    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+	 		
+	    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
 
-					                    	}else{
+	    	}else{
 
-					                    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+	    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
 
-					                    	}
+	    	}
 
-					                     	if (week_days.indexOf('Wednesday') > -1) {
+	     	if (week_days.indexOf('Wednesday') > -1) {
 
-				                     		
-					                    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+	 		
+	    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
 
-					                    	}else{
+	    	}else{
 
-					                    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+	    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
 
-					                    	}
+	    	}
 
-					                     	if (week_days.indexOf('Thursday') > -1) {
+	     	if (week_days.indexOf('Thursday') > -1) {
 
-				                     		
-					                    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+	 		
+	    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
 
-					                    	}else{
+	    	}else{
 
-					                    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+	    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
 
-					                    	}
+	    	}
 
-					                     	if (week_days.indexOf('Friday') > -1) {
+	     	if (week_days.indexOf('Friday') > -1) {
 
-				                     		
-					                    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+	 		
+	    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
 
-					                    	}else{
+	    	}else{
 
-					                    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+	    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
 
-					                    	}
+	    	}
 
-					                    	if (week_days.indexOf('Saturday') > -1) {
+	    	if (week_days.indexOf('Saturday') > -1) {
 
-				                     		
-					                    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+	 		
+	    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
 
-					                    	}else{
+	    	}else{
 
-					                    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+	    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
 
-					                    	}
+	    	}
 
 					                       
-					                     event_timming += "</tr>";
-					                  event_timming += "</tbody>";
+			event_timming += "</tr>";
+			event_timming += "</tbody>";
 
 
 
-					               event_timming += "</table>";
+			event_timming += "</table>";
 
 
 
@@ -877,38 +874,192 @@ function get_event(event_id){
 			}
 
 
-
-
-			
-
-
-
-            $("#event_heading").html(event_heading);
-            $("#entitie_add").html(entitie_add);
-            $("#event_timming").html(event_timming);
-            
-
-
-			}
-		});
+	        $("#event_heading").html(event_heading);
+	        $("#entitie_add").html(entitie_add);
+	        $("#event_timming").html(event_timming);
+	        myApp.hideIndicator();
+		}
+	});
 
 }
 
 
-// function get_entitie(){
+function get_entitie(id){
 
-// 	$.ajax({
-// 		type: 'POST',
-// 		url: base_url+"get_entitie/",
-// 		dataType: 'json',
-// 		data:{
+	console.log(id);
 
-// 			"enitite_id": 1
+	$.ajax({
+		url: base_url+"get_entitie/",
+		type: 'POST',
+		crossDomain: true,
+		dataType: 'json',
+		data: {
+			id: id
+		},
+		success: function(result){
 
-// 		},
-// 		success:function(result){
-		
-// 			console.log(result);
-// 		}
-// 	});
-// }
+			console.log(result);
+
+			// alert("get entities after ajax");
+
+			var entitie_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
+						result['content']['entity_name']+
+                           "<br>"+
+                           "<i class='fa fa-star' aria-hidden='true'></i>"+
+                           "<i class='fa fa-star' aria-hidden='true'></i>"+
+                           "<i class='fa fa-star' aria-hidden='true'></i>"+
+                        "</h3>";
+
+            // "<h3 style='margin: 5px 0;'>"+result.content[0]['entity_name']+"</h3>"+
+            var entitie_address = "<p>"+result['content']['address']+"</p>";
+
+
+            var entitie_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
+					               
+					  "<p style='margin:8px'>Open from "+result['content']['entitie_start']+" to "+result['content']['entitie_end']+"</p>";
+
+
+
+			var menu_data = "";
+
+			if(result.menu_images[0]['id'] == 0){
+
+				$("#menu_data").html("No Menu Available");
+
+			}else{
+
+				$.each(result.menu_images,function(key,value){
+
+					menu_data += "<img width='100%' src='http://mumbaiparties.com/assets/uploads/"+result.menu_images[key]['url']+"' alt='no img'>";
+
+
+				})
+
+				$("#menu_data_entitie").html(menu_data);
+
+			}
+
+
+			var entitie_events = "";
+
+			if(result['events'][0]['id'] == 0){
+
+				$("#entitie_events").html("No Event Available");
+
+			}else{
+
+				$.each(result['events'],function(key,value){
+
+				// console.log(result.menu_images[0][key]['url']);
+
+					entitie_events += "<div data-id='"+value.event_id+"' class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 10px;width:100%'>"+
+
+                                          "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
+                                          "<h3 class='no-mar list-name'>"+value.event_name+"</h3>"+
+                                          "</div>"+
+                                         
+                                          "<div class='card-footer color-white'>"+
+                                            "<span class='footer-text'>@woodside - All Day Bar & Eatery </span>"+
+                                            "<span class='footer-text'>10am to 12pm</span>"+
+                                          "</div>"+
+                                        "</div>";
+
+
+				})
+
+				$("#entitie_events").html(entitie_events);
+
+			}
+
+
+
+            $("#entitie_heading").html(entitie_heading);
+            $("#entitie_address").html(entitie_address);
+            $("#entitie_timming").html(entitie_timming);
+
+
+
+		},
+		error: function(jqXHR, exception) {
+			alert("error");
+		}
+	});
+
+
+			// var entitie_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
+			// 			result['content']['entity_name']+
+   //                         "<br>"+
+   //                         "<i class='fa fa-star' aria-hidden='true'></i>"+
+   //                         "<i class='fa fa-star' aria-hidden='true'></i>"+
+   //                         "<i class='fa fa-star' aria-hidden='true'></i>"+
+   //                      "</h3>";
+
+   //          // "<h3 style='margin: 5px 0;'>"+result.content[0]['entity_name']+"</h3>"+
+   //          var entitie_address = "<p>"+result['content']['address']+"</p>";
+
+
+   //          var entitie_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
+					               
+			// 		  "<p style='margin:8px'>Open from "+result['content']['entitie_start']+" to "+result['content']['entitie_end']+"</p>";
+
+
+
+			// var menu_data = "";
+
+			// if(result.menu_images[0]['id'] == 0){
+
+			// 	$("#menu_data").html("No Menu Available");
+
+			// }else{
+
+			// 	$.each(result.menu_images,function(key,value){
+
+			// 		menu_data += "<img width='100%' src='http://mumbaiparties.com/assets/uploads/"+result.menu_images[key]['url']+"' alt='no img'>";
+
+
+			// 	})
+
+			// 	$("#menu_data_entitie").html(menu_data);
+
+			// }
+
+
+			// var entitie_events = "";
+
+			// if(result['events'][0]['id'] == 0){
+
+			// 	$("#entitie_events").html("No Event Available");
+
+			// }else{
+
+			// 	$.each(result['events'],function(key,value){
+
+			// 	// console.log(result.menu_images[0][key]['url']);
+
+			// 		entitie_events += "<div id='entitie_event"+result['events'][key]['event_id']+"' class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 10px;width:100%'>"+
+
+   //                                        "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
+   //                                        "<h3 class='no-mar list-name'>"+result['events'][key]['event_name']+"</h3>"+
+   //                                        "</div>"+
+                                         
+   //                                        "<div class='card-footer color-white'>"+
+   //                                          "<span class='footer-text'>@woodside - All Day Bar & Eatery </span>"+
+   //                                          "<span class='footer-text'>10am to 12pm</span>"+
+   //                                        "</div>"+
+   //                                      "</div>";
+
+
+			// 	})
+
+			// 	$("#entitie_events").html(entitie_events);
+
+			// }
+
+
+
+   //          $("#entitie_heading").html(entitie_heading);
+   //          $("#entitie_address").html(entitie_address);
+   //          $("#entitie_timming").html(entitie_timming);
+            
+
+}

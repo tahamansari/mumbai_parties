@@ -26,42 +26,18 @@ var mainView = myApp.addView('.view-main', {
 });
 
 
-
-
 $$(document).on('deviceready', function() {
 
     console.log("Device is ready!");
+
     // console.log(myApp.params.swipePanel);
-
-
-    console.log("initial value"+Lockr.get("is_logged_in"));
-
-
+    // console.log("initial value"+Lockr.get("is_logged_in"));
 
 });
-
-
-
-myApp.onPageInit('index', function (page) {
-
-        console.log("value in index "+Lockr.get("is_logged_in"));
-
-});
-
-myApp.onPageInit('register', function (page) {
-
-    // myApp.myApp.alert('this is login page');
-
-});
-
-
 
 myApp.onPageInit('location', function (page) {
 
-    // console.log('myapp location called');
     get_location();
-    
-    console.log("value in location "+Lockr.get("is_logged_in"));
 
     if(Lockr.get("is_logged_in")){
 
@@ -71,6 +47,40 @@ myApp.onPageInit('location', function (page) {
     }
     
 });
+
+myApp.onPageInit('mapview', function (page) {
+
+        var id = page.query.id;        
+        get_initial_map_data(id);
+
+        $("#owl-demo-map").owlCarousel({
+      
+             items : 4,
+             itemsDesktop : [1199,3],
+             itemsDesktopSmall : [979,3],
+        });
+});
+
+myApp.onPageInit('entitie', function (page) {
+
+        var id = page.query.id;   
+        get_entitie(id);
+        
+});
+
+
+myApp.onPageInit('index', function (page) {
+
+  console.log("value in index "+Lockr.get("is_logged_in"));
+
+});
+
+myApp.onPageInit('register', function (page) {
+
+    // myApp.myApp.alert('this is login page');
+
+});
+
 
 
 // function onMapInit(map) {
@@ -91,24 +101,12 @@ myApp.onPageInit('listview', function (page) {
       
 });
 
-myApp.onPageInit('mapview', function (page) {
-        
-        get_initial_map_data(Lockr.get('loc_id'));
 
-        $("#owl-demo-map").owlCarousel({
-      
-             items : 4,
-             itemsDesktop : [1199,3],
-             itemsDesktopSmall : [979,3],
-        });
-});
 
 myApp.onPageInit('event', function (page) {
 
-        var event_id = Lockr.get("event_id"); 
-        // alert("event id is "+event_id);    
-        get_event(event_id);
-
-
+        var id = page.query.id;
+        get_event(id);
         
 });
+
