@@ -374,7 +374,7 @@ function get_location_list(){
 
 function initial_marker_clicked_event(para1){
 
-	alert("entitie id is "+para1);
+	// alert("entitie id is "+para1);
 	mainView.router.loadPage('entitie.html?id='+para1);
 }
 
@@ -510,7 +510,7 @@ function get_initial_map_data(id){
 
 function marker_clicked_event(para1){
 
-	alert("event id is "+para1);
+	// alert("event id is "+para1);
 	mainView.router.loadPage("event.html?id="+para1);
 
 }
