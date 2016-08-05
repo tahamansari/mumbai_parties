@@ -5,8 +5,7 @@ var casa_img_url = "http://casaestilo.in/taha/mp_admin/assets/";
 
 $(window).load(function () {
 	 
-	 // 
-	 // initMap();
+//   initMap();
 // 	 alert("window loeeded");
 
 });
@@ -257,6 +256,23 @@ $(document).on('click','#login_button',function(event){
 
 });
 
+$(document).on("click","#signout",function(event){
+
+	event.preventDefault();
+
+	$("#signin-div").html("<a href='login.html' class='close-panel'> <h2 class='username'>Sign in</h2> </a>");
+    $("#signout-div").css("display","none");
+
+    Lockr.rm('is_logged_in');
+    Lockr.rm('name');
+	Lockr.flush();
+
+	myApp.alert("Logged out");
+	mainView.router.loadPage("index.html");
+
+
+});
+
 function get_location(){
 
   $.ajax({
@@ -267,21 +283,26 @@ function get_location(){
         crossDomain : true,
         success:function(result){
 
-          console.log(result);
+            console.log(result);
 
  			if(result['status']=="success"){
 
  				  var select = "<option value=''>Select Location</option>";
 		          $.each(result['data'], function(key,value){
 
-		                select += "<option value='"+result['data'][key]['id']+"'>"+result['data'][key]['name']+"</option>";
+		                select += "<option value='"+value.id+"'>"+value.name+"</option>";
 
 		          });
 		          $('#select_location').html(select);
 
  			}else{
 
- 				alert("failed");
+ 				if(result['msg']=="no data"){
+ 					alert("no data");
+ 				}else{
+ 					alert("failed");
+ 				}
+
  			}
 
         },
@@ -301,88 +322,13 @@ $(document).on('change','#select_location',function(){
 
 });
 
-
-function get_location_map(){
-
-
-  $.ajax({
-
-        url: base_url+"get_location/",
-        type:"POST",
-        crossDomain : true,
-        success:function(result){
-
-          console.log(result);
-
-          var json = JSON.parse(result);
-          var select = "<option value=''>Select Location</option>";
-          // console.log(json);
-
-          $.each(json, function(i){
-
-                // console.log(json[i]['id']);
-                // console.log(json[i]['name']);
-                select += "<option value='"+json[i]['id']+"'>"+json[i]['name']+"</option>";
-
-          });
-
-          $('#select_location').html(select);
-          // console.log("printed value to dropdown");
-        },
-		error: function(jqXHR, exception) {
-			
-			alert("error");
-		}
-
-    })
+function initial_marker_clicked_event(id){
+	// 30
+	mainView.router.loadPage('entitie.html?id='+id);
 }
-
-function get_location_list(){
-
-
-  $.ajax({
-
-        url: base_url+"get_location/",
-        type:"POST",
-        crossDomain : true,
-        success:function(result){
-
-          console.log(result);
-
-          var json = JSON.parse(result);
-          var select = "<option value=''>Select Location</option>";
-          // console.log(json);
-
-          $.each(json, function(i){
-
-                // console.log(json[i]['id']);
-                // console.log(json[i]['name']);
-                select += "<option value='"+json[i]['id']+"'>"+json[i]['name']+"</option>";
-
-          });
-
-          $('#select_location').html(select);
-          // console.log("printed value to dropdown");
-        },
-		error: function(jqXHR, exception) {
-			
-			alert("error");
-		}
-
-    })
-}
-
-function initial_marker_clicked_event(para1){
-
-	// alert("entitie id is "+para1);
-	mainView.router.loadPage('entitie.html?id='+para1);
-}
-
-
 
 
 function get_initial_map_data(id){
-
 
 	var styles = [
 
@@ -429,6 +375,8 @@ function get_initial_map_data(id){
 			id:id
 		},
 		success:function(result){
+
+			console.log(result);
 
 			if(result['status'] == "success"){
 
@@ -493,7 +441,17 @@ function get_initial_map_data(id){
 			 
 
 			}else{
-				alert("failed");
+
+				if(result['msg']=="no data"){
+
+					alert("no data");
+
+				}else{
+
+					alert("failed");
+
+				}
+				
 			}
 		},
 		error: function(jqXHR, exception) {
@@ -503,20 +461,621 @@ function get_initial_map_data(id){
 }
 
 
+function get_entitie(id){
+
+	$.ajax({
+		url: base_url+"get_entitie/",
+		type: 'POST',
+		crossDomain: true,
+		dataType: 'json',
+		data: {
+			id: id
+		},
+		success: function(result){
+
+			console.log(result);
+
+			if(result['status']=="success"){
+
+				var entitie_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
+							result['entitie'][0]['name']+
+	                           "<br>"+
+	                           "<i class='fa fa-star' aria-hidden='true'></i>"+
+	                           "<i class='fa fa-star' aria-hidden='true'></i>"+
+	                           "<i class='fa fa-star' aria-hidden='true'></i>"+
+	                        "</h3>";
+
+	            var entitie_address = "<p>"+result['entitie'][0]['address']+"</p>";
+
+	            var entitie_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
+						               
+						  "<p style='margin:8px'>Open from "+result['entitie'][0]['open_hours']+" to "+result['entitie'][0]['closing_hours']+"</p>";
+
+				var menu_data = "";
+
+				if(result['menu_images'] == "no data"){
+
+					$("#menu_data_entitie").html("No Menu Available");
+
+				}else{
+
+					$.each(result['menu_images'],function(key,value){
+
+						menu_data += "<img width='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'>";
+					})
+
+					$("#menu_data_entitie").html(menu_data);
+
+				}
+
+				var entitie_events = "";
+
+				if(result['events'] == "no data"){
+
+					$("#entitie_events").html("No Event Available");
+
+				}else{
+
+					$.each(result['events'],function(key,value){
+
+						entitie_events += "<div data-id='"+value.event_id+"' class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 10px;width:100%'>"+
+
+                          "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
+                          "<h3 class='no-mar list-name'>"+value.event_name+"</h3>"+
+                          "</div>"+
+                         
+                          "<div class='card-footer color-white'>"+
+                            "<span class='footer-text'>@woodside - All Day Bar & Eatery </span>"+
+                            "<span class='footer-text'>10am to 12pm</span>"+
+                          "</div>"+
+                        "</div>";
+
+
+					})
+
+					$("#entitie_events").html(entitie_events);
+
+				}
+
+				var entitie_offers = "";
+
+				if(result['offers'] == "no data"){
+
+					$("#entitie_offers").html("No Offers Available");
+
+				}else{
+
+					$.each(result['offers'],function(key,value){
+
+						entitie_offers += "<div data-id='"+value.offer_id+"' class='card demo-card-header-pic get-offer' style='margin: 0;margin-bottom: 10px;width:100%'>"+
+
+                          "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
+                          "<h3 class='no-mar list-name'>"+value.offer_name+"</h3>"+
+                          "</div>"+
+                         
+                          "<div class='card-footer color-white'>"+
+                            "<span class='footer-text'>@woodside - All Day Bar & Eatery </span>"+
+                            "<span class='footer-text'>10am to 12pm</span>"+
+                          "</div>"+
+                        "</div>";
+
+
+					})
+
+					$("#entitie_offers").html(entitie_offers);
+
+				}
+
+	            $("#entitie_heading").html(entitie_heading);
+	            $("#entitie_address").html(entitie_address);
+	            $("#entitie_timming").html(entitie_timming);				
+
+			}else{
+
+				if(result['msg'] = "no data"){
+
+					alert("no data");
+
+				}else{
+
+					alert("failed");
+				}
+			}
+
+		},
+		error: function(jqXHR, exception) {
+			alert("error");
+		}
+	});
+}
+
+$(document).on('click','.get-offer',function(event){
+
+	var id = $(this).attr('data-id');
+
+	// alert('id is '+id);
+	mainView.loadPage('offer.html?id='+id);
+
+});
+
+
+function get_offer(id){
+
+	$.ajax({
+
+		type: 'POST',
+		url: base_url+"get_offer/",
+		dataType: 'json',
+		data:{
+
+			id: id
+
+		},
+		success:function(result){
+			
+			console.log(result);
+
+			if(result['status'] == "success"){
+
+						var week_days =result['offer'][0]['weekly_base'];
+
+						var offer_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
+									result['offer'][0]['offer_name']+
+				                       "<br>"+
+				                       "<i class='fa fa-star' aria-hidden='true'></i>"+
+				                       "<i class='fa fa-star' aria-hidden='true'></i>"+
+				                       "<i class='fa fa-star' aria-hidden='true'></i>"+
+				                    "</h3>";
+
+				        var offer_entitie_address = "<h3 style='margin: 5px 0;'>"+result['offer'][0]['name']+"</h3>"+
+				                          "<p>"+result['offer'][0]['address']+"</p>";
+
+
+				        var offer_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
+								               
+								  "<p style='margin:8px'>Open from "+result['offer'][0]['start_time']+" to "+result['offer'][0]['start_time']+"</p>"+
+
+									"<table style='float: right'>"+
+
+					                  "<thead>"+
+					                     "<tr style='font-size: 10px;'>"+
+					                        "<th>S</th>"+
+					                        "<th>M</th>"+
+					                        "<th>T</th>"+
+					                        "<th>W</th>"+
+					                        "<th>T</th>"+
+					                        "<th>F</th>"+
+					                        "<th>S</th>"+
+					                     "</tr>"+
+					                  "</thead>"+
+
+					                  "<tbody>"+
+					                     "<tr style='font-size: 10px;'>";
+
+
+				     	if (week_days.indexOf('Sunday') > -1) {
+
+				 		
+				    		offer_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+				    	}else{
+
+				    		offer_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+				    	}
+
+				     	if (week_days.indexOf('Monday') > -1) {
+
+				 		
+				    		offer_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+				    	}else{
+
+				    		offer_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+				    	}
+
+				     	if (week_days.indexOf('Tuesday') > -1) {
+
+				 		
+				    		offer_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+				    	}else{
+
+				    		offer_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+				    	}
+
+				     	if (week_days.indexOf('Wednesday') > -1) {
+
+				 		
+				    		offer_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+				    	}else{
+
+				    		offer_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+				    	}
+
+				     	if (week_days.indexOf('Thursday') > -1) {
+
+				 		
+				    		offer_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+				    	}else{
+
+				    		offer_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+				    	}
+
+				     	if (week_days.indexOf('Friday') > -1) {
+
+				 		
+				    		offer_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+				    	}else{
+
+				    		offer_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+				    	}
+
+				    	if (week_days.indexOf('Saturday') > -1) {
+
+				 		
+				    		offer_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+				    	}else{
+
+				    		offer_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+				    	}
+
+						offer_timming += "</tr>";
+						offer_timming += "</tbody>";
 
 
 
+						offer_timming += "</table>";
 
 
-function marker_clicked_event(para1){
 
-	// alert("event id is "+para1);
-	mainView.router.loadPage("event.html?id="+para1);
+						var menu_data = "";
+
+						if(result['menu_images'] == "no data"){
+
+							$("#menu_data_offer").html("No Menu Available");
+
+						}else{
+
+							$.each(result['menu_images'],function(key,value){
+
+								menu_data += "<img width='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'>";
+
+							})
+
+							$("#menu_data_offer").html(menu_data);
+
+						}
+
+				        $("#offer_heading").html(offer_heading);
+				        $("#offer_entitie_address").html(offer_entitie_address);
+				        $("#offer_timming").html(offer_timming);
+
+					}else{
+
+						if(result['msg'] == "no data"){
+
+							alert("no data");
+
+						}else{
+
+							alert("failed");
+						}
+
+					}
+
+			
+		}
+	});
 
 }
 
 
 
+$(document).on('click','.get-event',function(event){
+
+	var id = $(this).attr('data-id');
+	mainView.loadPage('event.html?id='+id);
+
+});
+
+
+function get_event(id){
+
+	$.ajax({
+
+		type: 'POST',
+		url: base_url+"get_event/",
+		dataType: 'json',
+		data:{
+
+			id: id
+
+		},
+		success:function(result){
+			
+			console.log(result);
+
+			if(result['status'] == "success"){
+
+						var week_days =result['event'][0]['weekly_base'];
+
+						var event_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
+									result['event'][0]['event_name']+
+				                       "<br>"+
+				                       "<i class='fa fa-star' aria-hidden='true'></i>"+
+				                       "<i class='fa fa-star' aria-hidden='true'></i>"+
+				                       "<i class='fa fa-star' aria-hidden='true'></i>"+
+				                    "</h3>";
+
+				        var event_entitie_address = "<h3 style='margin: 5px 0;'>"+result['event'][0]['name']+"</h3>"+
+				                          "<p>"+result['event'][0]['address']+"</p>";
+
+
+				        var event_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
+								               
+								  "<p style='margin:8px'>Open from "+result['event'][0]['time_event_start']+" to "+result['event'][0]['time_event_ends']+"</p>"+
+
+									"<table style='float: right'>"+
+
+					                  "<thead>"+
+					                     "<tr style='font-size: 10px;'>"+
+					                        "<th>S</th>"+
+					                        "<th>M</th>"+
+					                        "<th>T</th>"+
+					                        "<th>W</th>"+
+					                        "<th>T</th>"+
+					                        "<th>F</th>"+
+					                        "<th>S</th>"+
+					                     "</tr>"+
+					                  "</thead>"+
+
+					                  "<tbody>"+
+					                     "<tr style='font-size: 10px;'>";
+
+
+				     	if (week_days.indexOf('Sunday') > -1) {
+
+				 		
+				    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+				    	}else{
+
+				    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+				    	}
+
+				     	if (week_days.indexOf('Monday') > -1) {
+
+				 		
+				    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+				    	}else{
+
+				    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+				    	}
+
+				     	if (week_days.indexOf('Tuesday') > -1) {
+
+				 		
+				    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+				    	}else{
+
+				    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+				    	}
+
+				     	if (week_days.indexOf('Wednesday') > -1) {
+
+				 		
+				    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+				    	}else{
+
+				    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+				    	}
+
+				     	if (week_days.indexOf('Thursday') > -1) {
+
+				 		
+				    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+				    	}else{
+
+				    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+				    	}
+
+				     	if (week_days.indexOf('Friday') > -1) {
+
+				 		
+				    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+				    	}else{
+
+				    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+
+				    	}
+
+				    	if (week_days.indexOf('Saturday') > -1) {
+
+				 		
+				    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+
+				    	}else{
+
+				    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+				    	}
+
+						event_timming += "</tr>";
+						event_timming += "</tbody>";
+
+
+
+						event_timming += "</table>";
+
+
+
+						var menu_data = "";
+
+						if(result['menu_images'] == "no data"){
+
+							$("#menu_data_event").html("No Menu Available");
+
+						}else{
+
+							$.each(result['menu_images'],function(key,value){
+
+								menu_data += "<img width='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'>";
+
+							})
+
+							$("#menu_data_event").html(menu_data);
+
+						}
+
+				        $("#event_heading").html(event_heading);
+				        $("#event_entitie_address").html(event_entitie_address);
+				        $("#event_timming").html(event_timming);
+
+					}else{
+
+						if(result['msg'] == "no data"){
+
+							alert("no data");
+
+						}else{
+
+							alert("failed");
+						}
+
+					}
+
+			
+		}
+	});
+
+}
+
+function get_event_type(){
+
+		$.ajax({
+
+		type:"POST",
+		url:base_url+"get_event_type/",
+		crossDomain:true,
+		dataType:'json',
+		success:function(result){
+
+			console.log(result);
+
+			if(result['status']=="success"){
+
+				var list = "";
+				$.each(result['data'],function(key,value) {
+					 
+					list += "<div class='col-50 list-box'>"+
+							"<a data-id='"+value.id+"' class='get-event-data'><img src='img/event.jpeg' width='100%' alt='img error'>"+
+							"<div class='list-overlay'>"+value.event_type+"</div></a>"+
+							"</div>";
+				})
+
+				$("#event_box").html(list);
+
+			}else{
+
+				if(result['msg'] = "no data"){
+
+					alert("no data");
+
+				}else{
+
+					alert("failed");
+				}
+			}
+			
+		},
+		error: function(jqXHR, exception) {
+			
+			alert("error");
+		}
+
+
+	})
+}
+
+$(document).on('click','.get-event-data',function(event){
+		//2
+	 var id = $(this).attr("data-id");
+	 $.ajax({
+
+	 	type:"POST",
+	 	url: base_url+"get_event_data/",
+	 	dataType:"json",
+	 	data:{
+
+	 		id:id
+	 	},
+	 	success:function(result){
+
+	 		console.log(result);
+
+	 		if(result['status']=="success"){
+
+	 			var html = "";
+		 		$.each(result['data'],function(key,value) {
+
+		 			html +="<div data-id="+value.event_id+" class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 10px;width:100%'>"+
+			                  "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
+			                  "<h3 class='no-mar list-name'>"+value.event_name+"</h3>" +
+			                  "</div>"+
+			                 
+			                  "<div class='card-footer color-white'>"+
+			                    "<span class='footer-text'>@woodside - All Day Bar & Eatery </span>"+
+			                    "<span class='footer-text'>"+value.time_event_start+" to "+value.time_event_ends+"</span>"+
+			                  "</div>"+
+			                "</div>";
+		 			
+		 			
+		 		});
+
+		 		$('#event_box').html(html);
+
+	 		}else{
+
+	 			if(result['msg']=="no data"){
+
+	 				alert("no data");
+
+	 			}else{
+
+	 				alert("failed");
+	 			}
+	 		}
+
+	 		
+	 	}
+	})
+});
+
+
+function marker_clicked_event(para1){
+
+	mainView.router.loadPage("event.html?id="+para1);
+
+}
 
 $(document).on('click','.get_map_data',function(event){
 
@@ -570,31 +1129,48 @@ $(document).on('click','.get_map_data',function(event){
 
 	 		console.log(result);
 
-	 		var map = new google.maps.Map(document.getElementById('map'), {
-		      zoom: 14,
-		      center: new google.maps.LatLng(result['center'][0]['latitute'], result['center'][0]['longitute']),
-		      mapTypeId: google.maps.MapTypeId.ROADMAP
-		    });
+	 		if(result['status']=="success"){
 
-			map.setOptions({styles: styles});
+	 			var map = new google.maps.Map(document.getElementById('map'), {
+			      zoom: 14,
+			      center: new google.maps.LatLng(result['center'][0]['latitute'], result['center'][0]['longitute']),
+			      mapTypeId: google.maps.MapTypeId.ROADMAP
+			    });
 
-		    var marker,i;
+				map.setOptions({styles: styles});
 
-	        $.each(result['data'],function(key, value) {
+			    var marker,i;
 
-		      marker = new google.maps.Marker({
-		        position: new google.maps.LatLng(value.latitude,value.longitude),
-		        map: map
-		      });
+		        $.each(result['data'],function(key, value) {
 
-		      marker.addListener('click', function() {
+			      marker = new google.maps.Marker({
+			        position: new google.maps.LatLng(value.latitude,value.longitude),
+			        map: map
+			      });
 
-		          marker_clicked_event(value.event_id);
+			      marker.addListener('click', function() {
 
-		      });
+			          marker_clicked_event(value.event_id);
+
+			      });
 
 
-			});
+				});
+
+	 		}else{
+
+	 			if(result['msg']=="no data"){
+
+	 				alert("no data");
+
+	 			}else{
+
+	 				alert("failed");
+
+	 			}
+	 		}
+
+	 		
 
 	 	},
 		error: function(jqXHR, exception) {
@@ -605,461 +1181,91 @@ $(document).on('click','.get_map_data',function(event){
 });
 
 
+function get_location_map(){
 
 
-$(document).on("click","#signout",function(event){
+  $.ajax({
 
-	event.preventDefault();
+        url: base_url+"get_location/",
+        type:"POST",
+        crossDomain : true,
+        success:function(result){
 
-	$("#signin-div").html("<a href='login.html' class='close-panel'> <h2 class='username'>Sign in</h2> </a>");
-    $("#signout-div").css("display","none");
+          console.log(result);
 
-    Lockr.rm('is_logged_in');
-    Lockr.rm('name');
-	Lockr.flush();
+          var json = JSON.parse(result);
+          var select = "<option value=''>Select Location</option>";
+          // console.log(json);
 
-	myApp.alert("Logged out");
-	mainView.router.loadPage("index.html");
+          $.each(json, function(i){
 
+                select += "<option value='"+json[i]['id']+"'>"+json[i]['name']+"</option>";
 
-});
+          });
 
-
-
-function get_event_type(){
-
-
-		$.ajax({
-
-		type:"POST",
-		url:base_url+"get_event_type/",
-		crossDomain:true,
-		dataType:'json',
-		success:function(result){
-
-			console.log(result);
-
-			var list = "";
-
-			$.each(result['data'],function(key,value) {
-				 
-				list += "<div class='col-50 list-box'>"+
-				// "+img_url+json[i]['img_name']+"
-						"<a data-id='"+value.id+"' class='get-event-data'><img src='img/event.jpeg' width='100%' alt='img error'>"+
-						"<div class='list-overlay'>"+value.event_type+"</div></a>"+
-						"</div>";
-			})
-
-			$("#event_box").html(list);
-			
-		},
+          $('#select_location').html(select);
+          // console.log("printed value to dropdown");
+        },
 		error: function(jqXHR, exception) {
 			
 			alert("error");
 		}
 
-
-	})
+    })
 }
 
-$(document).on('click','.get-event-data',function(event){
+function get_location_list(){
 
+  $.ajax({
 
-	 var id = $(this).attr("data-id");
+        url: base_url+"get_location/",
+        type:"POST",
+        crossDomain : true,
+        success:function(result){
 
-	 $.ajax({
+          console.log(result);
 
-	 	type:"POST",
-	 	url: base_url+"get_event_data/",
-	 	dataType:"json",
-	 	data:{
+          var json = JSON.parse(result);
+          var select = "<option value=''>Select Location</option>";
+          // console.log(json);
 
-	 		id:id
-	 	},
-	 	success:function(result){
+          $.each(json, function(i){
 
+                // console.log(json[i]['id']);
+                // console.log(json[i]['name']);
+                select += "<option value='"+json[i]['id']+"'>"+json[i]['name']+"</option>";
 
-	 		var html = "";
-	 		$.each(result['data'],function(key,value) {
+          });
 
-	 			html +="<div data-id="+value.event_id+" class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 10px;width:100%'>"+
-		                  "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
-		                  "<h3 class='no-mar list-name'>"+value.event_name+"</h3>" +
-		                  "</div>"+
-		                 
-		                  "<div class='card-footer color-white'>"+
-		                    "<span class='footer-text'>@woodside - All Day Bar & Eatery </span>"+
-		                    "<span class='footer-text'>"+value.time_event_start+" to "+value.time_event_ends+"</span>"+
-		                  "</div>"+
-		                "</div>";
-	 			
-	 			
-	 		});
-
-	 		$('#event_box').html(html);
-	 	}
-	})
-});
-
-
-
-$(document).on('click','.get-event',function(event){
-
-	var id = $(this).attr('data-id');
-	mainView.loadPage('event.html?id='+id);
-
-});
-
-
-function get_event(id){
-
-	$.ajax({
-
-		type: 'POST',
-		url: base_url+"get_events/",
-		dataType: 'json',
-		data:{
-
-			id: id
-
-		},
-		success:function(result){
-			
-			console.log(result);
-
-			var week_days =result.week_days;
-
-			var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-
-			var event_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
-						result.content[0]['event_name']+
-	                       "<br>"+
-	                       "<i class='fa fa-star' aria-hidden='true'></i>"+
-	                       "<i class='fa fa-star' aria-hidden='true'></i>"+
-	                       "<i class='fa fa-star' aria-hidden='true'></i>"+
-	                    "</h3>";
-
-	        var entitie_add = "<h3 style='margin: 5px 0;'>"+result.content[0]['entity_name']+"</h3>"+
-	                          "<p>"+result.content[0]['address']+"</p>";
-
-
-	        var event_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
-					               
-					  "<p style='margin:8px'>Open from "+result.content[0]['event_start']+" to "+result.content[0]['event_end']+"</p>"+
-
-									"<table style='float: right'>"+
-
-					                  "<thead>"+
-					                     "<tr style='font-size: 10px;'>"+
-					                        "<th>S</th>"+
-					                        "<th>M</th>"+
-					                        "<th>T</th>"+
-					                        "<th>W</th>"+
-					                        "<th>T</th>"+
-					                        "<th>F</th>"+
-					                        "<th>S</th>"+
-					                     "</tr>"+
-					                  "</thead>"+
-
-					                  "<tbody>"+
-					                     "<tr style='font-size: 10px;'>";
-
-
-	     	if (week_days.indexOf('Sunday') > -1) {
-
-	 		
-	    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
-
-	    	}else{
-
-	    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
-
-	    	}
-
-	     	if (week_days.indexOf('Monday') > -1) {
-
-	 		
-	    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
-
-	    	}else{
-
-	    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
-
-	    	}
-
-	     	if (week_days.indexOf('Tuesday') > -1) {
-
-	 		
-	    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
-
-	    	}else{
-
-	    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
-
-	    	}
-
-	     	if (week_days.indexOf('Wednesday') > -1) {
-
-	 		
-	    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
-
-	    	}else{
-
-	    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
-
-	    	}
-
-	     	if (week_days.indexOf('Thursday') > -1) {
-
-	 		
-	    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
-
-	    	}else{
-
-	    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
-
-	    	}
-
-	     	if (week_days.indexOf('Friday') > -1) {
-
-	 		
-	    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
-
-	    	}else{
-
-	    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
-
-	    	}
-
-	    	if (week_days.indexOf('Saturday') > -1) {
-
-	 		
-	    		event_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
-
-	    	}else{
-
-	    		event_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
-
-	    	}
-
-					                       
-			event_timming += "</tr>";
-			event_timming += "</tbody>";
-
-
-
-			event_timming += "</table>";
-
-
-
-			var menu_data = "";
-
-			if(result.menu_images[0][0]['id'] == 0){
-
-				$("#menu_data").html("No Menu Available");
-
-			}else{
-
-				$.each(result.menu_images[0],function(key,value){
-
-				// console.log(result.menu_images[0][key]['url']);
-
-					menu_data += "<img width='100%' src='http://mumbaiparties.com/assets/uploads/"+result.menu_images[0][key]['url']+"' alt='no img'>";
-
-
-				})
-
-				$("#menu_data").html(menu_data);
-
-			}
-
-
-	        $("#event_heading").html(event_heading);
-	        $("#entitie_add").html(entitie_add);
-	        $("#event_timming").html(event_timming);
-	        myApp.hideIndicator();
-		}
-	});
-
-}
-
-
-function get_entitie(id){
-
-	console.log(id);
-
-	$.ajax({
-		url: base_url+"get_entitie/",
-		type: 'POST',
-		crossDomain: true,
-		dataType: 'json',
-		data: {
-			id: id
-		},
-		success: function(result){
-
-			console.log(result);
-
-			// alert("get entities after ajax");
-
-			var entitie_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
-						result['content']['entity_name']+
-                           "<br>"+
-                           "<i class='fa fa-star' aria-hidden='true'></i>"+
-                           "<i class='fa fa-star' aria-hidden='true'></i>"+
-                           "<i class='fa fa-star' aria-hidden='true'></i>"+
-                        "</h3>";
-
-            // "<h3 style='margin: 5px 0;'>"+result.content[0]['entity_name']+"</h3>"+
-            var entitie_address = "<p>"+result['content']['address']+"</p>";
-
-
-            var entitie_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
-					               
-					  "<p style='margin:8px'>Open from "+result['content']['entitie_start']+" to "+result['content']['entitie_end']+"</p>";
-
-
-
-			var menu_data = "";
-
-			if(result.menu_images[0]['id'] == 0){
-
-				$("#menu_data").html("No Menu Available");
-
-			}else{
-
-				$.each(result.menu_images,function(key,value){
-
-					menu_data += "<img width='100%' src='http://mumbaiparties.com/assets/uploads/"+result.menu_images[key]['url']+"' alt='no img'>";
-
-
-				})
-
-				$("#menu_data_entitie").html(menu_data);
-
-			}
-
-
-			var entitie_events = "";
-
-			if(result['events'][0]['id'] == 0){
-
-				$("#entitie_events").html("No Event Available");
-
-			}else{
-
-				$.each(result['events'],function(key,value){
-
-				// console.log(result.menu_images[0][key]['url']);
-
-					entitie_events += "<div data-id='"+value.event_id+"' class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 10px;width:100%'>"+
-
-                                          "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
-                                          "<h3 class='no-mar list-name'>"+value.event_name+"</h3>"+
-                                          "</div>"+
-                                         
-                                          "<div class='card-footer color-white'>"+
-                                            "<span class='footer-text'>@woodside - All Day Bar & Eatery </span>"+
-                                            "<span class='footer-text'>10am to 12pm</span>"+
-                                          "</div>"+
-                                        "</div>";
-
-
-				})
-
-				$("#entitie_events").html(entitie_events);
-
-			}
-
-
-
-            $("#entitie_heading").html(entitie_heading);
-            $("#entitie_address").html(entitie_address);
-            $("#entitie_timming").html(entitie_timming);
-
-
-
-		},
+          $('#select_location').html(select);
+          // console.log("printed value to dropdown");
+        },
 		error: function(jqXHR, exception) {
+			
 			alert("error");
 		}
-	});
 
-
-			// var entitie_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
-			// 			result['content']['entity_name']+
-   //                         "<br>"+
-   //                         "<i class='fa fa-star' aria-hidden='true'></i>"+
-   //                         "<i class='fa fa-star' aria-hidden='true'></i>"+
-   //                         "<i class='fa fa-star' aria-hidden='true'></i>"+
-   //                      "</h3>";
-
-   //          // "<h3 style='margin: 5px 0;'>"+result.content[0]['entity_name']+"</h3>"+
-   //          var entitie_address = "<p>"+result['content']['address']+"</p>";
-
-
-   //          var entitie_timming = "<i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>"+
-					               
-			// 		  "<p style='margin:8px'>Open from "+result['content']['entitie_start']+" to "+result['content']['entitie_end']+"</p>";
-
-
-
-			// var menu_data = "";
-
-			// if(result.menu_images[0]['id'] == 0){
-
-			// 	$("#menu_data").html("No Menu Available");
-
-			// }else{
-
-			// 	$.each(result.menu_images,function(key,value){
-
-			// 		menu_data += "<img width='100%' src='http://mumbaiparties.com/assets/uploads/"+result.menu_images[key]['url']+"' alt='no img'>";
-
-
-			// 	})
-
-			// 	$("#menu_data_entitie").html(menu_data);
-
-			// }
-
-
-			// var entitie_events = "";
-
-			// if(result['events'][0]['id'] == 0){
-
-			// 	$("#entitie_events").html("No Event Available");
-
-			// }else{
-
-			// 	$.each(result['events'],function(key,value){
-
-			// 	// console.log(result.menu_images[0][key]['url']);
-
-			// 		entitie_events += "<div id='entitie_event"+result['events'][key]['event_id']+"' class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 10px;width:100%'>"+
-
-   //                                        "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
-   //                                        "<h3 class='no-mar list-name'>"+result['events'][key]['event_name']+"</h3>"+
-   //                                        "</div>"+
-                                         
-   //                                        "<div class='card-footer color-white'>"+
-   //                                          "<span class='footer-text'>@woodside - All Day Bar & Eatery </span>"+
-   //                                          "<span class='footer-text'>10am to 12pm</span>"+
-   //                                        "</div>"+
-   //                                      "</div>";
-
-
-			// 	})
-
-			// 	$("#entitie_events").html(entitie_events);
-
-			// }
-
-
-
-   //          $("#entitie_heading").html(entitie_heading);
-   //          $("#entitie_address").html(entitie_address);
-   //          $("#entitie_timming").html(entitie_timming);
-            
-
+    })
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

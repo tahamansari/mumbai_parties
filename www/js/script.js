@@ -39,5 +39,11 @@ function call(){
 
 }
 
+function get_direction(){
+
+	// alert("called");
+	directions.navigateTo("51.50722", "-0.12750"); // latitude, longitude
+}
+
 
 

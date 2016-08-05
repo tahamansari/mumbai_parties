@@ -30,9 +30,6 @@ $$(document).on('deviceready', function() {
 
     console.log("Device is ready!");
 
-    // console.log(myApp.params.swipePanel);
-    // console.log("initial value"+Lockr.get("is_logged_in"));
-
 });
 
 myApp.onPageInit('location', function (page) {
@@ -62,35 +59,32 @@ myApp.onPageInit('mapview', function (page) {
 });
 
 myApp.onPageInit('entitie', function (page) {
-
+        // 30
         var id = page.query.id;   
         get_entitie(id);
         
 });
 
+myApp.onPageInit('event', function (page) {
 
-myApp.onPageInit('index', function (page) {
-
-  console.log("value in index "+Lockr.get("is_logged_in"));
-
+        // 73
+        var id = page.query.id;
+        get_event(id);
+        
 });
 
-myApp.onPageInit('register', function (page) {
+myApp.onPageInit('offer', function (page) {
 
-    // myApp.myApp.alert('this is login page');
-
+        // 73
+        var id = page.query.id;
+        get_offer(id);
+        
 });
 
-
-
-// function onMapInit(map) {
-
-// }
 
 myApp.onPageInit('listview', function (page) {
 
       get_event_type();
-
       $("#owl-demo-listview").owlCarousel({
 
          items : 4,
@@ -98,15 +92,8 @@ myApp.onPageInit('listview', function (page) {
          itemsDesktopSmall : [979,3]
    
       });
-      
 });
 
 
 
-myApp.onPageInit('event', function (page) {
-
-        var id = page.query.id;
-        get_event(id);
-        
-});
 

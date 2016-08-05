@@ -21,12 +21,16 @@
 
 }
 
-body{
+html,body{
 
   font-family: 'montserratlight';
   color: white;
   height: 100%;
 }
+
+
+
+
 
 .statusbar-overlay {
     background: #000000;
@@ -164,7 +168,8 @@ input[type="text"]{
 
   background-color: rgba(128, 128, 128, 0.7) !important;
   padding-left: 10px!important;
-  color: #f4f3f3!important;
+  /*color: #f4f3f3!important;*/
+  color: black;
 }
 
 input[type="email"]{
@@ -295,10 +300,6 @@ input:checked + label{
 
 a{
   /*color: white!important;*/
-}
-
-#map {
-        height: 640px;
 }
 
 .middle-text{
@@ -470,7 +471,7 @@ a{
     color: white;
     width: 100%;
     padding: 10px;
-    font-size: 19px;
+    font-size: 14px;
     border: none;
     border-radius: 4px 4px 0px 0px;
 }
@@ -487,7 +488,8 @@ a{
 
 
 #map {
-  height: 480px;
+
+  height: 650px;
   overflow: inherit!important;
 
 }
