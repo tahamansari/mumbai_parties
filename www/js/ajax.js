@@ -566,6 +566,14 @@ function get_entitie(id){
 
 				}
 
+				var entitie_call = "<br>...<i class='fa fa-phone' onclick='call("+result['entitie'][0]['bar_contact']+")' style='font-size: 30px;color: #03A9F4;' aria-hidden='true'></i>";
+
+				var entitie_direction = "<i class='fa fa-globe'  onclick='get_direction("+result['entitie'][0]['latitude']+","+result['entitie'][0]['longitude']+")' aria-hidden='true'></i>";
+
+
+		        $("#entitie_call").html(entitie_call);
+		        $("#entitie_direction").html(entitie_direction);
+
 	            $("#entitie_heading").html(entitie_heading);
 	            $("#entitie_address").html(entitie_address);
 	            $("#entitie_timming").html(entitie_timming);				
@@ -755,6 +763,14 @@ function get_offer(id){
 							$("#menu_data_offer").html(menu_data);
 
 						}
+
+						var offer_call = "<br>...<i class='fa fa-phone' onclick='call("+result['eoffer'][0]['bar_contact']+")' style='font-size: 30px;color: #03A9F4;' aria-hidden='true'></i>";
+
+						var offer_direction = "<i class='fa fa-globe'  onclick='get_direction("+result['offer'][0]['latitude']+","+result['offer'][0]['longitude']+")' aria-hidden='true'></i>";
+
+
+				        $("#offer_call").html(offer_call);
+				        $("#offer_direction").html(offer_direction);
 
 				        $("#offer_heading").html(offer_heading);
 				        $("#offer_entitie_address").html(offer_entitie_address);
@@ -946,6 +962,13 @@ function get_event(id){
 
 						}
 
+						var event_call = "<br>...<i class='fa fa-phone' onclick='call("+result['event'][0]['bar_contact']+")' style='font-size: 30px;color: #03A9F4;' aria-hidden='true'></i>";
+
+						var event_direction = "<i class='fa fa-globe'  onclick='get_direction("+result['event'][0]['latitude']+","+result['event'][0]['longitude']+")' aria-hidden='true'></i>";
+
+
+				        $("#event_call").html(event_call);
+				        $("#event_direction").html(event_direction);
 				        $("#event_heading").html(event_heading);
 				        $("#event_entitie_address").html(event_entitie_address);
 				        $("#event_timming").html(event_timming);

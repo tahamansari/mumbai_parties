@@ -32,17 +32,20 @@ $(document).on('click','.tab',function(event){
 
 
 
-function call(){
+function call(para1){
 
-	window.open('tel:8976321674');
+	window.open('tel:'+para1);
 
 
 }
 
-function get_direction(){
+function get_direction(para1,para2){
+
+	console.log(para1,para2);
+	
 
 	// alert("called");
-	directions.navigateTo("51.50722", "-0.12750"); // latitude, longitude
+	directions.navigateTo(para1,para2); // latitude, longitude
 }
 
 
