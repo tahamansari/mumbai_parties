@@ -72,3 +72,28 @@ function onDeviceReady() {
 }
 
 
+var login = function () {
+
+    if (!window.cordova) {
+
+        var appId = prompt("Enter FB Application ID", "");
+        facebookConnectPlugin.browserInit(appId);
+    }
+    
+    facebookConnectPlugin.login( ["email"],
+        function (response) { alert(JSON.stringify("f "+response)) },
+        function (response) { alert(JSON.stringify("s "+response)) });
+}
+
+
+var getStatus = function () { 
+    facebookConnectPlugin.getLoginStatus( 
+        function (response) { alert(JSON.stringify(response)) },
+        function (response) { alert(JSON.stringify(response)) });
+}
+var logout = function () { 
+    facebookConnectPlugin.logout( 
+        function (response) { alert(JSON.stringify(response)) },
+        function (response) { alert(JSON.stringify(response)) });
+}
+

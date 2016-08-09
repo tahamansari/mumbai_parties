@@ -7,15 +7,17 @@
   <meta name="Keywords" content="">
   <meta name="Description" content="">
   
-	
+  
  </head>
 
  <body>
 
 <script type="text/javascript">
     function showAndroidToast(toast) {
-        // Android.showToast(toast);
-        // 
+
+         toast = JSON.parse(toast);
+         // Android.showToast(toast);
+         
         alert(toast);
     }
 </script>
@@ -31,7 +33,7 @@
     
   ?>
 
-  <input type="button" value="Close" onClick="showAndroidToast('{status:success,data:[]}')"/>
+  <input type="button" value="Close" onClick="showAndroidToast("<?php echo $json ?>")"/>
 
 
 
