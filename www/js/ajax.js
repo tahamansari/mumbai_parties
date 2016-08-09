@@ -276,6 +276,8 @@ $(document).on("click","#signout",function(event){
     Lockr.rm('name');
 	Lockr.flush();
 
+	logout();
+
 	myApp.alert("Logged out");
 	mainView.router.loadPage("index.html");
 

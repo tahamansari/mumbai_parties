@@ -109,7 +109,7 @@ var getStatus = function () {
         function (response) { alert(JSON.stringify(response)) });
 }
 var logout = function () { 
-	
+
     facebookConnectPlugin.logout( 
         function (response) { alert(JSON.stringify(response)) },
         function (response) { alert(JSON.stringify(response)) });
