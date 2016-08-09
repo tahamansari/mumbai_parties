@@ -34,8 +34,8 @@
     <preference name="android-build-tool" value="gradle" />
 
     <plugin spec="https://github.com/Wizcorp/phonegap-facebook-plugin.git#v0.12.0" source="git">
-        <param name="APP_ID" value="272656089759518" />
-        <param name="APP_NAME" value="pg_connect" />
+        <param name="APP_ID" value="908572929213032" />
+        <param name="APP_NAME" value="Mumbai Parties" />
     </plugin>
 
 
