@@ -84,7 +84,7 @@ var login = function () {
     function (response) { 
         // alert(JSON.stringify(response));
 
-        if(response.status == "success"){
+        if(response.status == "connected"){
 
         	alert("Login Success");
 
