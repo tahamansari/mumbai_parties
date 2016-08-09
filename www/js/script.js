@@ -86,7 +86,11 @@ var login = function () {
 
         if(response.status == "connected"){
 
-        	alert("Login Success");
+        	Lockr.set("name","Facebook");
+			Lockr.set("is_logged_in",true);
+
+			myApp.alert("Success");				
+			mainView.router.loadPage("location.html");
 
         }else{
 
@@ -105,6 +109,7 @@ var getStatus = function () {
         function (response) { alert(JSON.stringify(response)) });
 }
 var logout = function () { 
+	
     facebookConnectPlugin.logout( 
         function (response) { alert(JSON.stringify(response)) },
         function (response) { alert(JSON.stringify(response)) });
