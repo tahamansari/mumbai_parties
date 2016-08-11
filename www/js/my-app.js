@@ -6,6 +6,8 @@ var myApp = new Framework7({
     smartSelectOpenIn:'picker',
     swipeBackPage:false,
     smartSelectSearchbar:true,
+    preloadPreviousPage: false,
+    uniqueHistory: true,
     // animateNavBackIcon:true,
 
     onAjaxStart: function (xhr) {
@@ -28,12 +30,6 @@ var mainView = myApp.addView('.view-main', {
 });
 
 
-
-$$(document).on('deviceready', function() {
-
-
-});
-
 myApp.onPageInit('location', function (page) {
 
     get_location();
@@ -45,20 +41,6 @@ myApp.onPageInit('location', function (page) {
 
     }
     
-});
-
-myApp.onPageInit('mapview', function (page) {
-
-        var id = page.query.id;  
-        get_initial_map_data(id);
-
-        get_top_location(id);
-
-        $("#owl-demo-map").owlCarousel({
-             items : 4,
-             itemsDesktop : [1199,3],
-             itemsDesktopSmall : [979,3],
-        });
 });
 
 myApp.onPageInit('entitie', function (page) {
@@ -84,10 +66,27 @@ myApp.onPageInit('offer', function (page) {
         
 });
 
+myApp.onPageInit('mapview', function (page) {
+
+        var id = page.query.id;  
+        get_initial_map_data(id);
+
+        get_top_location(id);
+
+        $("#owl-demo-map").owlCarousel({
+             items : 4,
+             itemsDesktop : [1199,3],
+             itemsDesktopSmall : [979,3],
+        });
+});
 
 myApp.onPageInit('listview', function (page) {
 
+      var id = page.query.id;
+      get_top_location(id);
+      
       get_event_type();
+
       $("#owl-demo-listview").owlCarousel({
 
          items : 4,

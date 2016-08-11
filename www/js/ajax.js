@@ -1,21 +1,8 @@
 var base_url = "http://casaestilo.in/taha/mp_admin/index.php/Api/";
 var img_url = "http://mumbaiparties.com/assets/uploads/";
 
-var casa_img_url = "http://casaestilo.in/taha/mp_admin/assets/";
+var casa_img_url = "http://casaestilo.in/taha/mp_admin/assets/img/";
 
-$(window).load(function () {
-	 
-//   initMap();
-// 	 alert("window loeeded");
-
-});
-
-$(document).ready(function(){	
- 
-
-
-
-});
 
 function isEmail(email) {
 
@@ -32,11 +19,10 @@ function format_time(time) {
 
 }
 
-
-
 $(document).on('click','#register_button',function(event){
 
 	event.preventDefault();
+
 
 	if($('[name="name"]').val() ==""){
 
@@ -329,15 +315,18 @@ function get_location(){
 $(document).on('change','#map_top_select',function(){
 
 	var id = $("#map_top_select").val();
+	$('#list_view_link').attr('href', 'listview.html?id='+$(this).val());
 	get_initial_map_data(id);
 
 });
 
-// $('#top-select').change(function(event) {
+$(document).on('change','#list_top_select',function(){
 
-// 	$('#list_view_link').attr('href', 'listview.html?id='$(this).val());
+	var id = $("#list_top_select").val();
+	$('#map_view_link').attr('href', 'mapview.html?id='+$(this).val());
+	get_event_type();
 
-// });
+});
 
 
 function get_top_location(id){
@@ -365,10 +354,13 @@ function get_top_location(id){
 
 		          			select += "<option value='"+value.id+"'>in "+value.name+"</option>";
 		          		}
-		                
 
 		          });
-		          $('#map_top_select').html(select);
+
+		          $('#list_view_link').attr("href","listview.html?id="+id);
+		          $('#map_view_link').attr("href","mapview.html?id="+id);
+
+		          $('.top-select').html(select);
 
  			}else{
 
@@ -503,9 +495,27 @@ function get_initial_map_data(id){
 
 	        $.each(result['data'],function(key, value) {
 
+	          if(value.rating < 5){
+
+	          	var image = casa_img_url+"party-meter1.gif";
+
+	          }else if(value.rating<10){
+
+				var image = casa_img_url+"party-meter2.gif";
+
+	          }else{
+
+	          	var image = casa_img_url+"party-meter3.gif";
+
+	          }
+
 		      marker = new google.maps.Marker({
+		      	
 		        position: new google.maps.LatLng(value.latitude,value.longitude),
-		        map: map
+		        map: map,
+		        icon: image,
+		        optimized: false
+
 		      });
 
 		      marker.addListener('click', function() {
@@ -1034,7 +1044,8 @@ function get_event(id){
 						}else{
 
 							$.each(result['menu_images'],function(key,value){
-
+								
+								menu_data += "<a href='http://mumbaiparties.com/assets/uploads/"+value.url+"' class='fancybox'><img width='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'></a>";
 
 							})
 
@@ -1121,8 +1132,14 @@ function get_event_type(){
 }
 
 $(document).on('click','.get-event-data',function(event){
-		//2
-	 var id = $(this).attr("data-id");
+
+	 var loc_id = $("#list_top_select").val();
+	 var event_type = $(this).attr("data-id");
+
+
+	 alert(loc_id+event_type);
+
+
 	 $.ajax({
 
 	 	type:"POST",
@@ -1130,7 +1147,8 @@ $(document).on('click','.get-event-data',function(event){
 	 	dataType:"json",
 	 	data:{
 
-	 		id:id
+	 		loc_id:loc_id,
+	 		event_type:event_type
 	 	},
 	 	success:function(result){
 
@@ -1218,7 +1236,8 @@ $(document).on('click','.get_map_data',function(event){
             ];
 
 
-	 var id = $(this).attr('data-id');
+     var loc_id =  $('#map_top_select').val();
+	 var event_type = $(this).attr('data-id');
 
 	 $.ajax({
 
@@ -1227,7 +1246,8 @@ $(document).on('click','.get_map_data',function(event){
 	 	dataType:"json",
 	 	data:{
 
-	 		id:id
+	 		loc_id:loc_id,
+	 		event_type:event_type
 	 	},
 	 	success:function(result){
 
