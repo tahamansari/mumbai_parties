@@ -51,6 +51,8 @@
 
     <plugin spec="https://github.com/leecrossley/cordova-plugin-directions.git" source="git"/>
 
+    <plugin spec="https://github.com/razorpay/razorpay-cordova.git" />
+
 
 
 </widget>
