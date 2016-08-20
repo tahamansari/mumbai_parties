@@ -28,8 +28,7 @@ var $$ = Dom7;
 $$(document).on('pageInit', function (e) {
 
     var page = myApp.getCurrentView().activePage;
-
-    if (page.name == "index" || page.name =="location") {
+    if (page.name == "index" || page.name =="location" || page.name =="login" || page.name =="register" ) {
         mainView.hideToolbar();
     } else {
         mainView.showToolbar();

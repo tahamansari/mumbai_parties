@@ -12,7 +12,7 @@ $(document).ready(function(){
 
 function isEmail(email) {
 
-	  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	  return regex.test(email);
 
 }
@@ -584,7 +584,7 @@ function get_entitie(id){
 
 	            var entitie_address = "<p>"+result['entitie'][0]['address']+"</p>";
 
-	            var entitie_timming = "<p style='font-size: 12px;float:left'>Open from "+format_time(result['entitie'][0]['open_hours'])+" to "+format_time(result['entitie'][0]['closing_hours'])+"</p>";
+	            var entitie_timming = "<p style='font-size: 14px;float:left;margin: 7px;'>Open from "+format_time(result['entitie'][0]['open_hours'])+" to "+format_time(result['entitie'][0]['closing_hours'])+"</p>";
 						               
 					
 
@@ -662,6 +662,36 @@ function get_entitie(id){
 					$("#entitie_offers").html(entitie_offers);
 
 				}
+
+
+				// var entitie_reviews = "";
+
+				// if(result['offers'] == "no data"){
+
+				// 	$("#entitie_offers").html("No Offers Available");
+
+				// }else{
+
+				// 	$.each(result['offers'],function(key,value){
+
+				// 		entitie_offers += "<div data-id='"+value.offer_id+"' class='card demo-card-header-pic get-offer' style='margin: 0;margin-bottom: 10px;width:100%'>"+
+
+    //                       "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
+    //                       "<h3 class='no-mar list-name'>"+value.offer_name+"</h3>"+
+    //                       "</div>"+
+                         
+    //                       "<div class='card-footer color-white'>"+
+    //                         "<span class='footer-text'>@woodside - All Day Bar & Eatery </span>"+
+    //                         "<span class='footer-text'>10am to 12pm</span>"+
+    //                       "</div>"+
+    //                     "</div>";
+
+
+				// 	})
+
+				// 	$("#entitie_offers").html(entitie_offers);
+
+				// }
 
 				var entitie_call = "<br>...<i class='fa fa-phone' onclick='call("+result['entitie'][0]['bar_contact']+")' style='font-size: 30px;color: #03A9F4;' aria-hidden='true'></i>";
 

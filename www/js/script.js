@@ -5,12 +5,6 @@ function initilize(){
 
 }
 
-
-
-
-
-
-
 function check_age(age){
 
 

@@ -314,7 +314,7 @@ a{
 
 .navbar, .toolbar{
 
-  height: 60px;
+  /*height: 60px;*/
 }
 
 .navbar .left a+a, .navbar .right a+a{
@@ -492,7 +492,8 @@ a{
 
 #map {
 
-  height: 650px;
+  /*height: 650px;*/
+  height: 490px;
   overflow: inherit!important;
 
 }
@@ -688,4 +689,13 @@ a{
     background-size: cover;
     background-attachment: fixed;
 
+}
+
+.tool-text{
+
+  font-size: 12px;
+}
+
+.toolbar,.navbar{
+  height: 65px;
 }

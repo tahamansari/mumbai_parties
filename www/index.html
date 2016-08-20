@@ -226,7 +226,6 @@
 
               </div>
             </div> -->
-
     
     
 
@@ -264,7 +263,7 @@
                             <!-- <p>Page content goes here</p> -->
                             <!-- Link to another page -->
 
-                            <br><br>
+                            
                             <img src="img/logo.png" width="200px">
                             <p class="buttons-row">
               							  <a href="login.html" class="button">SIGN IN TO PARTY</a>
@@ -285,34 +284,62 @@
                     </div>
                 </div>
             </div>
+            <div class="toolbar" style="text-align:center">
+                <div class="toolbar-inner">
+                    <a href="search.html" class="">
+                      <i class="material-icons">&#xE8B6;</i>
+                      <p class="tool-text no-mar">SEARCH</p>
+                    </a>
+                    <a href="#" class="">
+                      <i class="material-icons">&#xE54E;</i>
+                      <p class="tool-text no-mar">MY OFFERS</p>
+                    </a>
+                    <a href="club_types.html" class="">
+                      <i class="material-icons">&#xE147;</i>
+                      <p class="tool-text no-mar">CLUBS</p>
+                    </a>
+                    <a href="#" class="open-popup" data-popup=".popup-notification">
+                      <i class="material-icons">&#xE7F4;</i>
+                      <p class="tool-text no-mar">ALERTS</p>
+                    </a>
+                    <a href="#" class="">
+                      <i class="material-icons">&#xE7F4;</i>
+                      <p class="tool-text no-mar">ALERTS</p>
+                    </a>
+                </div>
+            </div>
+
+
+
+            
   
-            <div class="toolbar tabbar tabbar-labels">
+            <!-- div class="toolbar">
                <div class="toolbar-inner" style="text-align:center">
 
                   <a href="search.html" class="">
                       <i class="material-icons">&#xE8B6;</i>
-                      <span class="tabbar-label">SEARCH</span>
+                      <span class="">SEARCH</span>
                   </a>
 
                   <a href="#tab2" class="">
                   <i class="material-icons">&#xE54E;</i>
-                  <span class="tabbar-label">MY OFFERS</span>
+                  <span class="">MY OFFERS</span>
                   </a>
                   <a id="bottom-select" href="club_types.html" class="">
                       <i class="material-icons">&#xE147;</i>
-                      <span class="tabbar-label">CLUBS</span>
+                      <span class="">CLUBS</span>
                   </a>
 
                   <a href="#tab4" class=" open-popup" data-popup=".popup-notification">
                   <i class="material-icons">&#xE7F4;</i>
-                  <span class="tabbar-label">ALERTS</span>
+                  <span class="">ALERTS</span>
                   </a>
                   <a href="#tab5" class="">
                   <i class="material-icons">&#xE7F4;</i>
-                  <span class="tabbar-label">ALERTS</span>
+                  <span class="">ALERTS</span>
                   </a> 
                </div>
-            </div>  
+            </div> -->
 
             <!-- Bottom Toolbar-->
 
@@ -354,7 +381,8 @@
 
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCGxWQDpfQ2erARAl0RHwKkqfEDYq6rvU"
     async defer></script>
-
+  
+  <script type="text/javascript" src="request.js"></script>
    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
    <script type="text/javascript" src="js/script.js"></script>
 
@@ -373,53 +401,37 @@
             "image": "img/logo.png",
             "handler": function (response){
 
-              console.log("response is "+response);
+              // console.log("response is "+response.razorpay_payment_id);
 
-              // $.ajax({
+              $.ajax({
 
-              //   url: 'https://rzp_test_8JVmfLet3Dw8wA:m9iD1p5LgDALcDsAv6ee9QjA@api.razorpay.com/v1/payments/'+response.razorpay_payment_id+'/capture',
-              //   type: 'POST',
-              //   dataType: 'json',
-              //   crossDomain : true,
-              //   data: {
-              //     amount: 20000
-              //   },
+                url: 'http://casaestilo.in/taha/razorpay-testapp/charge.php',
+                type: 'POST',
+                crossDomain: true,
+                data: {
 
-              // })
-              // .done(function(result) {
+                  amount: 20000,
+                  razorpay_payment_id:response.razorpay_payment_id
 
-              //   console.log(result);
+                },
+                
+              })
+              .done(function(res) {
 
-              // })
-              // .fail(function() {
+                myApp.alert("payment done successfully");
 
-              //   console.log("error");
+                // myapp("payment done successfully");
 
-              // })
-              // .always(function() {
+                console.log("success: "+res);
 
-              //   console.log("complete");
-
-              // });
-            
-
-              var request = require('request');
-
-              request({
-
-                method: 'POST',
-                url: 'https://rzp_test_8JVmfLet3Dw8wA:m9iD1p5LgDALcDsAv6ee9QjA@api.razorpay.com/v1/payments/'+response.razorpay_payment_id+'/capture',
-                form: {
-                  amount: 20000
-                }
-
-              }, function (error, response, body) {
-
-                alert('Status:', response.statusCode);
-                alert('Headers:', JSON.stringify(response.headers));
-                alert('Response:', body);
-
+              })
+              .fail(function(err) {
+                console.log("error: "+err.messege);
+              })
+              .always(function() {
+                console.log("complete");
               });
+
 
             },
             "prefill": {
@@ -444,7 +456,6 @@
     });
 
     
-
     </script>
 
 
