@@ -6,7 +6,7 @@ var casa_img_url = "http://casaestilo.in/taha/mp_admin/assets/img/";
 
 $(document).ready(function(){
 	
-	mainView.hideToolbar();	
+	// mainView.hideToolbar();	
 
 });
 
@@ -272,7 +272,7 @@ $(document).on("click","#signout",function(event){
     Lockr.rm('name');
 	Lockr.flush();
 
-	logout();
+	// logout();
 
 	myApp.alert("Logged out");
 	mainView.router.loadPage("index.html");
@@ -645,7 +645,7 @@ function get_entitie(id){
 
 					$.each(result['menu_images'],function(key,value){
 
-						menu_data += "<a href='http://mumbaiparties.com/assets/uploads/"+value.url+"' class='fancybox'><img width='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'></a>";
+						menu_data += "<a href='http://mumbaiparties.com/assets/uploads/"+value.url+"' class='fancybox'><img style='padding:5px' width='30%' height='30%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'></a>";
 					})
 
 					$("#menu_data_entitie").html(menu_data);
@@ -812,7 +812,7 @@ function get_offer(id){
 				                          "<p>"+result['offer'][0]['address']+"</p>";
 
 
-				        var offer_timming = "<p style='font-size: 12px;float:left'>Open from "+format_time(result['offer'][0]['start_time'])+" to "+format_time(result['offer'][0]['end_time'])+"</p>"+
+				        var offer_timming = "<p style='font-size: 12px;float:left'>Open from "+result['offer'][0]['start_time']+" to "+result['offer'][0]['end_time']+"</p>"+
 								               
 								  
 
@@ -1012,6 +1012,9 @@ function get_event(id){
 				        var event_entitie_address = "<h3 style='margin: 5px 0;'>"+result['event']['name']+"</h3>"+
 				                          "<p>"+result['event']['address']+"</p>";
 
+				       var event_description = result['event']['description'];
+				                          
+
 				        // <i style='font-size: 20px;margin-top: 7px;' class='fa fa-clock-o' aria-hidden='true'></i>
 				        var event_timming = "<p style='font-size: 12px;float:left'>Open from "+result['event']['time_event_start']+" to "+result['event']['time_event_ends']+"</p>"+
 								               
@@ -1130,7 +1133,7 @@ function get_event(id){
 
 							$.each(result['menu_images'],function(key,value){
 								
-								menu_data += "<a href='http://mumbaiparties.com/assets/uploads/"+value.url+"' class='fancybox'><img width='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'></a>";
+								menu_data += "<div id='menu-box'><a href='http://mumbaiparties.com/assets/uploads/"+value.url+"' class='fancybox'><img width='100%' height='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'></a></div>";
 
 							})
 
@@ -1148,6 +1151,10 @@ function get_event(id){
 				        $("#event_heading").html(event_heading);
 				        $("#event_entitie_address").html(event_entitie_address);
 				        $("#event_timming").html(event_timming);
+				        $("#event_description").html(event_description);
+
+
+				        
 
 					}else{
 
@@ -1186,7 +1193,7 @@ function get_event_type(){
 				$.each(result['data'],function(key,value) {
 					 
 					list += "<div class='col-50 list-box'>"+
-							"<a data-id='"+value.id+"' class='get-event-data'><img src='img/event.jpeg' width='100%' alt='img error'>"+
+							"<a data-id='"+value.id+"' class='get-event-data category'><img src='img/event.jpeg' width='100%' alt='img error'>"+
 							"<div class='list-overlay'>"+value.event_type+"</div></a>"+
 							"</div>";
 				})
@@ -1219,7 +1226,6 @@ function get_event_type(){
 $(document).on('click','.get-event-data',function(event){
 
 
-
 	 var loc_id = $("#list_top_select").val();
 	 var event_type = $(this).attr("data-id");
 
@@ -1248,7 +1254,7 @@ $(document).on('click','.get-event-data',function(event){
 			                  "</div>"+
 			                 
 			                  "<div class='card-footer color-white'>"+
-			                    "<span class='footer-text'>@woodside - All Day Bar & Eatery </span>"+
+			                    "<span class='footer-text'>@ "+value.name+"</span>"+
 			                    "<span class='footer-text'>"+value.time_event_start+" to "+value.time_event_ends+"</span>"+
 			                  "</div>"+
 			                "</div>";
@@ -1282,6 +1288,125 @@ function marker_clicked_event(para1){
 	mainView.router.loadPage("event.html?id="+para1);
 
 }
+
+function marker_clicked_offer(para1){
+
+	// alert("marker clicked");
+	mainView.router.loadPage("offer.html?id="+para1);
+
+}
+
+
+$(document).on('click','.get_offers',function(event){
+
+	 var styles = [
+                {
+                featureType: 'all',
+                elementType: 'all',
+                  stylers: [
+                    { hue: '#0800ff' },
+                    { invert_lightness: 'true' },
+                    { saturation: -100 }
+                  ]
+                },
+                {
+                featureType: 'all',
+                elementType: 'labels.icon',
+                  stylers: [
+                    { visibility: 'off' }
+                  ]
+                },
+                {
+                featureType: 'all',
+                elementType: 'labels.text',
+                  stylers: [
+                    { visibility: 'off' }
+                  ]
+                },
+                {
+                featureType: 'road.arterial',
+                elementType: 'labels',
+                  stylers: [
+                    { visibility: 'on' }
+                  ]
+                },
+            ];
+
+
+     var loc_id =  $('#map_top_select').val();
+
+	 $.ajax({
+
+	 	type:"POST",
+	 	url: base_url+"get_offers/",
+	 	dataType:"json",
+	 	data:{
+
+	 		loc_id:loc_id,
+	 	},
+	 	success:function(result){
+
+	 		console.log(result);
+
+	 		if(result['status']=="success"){
+
+	 			var map = new google.maps.Map(document.getElementById('map'), {
+			      zoom: 14,
+			      center: new google.maps.LatLng(result['center']['latitute'], result['center']['longitute']),
+			      mapTypeId: google.maps.MapTypeId.ROADMAP
+			    });
+
+				map.setOptions({styles: styles});
+
+			    var marker,i;
+
+		        $.each(result['data'],function(key, value) {
+
+			      marker = new google.maps.Marker({
+			        position: new google.maps.LatLng(value.latitude,value.longitude),
+			        map: map,
+			        // icon:img_url+value.image
+
+			      });
+
+		           var content = value.offer_name; 
+				   var infowindow = new google.maps.InfoWindow()
+
+				   infowindow.setContent(content);
+			       infowindow.open(map,marker);
+
+
+
+			      marker.addListener('click', function() {
+
+					marker_clicked_offer(value.offer_id);
+
+
+			      });
+			      
+				});
+
+	 		}else{
+
+	 			if(result['msg']=="no data"){
+
+	 				alert("no data");
+
+	 			}else{
+
+	 				alert("failed");
+
+	 			}
+	 		}
+	 	},
+		error: function(jqXHR, exception) {
+			
+			alert("error");
+		}
+	})
+});
+
+
 
 $(document).on('click','.get_map_data',function(event){
 
@@ -1348,10 +1473,6 @@ $(document).on('click','.get_map_data',function(event){
 				map.setOptions({styles: styles});
 
 
-
-				
-
-			    var marker,i;
 
 		        $.each(result['data'],function(key, value) {
 
@@ -1489,11 +1610,25 @@ function get_clubs(){
           	  var list = "";
 	          $.each(result['data'], function(key,value){
 
-	                list += "<li class='item-content' style='padding-left: 0;'>"+
-				                "<div class='item-inner'>"+
-				                  "<div class='item-title'>"+value.name+"</div>"+
-				                "</div>"+
-				             "</li>";
+
+	          		 list+="<li class='search-list'>"+
+			                  "<a href='club.html?id="+value.club_id+"' class='item-content no-pad'>"+
+			                    "<div class='item-inner'>"+
+			                      "<div class='item-title-row'>"+
+			                        "<div class='item-title'>"+value.club_name+"</div>"+
+			                        "<div class='item-after no-mar'>"+value.club_name+", "+value.city+"</div>"+
+			                      "</div>"+
+			                    "</div>"+
+			                  "</a>"+
+			                "</li>";
+
+	                // list += "<a href='club.html?id="+value.id+"'><li class='item-content' style='padding-left: 0;'>"+
+				             //    "<div class='item-inner'>"+
+				             //      "<div class='item-title'>"+value.club_name+"</div>"+
+				             //    "</div>"+
+				             //    "<small style='font-size:12px'>"+value.name+"</small>,"+
+				             //    "<small style='font-size:12px'>"+value.city+"</small>"+
+				             // "</li></a>";
 
 	          });
 
@@ -1557,7 +1692,7 @@ function get_club_list(id,type){
           	  var list = "";
 	          $.each(result['data'], function(key,value){
 
-				    list += "<div data-id='"+value.id+"' class='card demo-card-header-pic go_to_club' "+
+				    list += "<div data-id='"+value.club_id+"' class='card demo-card-header-pic go_to_club' "+
 				            "style='position:relative;margin: 0;border-bottom: 2px solid white;width:100%;'>"+
 				              "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
 				                    "<div style='position:absolute;top: 30px;right: 0;background-color: white;'>"+
@@ -1567,7 +1702,7 @@ function get_club_list(id,type){
 				                    "</div>"+
 				                    
 				                    "<div class='list-name'>"+
-				                      "<h3 class='no-mar' style='float:left'>"+value.name+"</h3>"+
+				                      "<h3 class='no-mar' style='float:left'>"+value.club_name+"</h3>"+
 				                      "<p style='margin: 0;float:right;'>"+value.opening_hours+" TO "+value.closing_hours+"</p>"+
 				                    "</div>"+
 				              "</div>"+
@@ -1629,7 +1764,7 @@ function get_club(id){
   	var club = "<div class='card demo-card-header-pic' style='margin: 0;border-bottom:1px solid gray'>"+
                   "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
                     "<div class='list-name'>"+
-                        "<h3 class='no-mar color-white left'>"+result['data'][0]['name']+"</h3>"+
+                        "<h3 class='no-mar color-white left'>"+result['data'][0]['club_name']+"</h3>"+
                         "<i onclick='call("+result['data'][0]['contact']+")' class='fa fa-phone right call' aria-hidden='true'></i> "+
                         "<i onclick='get_direction("+result['data'][0]['latitude']+","+result['data'][0]['latitude']+")'  class='fa fa-map-marker right marker' aria-hidden='true'></i>"+
                     "</div>"+
@@ -1795,6 +1930,64 @@ function submit_review(){
 	
 }
 
+$(document).on('click', '.get-list-offers', function(event) {
+
+	event.preventDefault();
+
+	var loc_id = $("#list_top_select").val();
+
+	 $.ajax({
+
+	 	type:"POST",
+	 	url: base_url+"get_list_offers/",
+	 	dataType:"json",
+	 	data:{
+
+	 		loc_id:loc_id,
+	 	},
+	 	success:function(result){
+
+	 		console.log(result);
+
+	 		if(result['status']=="success"){
+
+	 			var html = "";
+		 		$.each(result['data'],function(key,value) {
+
+		 			html +="<div data-id="+value.offer_id+" class='card demo-card-header-pic get-offer' style='margin: 0;margin-bottom: 10px;width:100%'>"+
+			                  "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
+			                  "<h3 class='no-mar list-name'>"+value.offer_name+"</h3>" +
+			                  "</div>"+
+			                 
+			                  "<div class='card-footer color-white'>"+
+			                    "<span class='footer-text'>@woodside - All Day Bar & Eatery </span>"+
+			                    "<span class='footer-text'>"+value.start_time+" to "+value.end_time+"</span>"+
+			                  "</div>"+
+			                "</div>";
+		 			
+		 			
+		 		});
+
+		 		$('#event_box').html(html);
+
+	 		}else{
+
+	 			if(result['msg']=="no data"){
+
+	 				alert("no data");
+
+	 			}else{
+
+	 				alert("failed");
+	 			}
+	 		}
+
+	 		
+	 	}
+	})
+
+
+});
 
 
 

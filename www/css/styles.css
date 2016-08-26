@@ -719,6 +719,7 @@ a{
 .list-block .item-link .item-inner {
 
   /*background-image:none;*/
+  color: gray;
 }
 .username{
 
@@ -784,6 +785,40 @@ a{
 }
 
 .gm-style-iw + div {display: none;}
+
+.list-block .item-inner:after{
+
+  content: none!important;
+}
+.list-block .item-inner{
+
+  padding-bottom: 0px;
+  color: gray;
+}
+
+.search-list{
+
+    background-color: rgba(35, 35, 35, 0.85);
+    padding-left: 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #777;
+}
+
+
+.item-after{
+
+  font-size: 12px;
+}
+
+#menu-box{
+
+    width: 90px;
+    height: 100px;
+    padding: 5px;
+    /*border: 1px solid black;*/
+    float: left;
+
+}
 
 /*.gm-style-iw {
 

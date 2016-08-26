@@ -27,12 +27,12 @@ var $$ = Dom7;
 
 $$(document).on('pageInit', function (e) {
 
-    var page = myApp.getCurrentView().activePage;
-    if (page.name == "index" || page.name =="location" || page.name =="login" || page.name =="register" ) {
-        mainView.hideToolbar();
-    } else {
-        mainView.showToolbar();
-    }
+    // var page = myApp.getCurrentView().activePage;
+    // if (page.name == "index" || page.name =="location" || page.name =="login" || page.name =="register" ) {
+    //     mainView.hideToolbar();
+    // } else {
+    //     mainView.showToolbar();
+    // }
 
       
 });
@@ -233,7 +233,7 @@ myApp.onPageInit('mapview', function (page) {
 myApp.onPageInit('listview', function (page) {
 
 
-        var owl = $("#owl-demo-list");
+          var owl = $("#owl-demo-list");
 
           owl.owlCarousel({
 
@@ -253,20 +253,26 @@ myApp.onPageInit('listview', function (page) {
                 $('.owl-wrapper').trigger('owl.goTo', n);
           });
 
-      // $("#owl-demo-list").owlCarousel();
+          $(document).on('click', '.category', function(){
+                
+                // alert("category clicked");
 
-      var id = page.query.id;
-      get_top_location(id);
-      
-      get_event_type();
+                var id = $(this).attr('data-id');
 
-      // $("#owl-demo-listview").owlCarousel({
+                alert("id is"+id);
 
-      //    items : 3,
-      //    itemsDesktop : [1199,3],
-      //    itemsDesktopSmall : [979,3]
-   
-      // });
+                $('.owl-wrapper').trigger('owl.goTo', 1);
+
+                $('.tab').removeClass('active-tab');
+                $('#list-tab-'+id).addClass('active-tab');
+
+          });
+
+          var id = page.query.id;
+          get_top_location(id);
+          
+          get_event_type();
+
 });
 
 myApp.onPageInit('club_types', function (page) {
