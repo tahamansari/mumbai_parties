@@ -57,13 +57,14 @@
 
     <!-- <plugin name="nl.x-services.plugins.socialsharing" version="4.3.16" /> -->
 
-    <plugin name="cordova-plugin-socialsharing" source="npm"/>
 
 
 <!--     <gap:plugin name="com.phonegap.plugins.facebookconnect" version="v0.12.0">
         <param name="APP_ID" value="908572929213032" />
         <param name="APP_NAME" value="Mumbai Parties" />
     </gap:plugin> -->
+
+    <plugin name="cordova-plugin-socialsharing" source="npm"/>
 
 
     <plugin spec="https://github.com/leecrossley/cordova-plugin-directions.git" source="git"/>
