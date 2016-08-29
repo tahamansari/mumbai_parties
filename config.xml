@@ -38,6 +38,17 @@
         <param name="APP_NAME" value="Mumbai Parties" />
     </plugin> -->
 
+    <!-- for iOS -->
+    <feature name="SocialSharing">
+      <param name="ios-package" value="SocialSharing" />
+    </feature>
+
+
+    <!-- for Android (you will find one in res/xml) -->
+    <feature name="SocialSharing">
+      <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
+    </feature>
+
     <feature name="com.phonegap.plugins.facebookconnect" version="0.4.0">
         <param name="APP_ID" value="908572929213032" />
         <param name="APP_NAME" value="Mumbai Parties" />

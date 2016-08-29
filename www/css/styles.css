@@ -719,7 +719,7 @@ a{
 .list-block .item-link .item-inner {
 
   /*background-image:none;*/
-  color: gray;
+  color: #e6e7e8;
 }
 .username{
 
@@ -759,7 +759,17 @@ a{
 /* arrow colour */
 .gm-style > div:first-child > div + div > div:last-child > div > div:first-child > div > div > div
 {
-    background-color: transparent!important; 
+    background-color: transparent!important;
+    box-shadow: none!important;
+
+/*    width: 0px;
+    height: 0px;
+    border-right: 0px solid transparent!important;
+    border-left: 0px solid transparent!important;
+    border-top: 0px solid rgba(0, 0, 0, 0.0980392)!important;
+    position: absolute;
+    left: 64px;
+    top: 41px; */
 }
 
 /* close button */
@@ -781,7 +791,9 @@ a{
     top: 100px !important;
     left: 110px !important;
     color: #6D6D7E;
-    background-color: rgba(0,0,0,.5);
+    background-color: none;
+    /*background-color: rgba(0,0,0,.5);*/
+
 }
 
 .gm-style-iw + div {display: none;}
