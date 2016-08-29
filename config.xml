@@ -55,7 +55,9 @@
     </feature> -->
 
 
-    <plugin name="nl.x-services.plugins.socialsharing" version="4.3.16" />
+    <!-- <plugin name="nl.x-services.plugins.socialsharing" version="4.3.16" /> -->
+    
+    <gap:plugin name="cordova-plugin-socialsharing" source="npm" version="4.3.81" />
 
 
 <!--     <gap:plugin name="com.phonegap.plugins.facebookconnect" version="v0.12.0">
