@@ -48,7 +48,8 @@
         <param name="APP_NAME" value="Mumbai Parties" />
     </gap:plugin> -->
 
-    <plugin spec="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git#5.1.2" source="git"/>
+    <!-- <plugin spec="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git#5.1.2" source="git"/> -->
+    <gap:plugin name="cordova-plugin-social-message" source="npm" />
     
     <plugin spec="https://github.com/leecrossley/cordova-plugin-directions.git" source="git"/>
     <plugin spec="https://github.com/razorpay/razorpay-cordova.git" />
