@@ -39,33 +39,18 @@
         <param name="APP_NAME" value="Mumbai Parties" />
     </plugin> -->
 
-    <!-- for iOS -->
-    <feature name="SocialSharing">
-      <param name="ios-package" value="SocialSharing" />
-    </feature>
-
-    <feature name="SocialSharing">
-      <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
-    </feature>
-
-    <!-- for Android (you will find one in res/xml) -->
-   <!--  <feature name="SocialSharing">
-      <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
-    </feature>
-
     <feature name="com.phonegap.plugins.facebookconnect" version="0.4.0">
         <param name="APP_ID" value="908572929213032" />
         <param name="APP_NAME" value="Mumbai Parties" />
-    </feature> -->
-
-    <!-- <plugin name="nl.x-services.plugins.socialsharing" version="4.3.16" /> -->
+    </feature>
 
 <!--     <gap:plugin name="com.phonegap.plugins.facebookconnect" version="v0.12.0">
         <param name="APP_ID" value="908572929213032" />
         <param name="APP_NAME" value="Mumbai Parties" />
     </gap:plugin> -->
-    <gap:plugin name="cordova-plugin-x-socialsharing" source="npm" />
-    <!-- <gap:plugin name="nl.x-services.plugins.socialsharing" version="4.3.16" /> -->
+
+    <plugin spec="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git#v5.1.2" source="git"/>
+    
     <plugin spec="https://github.com/leecrossley/cordova-plugin-directions.git" source="git"/>
     <plugin spec="https://github.com/razorpay/razorpay-cordova.git" />
 </widget>
