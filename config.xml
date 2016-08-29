@@ -15,6 +15,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <platform name="android">
         <!-- 14 -->
         <preference name="android-minSdkVersion" value="15" />
@@ -63,14 +64,8 @@
         <param name="APP_ID" value="908572929213032" />
         <param name="APP_NAME" value="Mumbai Parties" />
     </gap:plugin> -->
-    
-    <gap:plugin name="nl.x-services.plugins.socialsharing" version="4.3.16" />
-
-
+    <gap:plugin name="cordova-plugin-x-socialsharing" source="npm" />
+    <!-- <gap:plugin name="nl.x-services.plugins.socialsharing" version="4.3.16" /> -->
     <plugin spec="https://github.com/leecrossley/cordova-plugin-directions.git" source="git"/>
-
     <plugin spec="https://github.com/razorpay/razorpay-cordova.git" />
-
-
-
 </widget>
