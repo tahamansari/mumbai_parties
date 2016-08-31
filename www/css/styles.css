@@ -924,6 +924,13 @@ font-smoothing: antialiased;
     border-radius: 0;
     width: 100%;
 }
+
+
+
+.preloader{
+/**/
+/*background-image: url('../img/loading.gif')!important;*/
+}
 /*.gm-style-iw {
 
    background: white!important;
@@ -937,6 +944,7 @@ font-smoothing: antialiased;
   color: green;
 
 }
+
 
 .gm-style > div:first-child > div + div > div:last-child > div > div:last-child > img
 {
