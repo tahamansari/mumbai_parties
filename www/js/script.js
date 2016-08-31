@@ -22,9 +22,10 @@ function check_age(age){
 
 }
 
-$(document).on('click','.tab',function(event){
+$(document).on('click','.owl-item',function(event){
 
 	$('.tab').removeClass('active-tab');
+    $('.owl-item').removeClass('active-tab');
 	$(this).addClass('active-tab');
 	 
 })
@@ -153,18 +154,18 @@ function check_login(){
 }
 
 
-function share(){
+function share(code){
 
 
 
     var message = {
 
-        subject: "NeonBuzz App",
-        text: "Click the link below to download NeonBuzz",
-        url: "https://play.google.com/store/apps/details?id=com.kreaserv.neonbuzz&hl=en"
+        subject: "Mumbai Parties",
+        text: "Your Reference Code Is - "+code
+        // url: "https://play.google.com/store/apps/details?id=com.kreaserv.neonbuzz&hl=en"
         // image: image
     };
-    
+
     window.socialmessage.send(message);
 
     // alert('share');
@@ -188,6 +189,117 @@ function share(){
     // }
 
     // window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
+}
+
+function inc_single(){
+
+    $("#dec_single").prop('disabled', false);
+    var quantity = Number($('#single_text').text());
+    var amount = Number($('#amount').text());
+
+    quantity += 1;
+    amount += 1000;
+    
+    $('#single_text').text(quantity);
+    $('#amount').text(amount);
+
+}
+
+function dec_single(){
+
+    var quantity = Number($('#single_text').text());
+    var amount = Number($('#amount').text());
+
+    quantity -= 1;
+    amount -= 1000;
+
+    $('#single_text').text(quantity);
+    $('#amount').text(amount);
+
+    if(quantity == 0){
+        $("#dec_single").prop('disabled', true);
+        return false;
+    }
+
+}
+
+function inc_couple(){
+
+    $("#dec_couple").prop('disabled', false);
+
+    var quantity = Number($('#couple_text').text());
+    var amount = Number($('#amount').text());
+    
+    quantity += 1;
+    amount += 2000;
+
+    $('#couple_text').text(quantity);
+    $('#amount').text(amount);
+
+}
+
+function dec_couple(){
+
+    var quantity = Number($('#couple_text').text());
+    var amount = Number($('#amount').text());
+
+    quantity -= 1;
+    amount -= 2000;
+
+    $('#couple_text').text(quantity);
+    $('#amount').text(amount);
+
+    if(quantity == 0){
+        $("#dec_couple").prop('disabled', true);
+        return false;
+    }
+
+}
+
+var tbl_count = 0;
+
+
+function inc_table(){
+
+    $("#dec_table").prop('disabled', false);
+
+    var quantity = Number($('#table_text').text());
+    var amount = Number($('#amount').text());
+
+    if(tbl_count==0){
+        quantity += 2;
+        amount += 4000;
+        tbl_count++;
+    }else{
+        quantity = quantity+1;
+        amount += 2000;
+    }
+    $('#table_text').text(quantity);
+    $('#amount').text(amount);
+
+}
+
+function dec_table(){
+
+    var quantity = Number($('#table_text').text());
+    var amount = Number($('#amount').text());
+
+    if(quantity == 2){
+        quantity -= 2;
+        amount -= 4000;
+        tbl_count = 0;
+    }else{
+        quantity -= 1;
+        amount -= 2000;
+    }
+    $('#table_text').text(quantity);
+    $('#amount').text(amount);
+
+    if(quantity == 0){
+        $("#dec_table").prop('disabled', true);
+        return false;
+    }
+
 }
 
   

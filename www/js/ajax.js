@@ -6,8 +6,8 @@ var casa_img_url = "http://casaestilo.in/taha/mp_admin/assets/img/";
 
 $(document).ready(function(){
 	
-	// mainView.hideToolbar();	
-
+	// mainView.hideToolbar();
+	
 });
 
 function isEmail(email) {
@@ -136,6 +136,12 @@ $(document).on('click','#register_button',function(event){
 
 	}
 
+	var nm = name.substring(0, 3);
+	var num = Math.floor(1000 + Math.random() * 9000);
+
+	var ref_code = nm+num;
+	var is_redeemed = 0;
+
 	$.ajax({
 
 		url: base_url+"register/",
@@ -149,7 +155,9 @@ $(document).on('click','#register_button',function(event){
 			confirm_password: confirm_password,
 			age: age,
 			gender:gender,
-			mobile: mobile
+			mobile: mobile,
+			ref_code:ref_code,
+			is_redeemed:is_redeemed
 
 		},
 		success:function(result){
@@ -240,7 +248,7 @@ $(document).on('click','#login_button',function(event){
 
 				Lockr.set("is_logged_in",true);
 
-				// myApp.alert("Success");				
+
 				mainView.router.loadPage("location.html");
 
 			}else{
@@ -1775,7 +1783,10 @@ function get_club(id){
                            " <p>"+result['data'][0]['address']+"</p>"+
                             "<p>FROM "+result['data'][0]['opening_hours']+" TO "+result['data'][0]['closing_hours']+"</p>"+
                             // <a href='book_detail.html'> </a>
-                            "<input id='rzp-button1' class='buy-btn' type='submit' value='BUY NOW'>"+
+                            // 
+                            // id='rzp-button1'
+                            
+                            "<a href='book.html'><input class='buy-btn' type='submit' value='BUY NOW'></a>"+
                             "<div class='price-label'>"+
                               "<input type='submit' value='RS "+result['data'][0]['single_price']+"'>"+
                               "<br>"+
@@ -1989,15 +2000,147 @@ $(document).on('click', '.get-list-offers', function(event) {
 
 });
 
+function get_ref_code(id){
 
 
+	$.ajax({
+
+		url: base_url+'get_ref_code',
+		type: 'POST',
+		dataType: 'json',
+		data: {
+
+			id: id
+		},
+	})
+	.done(function(result) {
+
+		console.log(result);
+
+	    if(result['status']=="success"){
+
+ 			
+ 			$('#ref_code').html(result['data']['ref_code']);
+ 			$('#share_anchor').attr('onclick','share('+result['data']['ref_code']+')');
+
+ 			if(result['data']['is_redeemed']==1){
+
+ 				$('#redeem_anchor').css('display','none');
+
+ 			}
+
+ 		}else{
+
+ 			if(result['msg']=="no data"){
+
+ 				alert("no data");
+
+ 			}else{
+
+ 				alert("failed");
+ 			}
+ 		}
+		
+	})
+
+	.fail(function() {
+		console.log("error");
+	})
+	.always(function() {
+		console.log("complete");
+	});
+	
+}
+
+function get_points(id){
+
+	$.ajax({
+		url: base_url+'get_points',
+		type: 'POST',
+		dataType: 'json',
+		data: {
+
+			id: id
+		},
+	})
+	.done(function(result) {
+		// console.log("success");
+		
+		console.log(result);
+
+	    if(result['status']=="success"){
+
+ 			
+ 			$('#ref_points').html("Points "+result['data']['points']);
 
 
+ 		}else{
 
+ 			if(result['msg']=="no data"){
 
+ 				alert("no data");
 
+ 			}else{
 
+ 				alert("failed");
+ 			}
+ 		}
+		
+	})
+	.fail(function() {
+		console.log("error");
+	})
+	.always(function() {
+		console.log("complete");
+	});
+	
+}
 
+function redeem(ref_code){
+
+    var id = Lockr.get('id');
+
+    $.ajax({
+    	url: base_url+'redeem',
+    	type: 'POST',
+    	dataType: 'json',
+    	data: {
+
+    		id:id,
+    		ref_code: ref_code
+    	},
+    })
+    .done(function(result) {
+
+    	console.log(result);
+
+    	if(result['status']=='success'){
+
+    		mainView.router.loadPage('index.html');
+    		myApp.alert("Points Added");
+
+    	}else{
+
+    		if(result['msg']=="no data"){
+
+    		    myApp.alert("Invalid Referal Code");
+
+ 			}else{
+
+ 				alert("failed");
+ 			}
+    	}
+ 		
+    })
+    .fail(function() {
+    	console.log("error");
+    })
+    .always(function() {
+    	console.log("complete");
+    });
+    
+
+}
 
 
 

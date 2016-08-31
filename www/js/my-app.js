@@ -27,6 +27,19 @@ var $$ = Dom7;
 
 $$(document).on('pageInit', function (e) {
 
+
+
+    // alert('hello');
+
+    if(Lockr.get('is_logged_in')){
+
+        var id = Lockr.get('id');
+        get_points(id);
+
+    }
+
+    
+
     // var page = myApp.getCurrentView().activePage;
     // if (page.name == "index" || page.name =="location" || page.name =="login" || page.name =="register" ) {
     //     mainView.hideToolbar();
@@ -49,7 +62,7 @@ myApp.onPageInit('location', function (page) {
 
     if(Lockr.get("is_logged_in")){
 
- $("#signin-div").html("<h2 class='username'><span>Hi, "+Lockr.get("name")+"</span><br><span style='color: #b7b3b3;font-size: 14px;'>Points 200</span> </h2>");
+ $("#signin-div").html("<h2 class='username'><span>Hi, "+Lockr.get("name")+"</span><br><span id='ref_points' style='color: #b7b3b3;font-size: 14px;'>Points 200</span> </h2>");
  $("#signout-div").css("display","block");
 
     }
@@ -198,7 +211,6 @@ myApp.onPageInit('offer', function (page) {
 
 myApp.onPageInit('mapview', function (page) {
 
-
       var owl = $("#owl-demo-map");
 
       owl.owlCarousel({
@@ -309,6 +321,14 @@ myApp.onPageInit('index', function (page) {
 myApp.onPageInit('search', function (page) {
 
   get_clubs();
+
+});
+
+myApp.onPageInit('invite', function (page) {
+
+  
+  var id = Lockr.get('id');
+  get_ref_code(id);
 
 });
 
