@@ -2021,7 +2021,7 @@ function get_ref_code(id){
 
  			
  			$('#ref_code').html(result['data']['ref_code']);
- 			$('#share_anchor').attr('onclick','share('+result['data']['ref_code']+')');
+ 			$('#share_anchor').attr('onclick','share("'+result['data']['ref_code']+'")');
 
  			if(result['data']['is_redeemed']==1){
 
