@@ -1,17 +1,12 @@
 function initilize(){
 
-
 	myApp.alert("initiliEd");
 
 }
 
 function check_age(age){
 
-
-	// myApp.alert($('#'+age).val());
 	var age = $('#'+age).val();
-
-	// myApp.alert(age);
 
 	if(isNaN(age)){
 
@@ -35,14 +30,10 @@ $(document).on('click','.owl-item',function(event){
 function call(para1){
 
 	window.open('tel:'+para1);
-
-
 }
 
 function get_direction(para1,para2){
 
-	console.log(para1,para2);
-	// alert("called");
 	directions.navigateTo(para1,para2); // latitude, longitude
 }
 
@@ -61,7 +52,6 @@ function onDeviceReady() {
         console.log("user is not logged in");
     }
 
-
     document.addEventListener("backbutton", function(e) {
         
         e.preventDefault();
@@ -70,16 +60,12 @@ function onDeviceReady() {
         if (page.name == "index") {
             myApp.confirm('would you like to exit app.', function() {
                 navigator.app.clearHistory();
-                // gaPlugin.exit(nativePluginResultHandler, nativePluginErrorHandler);
                 navigator.app.exitApp();
             });
         } else {
             mainView.router.back({});
         }
     }, false);
-
-    // gaPlugin = window.plugins.gaPlugin;
-    // gaPlugin.init(nativePluginResultHandler, nativePluginErrorHandler, "UA-78959047-1", 10);
 }
 
 
@@ -93,7 +79,6 @@ var login = function () {
     
     facebookConnectPlugin.login( ["email"],
     function (response) { 
-        // alert(JSON.stringify(response));
 
         if(response.status == "connected"){
 
@@ -155,8 +140,6 @@ function check_login(){
 
 
 function share(code){
-
-
 
     var message = {
 

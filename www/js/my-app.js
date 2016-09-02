@@ -1,13 +1,13 @@
 // Initialize app
 var myApp = new Framework7({
 
-    cache:false,
-    modalTitle:"Mumbai Parties",
-    smartSelectOpenIn:'picker',
+    // cache:false,
+    modalTitle:"Mumbai Parties",    
+    // smartSelectOpenIn:'picker',
     swipeBackPage:false,
     smartSelectSearchbar:true,
     // preloadPreviousPage: false,
-    uniqueHistory: true,
+    // uniqueHistory: true,
     // animateNavBackIcon:true,
 
     onAjaxStart: function (xhr) {
@@ -24,30 +24,21 @@ var myApp = new Framework7({
 
 var $$ = Dom7;
 
-
 $$(document).on('pageInit', function (e) {
-
-
-
-    // alert('hello');
 
     if(Lockr.get('is_logged_in')){
 
         var id = Lockr.get('id');
         get_points(id);
-
     }
 
-    
-
-    // var page = myApp.getCurrentView().activePage;
-    // if (page.name == "index" || page.name =="location" || page.name =="login" || page.name =="register" ) {
-    //     mainView.hideToolbar();
-    // } else {
-    //     mainView.showToolbar();
-    // }
-
-      
+    var page = myApp.getCurrentView().activePage;
+    // || page.name =="location" || page.name =="login" || page.name =="register" 
+    if (page.name == "index" ) {
+        mainView.hideToolbar();
+    } else {
+        mainView.showToolbar();
+    }
 });
 
 
@@ -58,19 +49,21 @@ var mainView = myApp.addView('.view-main', {
 
 myApp.onPageInit('location', function (page) {
 
+    myApp.showIndicator();
     get_location();
 
     if(Lockr.get("is_logged_in")){
 
- $("#signin-div").html("<h2 class='username'><span>Hi, "+Lockr.get("name")+"</span><br><span id='ref_points' style='color: #b7b3b3;font-size: 14px;'>Points 200</span> </h2>");
- $("#signout-div").css("display","block");
-
+         $("#signin-div").html("<h2 class='username'><span>Hi, "+Lockr.get("name")+"</span><br><span id='ref_points' style='color: #b7b3b3;font-size: 14px;'>Points 200</span> </h2>");
+         $("#signout-div").css("display","block");
     }
+
+    myApp.hideIndicator();
+
     
 });
 
 myApp.onPageInit('entitie', function (page) {
-        // 30
 
         // Starrr plugin (https://github.com/dobtco/starrr)
         
@@ -172,6 +165,7 @@ myApp.onPageInit('entitie', function (page) {
                     });
                 }
             });
+            
         })(window.jQuery, window);
 
         $(function() {
@@ -195,7 +189,6 @@ myApp.onPageInit('entitie', function (page) {
 
 myApp.onPageInit('event', function (page) {
 
-        // 73
         var id = page.query.id;
         get_event(id);
         
@@ -203,13 +196,14 @@ myApp.onPageInit('event', function (page) {
 
 myApp.onPageInit('offer', function (page) {
 
-        // 73
         var id = page.query.id;
         get_offer(id);
         
 });
 
 myApp.onPageInit('mapview', function (page) {
+
+      myApp.showIndicator();
 
       var owl = $("#owl-demo-map");
 
@@ -231,19 +225,17 @@ myApp.onPageInit('mapview', function (page) {
             $('.owl-wrapper').trigger('owl.goTo', n);
       });
 
+    var id = page.query.id;  
+    get_initial_map_data(id);
 
-        var id = page.query.id;  
-        get_initial_map_data(id);
+    get_top_location(id);
 
-        get_top_location(id);
+    myApp.hideIndicator();
 
-        // $("#owl-demo-map").owlCarousel();
 
-          
 });
 
 myApp.onPageInit('listview', function (page) {
-
 
           var owl = $("#owl-demo-list");
 
@@ -257,26 +249,32 @@ myApp.onPageInit('listview', function (page) {
 
           });
 
+          // owl-item
 
-          $(document).on('click', '.owl-item', function(){
+          $(document).on('click', '.tab', function(){
                 
                 n = $(this).index();
                 console.log(n)
                 $('.owl-wrapper').trigger('owl.goTo', n);
           });
 
+
           $(document).on('click', '.category', function(){
                 
-                // alert("category clicked");
+                // var default_id = $(this).attr('data-id');
+                // console.log(id);
 
-                var id = $(this).attr('data-id');
+                var number_id = Number($(this).attr('data-id'));
 
-                alert("id is"+id);
+                console.log(number_id);
 
-                $('.owl-wrapper').trigger('owl.goTo', 1);
+                // alert('done');
 
+                $('.owl-wrapper').trigger('owl.goTo', number_id);
+
+                $('.owl-item').removeClass('active-tab');
                 $('.tab').removeClass('active-tab');
-                $('#list-tab-'+id).addClass('active-tab');
+                $('#list-tab-'+number_id).addClass('active-tab');
 
           });
 
@@ -289,22 +287,21 @@ myApp.onPageInit('listview', function (page) {
 
 myApp.onPageInit('club_types', function (page) {
 
-    var id = page.query.id;
-    get_top_location(id);
-
+    // var id = page.query.id;
+    // get_top_location(id);
 
 });
 
 
 myApp.onPageInit('club_list', function (page) {
 
-    var id = page.query.id;
-    get_top_location(id);
+    // var id = page.query.id;
+    // get_top_location(id);
+    
     var type = page.query.type;
-
-    get_club_list(id,type);
+    get_club_list(type);
+    
 });
-
 
 myApp.onPageInit('club', function (page) {
 
@@ -329,6 +326,27 @@ myApp.onPageInit('invite', function (page) {
   
   var id = Lockr.get('id');
   get_ref_code(id);
+
+});
+
+myApp.onPageInit('login', function (page) {
+
+  if(Lockr.get('email')){
+
+    var email = Lockr.get('email');
+    $('#email').val(email);
+
+    console.log(email);
+
+  }
+
+});
+
+
+myApp.onPageInit('notification', function (page) {
+
+
+    get_notification();
 
 });
 

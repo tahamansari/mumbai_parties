@@ -14,17 +14,93 @@
    </div>
 </div>
 
-            <div class="pages navbar-through toolbar-fixed" >
-                <div data-page="club" class="page" style="background:url(img/bg.png); background-size: 100% 100%;">
-                    <div class="page-content" style="background-color: black;">
-                        <div id="club_box" class="content-block no-pad">
-                          
-                                
+<div class="pages navbar-through toolbar-fixed" >
+    <div data-page="club" class="page" style="background:url(img/bg.png); background-size: 100% 100%;">
+        <div class="page-content" style="background-color: black;">
+            <div id="club_box" class="content-block no-pad">
+                
+                <div class='card demo-card-header-pic' style='margin: 0;border-bottom:1px solid gray'>
+                  <div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>
+                    <div class='list-name'>
+                        <h3 id="club_name" class='no-mar color-white left'></h3>
 
-                        </div>
+                        <i onclick='call("+result['data'][0]['contact']+")' class='fa fa-phone right call' aria-hidden='true'></i> 
+                        <i onclick='get_direction("+result['data'][0]['latitude']+","+result['data'][0]['latitude']+")'  class='fa fa-map-marker right marker' aria-hidden='true'></i>
                     </div>
-                   
-                </div>
+                  </div>
+                        </div>
+                        <div class='content-block no-mar'>
+                          <div class='content-block-inner color-white' style='background-color:black'>
+                            <p>address</p>
+                            <p>FROM 6pm TO 1am</p>
+                             <a href='book_detail.html'> </a>
+                            
+                            <a href='book.html'><input class='buy-btn' type='submit' value='BUY NOW'></a>
+                            <div class='price-label'>
+                              <input type='submit' value='RS 2000'>
+                              <br>
+                              <input type='submit' value='RS 1000'>
+                            </div>
+                          </div>
+                        </div>
+                        <div class='content-block no-mar'>
+                          <div class='content-block-inner color-white' style='background-color:black'>
+                          <h4 class='heading'>DISCRIPTION</h4>
+                           this is description<br>
+                          </div> 
+                        </div> 
+                        <div class='content-block no-mar'>
+                          <div class='content-block-inner color-white' style='background-color:black'>
+                          <h4 class='heading'>MUSIC</h4>
+                          this is music<br>
+                          </div>
+                        </div>
+                        <div class='content-block no-mar'>
+                          <div class='content-block-inne color-whiter' style='background-color:black'>
+                          <h4 class='heading'>OPENING HOURS</h4>
+                          <div class='row'>
+                              <div class='col-2'>
+                                  <p class='days'>
+                                    MON<br>
+                                    <span>CLOSED</span>
+                                  </p>
+                              </div>
+                              <div class='col-2'>
+                                  <p class='days'>
+                                    MON<br>
+                                    <span>CLOSED</span>
+                                  </p>
+                              </div>
+                              <div class='col-2'>
+                                  <p class='days'>
+                                    MON<br>
+                                    <span>CLOSED</span>
+                                  </p>
+                              </div>
+                              <div class='col-2'>
+                                  <p class='days'>
+                                    MON<br>
+                                    <span>CLOSED</span>
+                                  </p>
+                              </div>
+                              <div class='col-2'>
+                                  <p class='days'>
+                                    MON<br>
+                                    <span>CLOSED</span>
+                                  </p>
+                              </div>
+                              <div class='col-2'>
+                                  <p class='days'>
+                                    MON<br>
+                                    <span>CLOSED</span>
+                                  </p>
+                              </div>
+                          </div>
+                          </div>
+                      </div>
             </div>
+        </div>
+    </div>
+</div>
 
            
