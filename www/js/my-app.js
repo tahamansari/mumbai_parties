@@ -27,7 +27,6 @@ var $$ = Dom7;
 $$(document).on('pageInit', function (e) {
 
     if(Lockr.get('is_logged_in')){
-
         var id = Lockr.get('id');
         get_points(id);
     }
@@ -38,6 +37,23 @@ $$(document).on('pageInit', function (e) {
         mainView.hideToolbar();
     } else {
         mainView.showToolbar();
+    }
+
+    var page = myApp.getCurrentView().activePage;
+    // || page.name =="location" || page.name =="login" || page.name =="register" 
+    if (page.name == "mapview" || page.name =="listview" || page.name =="club_types" ) {
+
+
+        $('#home').attr('href','location.html');
+        $('#home').html("<i class='material-icons'>&#xE88A;</i>"+
+                        "<p class='tool-text no-mar'>HOME</p>");
+
+    } else {
+
+        $('#home').attr('href','search.html');
+        $('#home').html("<i class='material-icons'>&#xE8B6;</i>"+
+                        "<p class='tool-text no-mar'>SEARCH</p>");
+
     }
 });
 

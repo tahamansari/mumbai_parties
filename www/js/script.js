@@ -66,50 +66,67 @@ function onDeviceReady() {
             mainView.router.back({});
         }
     }, false);
-}
 
 
-var login = function () {
+        var fbLoginSuccess = function (userData) {
+        alert("UserInfo: " + JSON.stringify(userData));\
 
-    if (!window.cordova) {
-
-        var appId = prompt("Enter FB Application ID", "");
-        facebookConnectPlugin.browserInit(appId);
-    }
-    
-    facebookConnectPlugin.login( ["email"],
-    function (response) { 
-
-        if(response.status == "connected"){
-
-        	Lockr.set("name","Facebook");
-			Lockr.set("is_logged_in",true);
-
-			myApp.alert("Success");				
-			mainView.router.loadPage("location.html");
-
-        }else{
-
-        	alert("Invalid Login");
         }
-    },
-    function (response) { 
-    	alert(JSON.stringify(response)) 
-    });
+
+        function open_facebook(){
+
+            facebookConnectPlugin.login(["public_profile"],
+                fbLoginSuccess,
+                function (error) { alert("" + error) }
+            );
+        }
+
 }
 
 
-var getStatus = function () { 
-    facebookConnectPlugin.getLoginStatus( 
-        function (response) { alert(JSON.stringify(response)) },
-        function (response) { alert(JSON.stringify(response)) });
-}
-var logout = function () { 
 
-    facebookConnectPlugin.logout( 
-        function (response) { alert(JSON.stringify(response)) },
-        function (response) { alert(JSON.stringify(response)) });
-}
+
+// var login = function () {
+
+//     if (!window.cordova) {
+
+//         var appId = prompt("Enter FB Application ID", "");
+//         facebookConnectPlugin.browserInit(appId);
+//     }
+    
+//     facebookConnectPlugin.login( ["email"],
+//     function (response) { 
+
+//         if(response.status == "connected"){
+
+//         	Lockr.set("name","Facebook");
+// 			Lockr.set("is_logged_in",true);
+
+// 			myApp.alert("Success");				
+// 			mainView.router.loadPage("location.html");
+
+//         }else{
+
+//         	alert("Invalid Login");
+//         }
+//     },
+//     function (response) { 
+//     	alert(JSON.stringify(response)) 
+//     });
+// }
+
+
+// var getStatus = function () { 
+//     facebookConnectPlugin.getLoginStatus( 
+//         function (response) { alert(JSON.stringify(response)) },
+//         function (response) { alert(JSON.stringify(response)) });
+// }
+// var logout = function () { 
+
+//     facebookConnectPlugin.logout( 
+//         function (response) { alert(JSON.stringify(response)) },
+//         function (response) { alert(JSON.stringify(response)) });
+// }
 
 function current_date(){
 

@@ -80,7 +80,7 @@ a{
 .toolbar{
 
 	background-color: rgba(0, 0, 0, 0.93);
-  height: 50px;
+  height: 55px;
 }
 
 .navbar-inner, .toolbar-inner{
@@ -114,6 +114,8 @@ a{
     position: absolute;
     width: 100%;
     bottom: 0;
+    left: 0;
+
 }
 
 
@@ -474,7 +476,7 @@ a{
 }
 .card-footer{
 
-      background: #b4b4b4;
+      background: #2f2a2a;
       padding: 10px;
 }
 
@@ -502,9 +504,9 @@ a{
 #map {
 
     position: absolute;
-    top: 97px;
+    top: 96px;
     width: 100%;
-    height: 77.4%;
+    height: 77%;
     overflow: hidden;
     background-color: rgb(229, 227, 223);
 }
@@ -612,9 +614,21 @@ a{
 .date-box{
   
     position: relative;
-    background-color: #6a6868;
+    background-color: #2f2a2a;
     height: 45px;
     color: #ffffff;
+
+}
+
+.list-view-date{
+
+  margin-top: 12px;
+  background: rgb(254, 244, 244) none repeat scroll 0% 0%;
+  float: right;
+  color: black;
+  outline: medium none;
+  border: medium none;
+  margin-right: 10px;
 
 }
 
@@ -1008,7 +1022,21 @@ font-smoothing: antialiased;
     margin: 5px;
 }
 
+.offer-text-box{
+  
+    background-color: #515050;
+    color: white;
+    padding: 5px 10px;
+    margin: 5px;
+}
+
+
 #event_time{
+
+    font-size: 12px;
+}
+
+#offer_time{
 
     font-size: 12px;
 }
@@ -1032,7 +1060,66 @@ font-smoothing: antialiased;
     margin: 5px;
     font-size: 12px;
 }
+
+#offer_entitie_address{
+
+  font-size: 12px;
+  margin: 0;
+
+}
+
+#offer_entitie_address p{
+
+  font-size: 12px;
+  margin: 0;
+
+}
+
+#offer_direction{
+
+  margin: auto;
+  text-align: center;
+
+}
+
+#offer_direction p{
+
+ font-size: 10px;
+  margin: 0;
+
+}
+
+#offer_direction i{
+
+  font-size: 30px;
+ 
+}
+
+#entitie_direction{
+  margin: auto;
+  text-align: center;
+}
+
+#entitie_direction p{
+  
+  font-size: 10px;
+  margin: 0;
+
+}
+
+
+#entitie_direction i{
+  
+  font-size: 30px;
+
+}
+
+.list-block{
+  font-size: 14px;
+}
+
 #event_direction{
+  margin:auto;
   text-align: center;
 }
 
@@ -1042,9 +1129,9 @@ font-smoothing: antialiased;
   margin: 0;
 }
 
-#entitie_direction{
+/*#entitie_direction{
   font-size: 30px;
-}
+}*/
 #event_direction i{
   
   font-size: 40px;
@@ -1127,6 +1214,14 @@ font-smoothing: antialiased;
 
   margin: 15px;
 
+}
+
+.location-bottomline{
+
+  position: absolute;
+  border-radius: 0px 0px 4px 4px;
+  left: 0;
+  bottom: 0;
 }
 
 /*.gm-style-iw {

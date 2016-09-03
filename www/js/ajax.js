@@ -531,7 +531,7 @@ function get_entitie(id){
 	            var entitie_address = "<p>"+result['entitie']['address']+"</p>";
 	            $("#entitie_address").html(entitie_address);
 
-	            var entitie_direction = "<i class='fa fa-map-marker'  onclick='get_direction("+result['entitie']['latitude']+","+result['entitie']['longitude']+")' aria-hidden='true'></i>";
+	            var entitie_direction = "<i class='fa fa-map-marker'  onclick='get_direction("+result['entitie']['latitude']+","+result['entitie']['longitude']+")' aria-hidden='true'></i><p clas='no-mar'>Get Direction</p>";
 		        $("#entitie_direction").html(entitie_direction);
 
 	            var entitie_timming = "<p>Open from "+result['entitie']['open_hours']+" to "+result['entitie']['closing_hours']+"</p>";
@@ -667,22 +667,31 @@ function get_offer(id){
 
 			if(result['status'] == "success"){
 
-						var week_days =result['offer'][0]['weekly_base'];
-
 						var offer_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
-									result['offer'][0]['offer_name']+
+									result['offer']['offer_name']+
 				                       "<br>"+
 				                       "<i class='fa fa-star' aria-hidden='true'></i>"+
 				                       "<i class='fa fa-star' aria-hidden='true'></i>"+
 				                       "<i class='fa fa-star' aria-hidden='true'></i>"+
 				                    "</h3>";
+				        $("#offer_heading").html(offer_heading);
 
-				        var offer_entitie_address = "<h3 style='margin: 5px 0;'>"+result['offer'][0]['name']+"</h3>"+
-				                          "<p>"+result['offer'][0]['address']+"</p>";
+				        var offer_call = "<br>...<i class='fa fa-phone' onclick='call("+result['offer']['bar_contact']+")' style='font-size: 30px;color: #03A9F4;' aria-hidden='true'></i>";
+				        $("#offer_call").html(offer_call);
 
-				        var offer_timming = "<p style='font-size: 12px;float:left'>Open from "+result['offer'][0]['start_time']+" to "+result['offer'][0]['end_time']+"</p>"+
-								  
-									"<table style='float: right'>"+
+				        var offer_entitie_address = "<h3 style='margin: 5px 0;color:rgb(78, 236, 78)'>"+result['offer']['name']+"</h3>"+
+				                          "<p>"+result['offer']['address']+"</p>";
+				        $("#offer_entitie_address").html(offer_entitie_address);
+
+				        var offer_direction = "<i class='fa fa-map-marker' onclick='get_direction("+result['offer']['latitude']+","+result['offer']['longitude']+")' aria-hidden='true'></i><p clas='no-mar'>Get Direction</p>";
+				        $("#offer_direction").html(offer_direction);
+
+				        var offer_time = "Open from "+result['offer']['start_time']+" to "+result['offer']['end_time'];
+				        $("#offer_time").html(offer_time);
+
+						var week_days =result['offer']['weekly_base'];
+						var arr = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+						var days = "<table style='float: right'>"+
 					                  "<thead>"+
 					                     "<tr style='font-size: 10px;'>"+
 					                        "<th>S</th>"+
@@ -696,48 +705,19 @@ function get_offer(id){
 					                  "</thead>"+
 					                  "<tbody>"+
 					                     "<tr style='font-size: 10px;'>";
+					            for(var i=0;i<arr.length;i++){
+									if(week_days.indexOf(arr[i]) > -1){
+										days += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+									}else{
+										days += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+									}
+								}
+					                     days += "</tr>";
+							  days += "</tbody>";
+							  days += "</table>";
 
-				     	if (week_days.indexOf('Sunday') > -1) {
-				    		offer_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
-				    	}else{
-				    		offer_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
-				    	}
-				     	if (week_days.indexOf('Monday') > -1) {
-				    		offer_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
-				    	}else{
-				    		offer_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
-				    	}
-				     	if (week_days.indexOf('Tuesday') > -1) {
-				    		offer_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
-				    	}else{
-				    		offer_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
-				    	}
-				     	if (week_days.indexOf('Wednesday') > -1) {
-				    		offer_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
-				    	}else{
-				    		offer_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
-				    	}
-				     	if (week_days.indexOf('Thursday') > -1) {
-				    		offer_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
-				    	}else{
-				    		offer_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
-				    	}
-				     	if (week_days.indexOf('Friday') > -1) {
-				    		offer_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
-				    	}else{
-				    		offer_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
-				    	}
-				    	if (week_days.indexOf('Saturday') > -1) {
-				    		offer_timming += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
-				    	}else{
-				    		offer_timming += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
-				    	}
-
-						offer_timming += "</tr>";
-						offer_timming += "</tbody>";
-
-						offer_timming += "</table>";
-
+				        $("#offer_days").html(days);
+				        
 						var menu_data = "";
 						if(result['menu_images'] == "no data"){
 
@@ -751,18 +731,6 @@ function get_offer(id){
 
 							$("#menu_data_offer").html(menu_data);
 						}
-
-						var offer_call = "<br>...<i class='fa fa-phone' onclick='call("+result['offer'][0]['bar_contact']+")' style='font-size: 30px;color: #03A9F4;' aria-hidden='true'></i>";
-
-						var offer_direction = "<i class='fa fa-map-marker'  onclick='get_direction("+result['offer'][0]['latitude']+","+result['offer'][0]['longitude']+")' aria-hidden='true'></i>";
-
-
-				        $("#offer_call").html(offer_call);
-				        $("#offer_direction").html(offer_direction);
-
-				        $("#offer_heading").html(offer_heading);
-				        $("#offer_entitie_address").html(offer_entitie_address);
-				        $("#offer_timming").html(offer_timming);
 
 					}else{
 
@@ -819,7 +787,7 @@ function get_event(id){
 				        var event_entitie_address = "<span>"+result['event']['address']+"</span>";
 				        $("#event_entitie_address").html(event_entitie_address);
 
-				        var event_direction = "<i class='fa fa-map-marker' onclick='get_direction("+result['event']['latitude']+","+result['event']['longitude']+")' aria-hidden='true'></i>";
+				        var event_direction = "<i class='fa fa-map-marker' onclick='get_direction("+result['event']['latitude']+","+result['event']['longitude']+")' aria-hidden='true'></i><p class='no-mar'>Get Direction<p>";
 				        $("#event_direction").html(event_direction);
 
 				        var event_description = result['event']['description'];
@@ -829,9 +797,7 @@ function get_event(id){
 				        $("#event_time").html(event_time);
 
 						var week_days =result['event']['weekly_base'];
-
 						var arr = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-
 						var days = "<table style='float: right'>"+
 					                  "<thead>"+
 					                     "<tr style='font-size: 10px;'>"+
@@ -968,7 +934,7 @@ $(document).on('click','.get-event-data',function(event){
 			                  "</div>"+
 			                 
 			                  "<div class='card-footer color-white'>"+
-			                    "<span class='footer-text'>@ "+value.name+"</span>"+
+			                    "<span class='footer-left'>@ "+value.name+"</span>"+
 			                    "<span class='footer-text'>"+value.time_event_start+" to "+value.time_event_ends+"</span>"+
 			                  "</div>"+
 			                "</div>";
