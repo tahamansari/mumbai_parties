@@ -68,21 +68,23 @@ function onDeviceReady() {
     }, false);
 
 
-        var fbLoginSuccess = function (userData) {
-        alert("UserInfo: " + JSON.stringify(userData));\
-
-        }
-
-        function open_facebook(){
-
-            facebookConnectPlugin.login(["public_profile"],
-                fbLoginSuccess,
-                function (error) { alert("" + error) }
-            );
-        }
+        
 
 }
 
+
+var fbLoginSuccess = function (userData) {
+alert("UserInfo: " + JSON.stringify(userData));\
+
+}
+
+function open_facebook(){
+
+    facebookConnectPlugin.login(["public_profile"],
+        fbLoginSuccess,
+        function (error) { alert("" + error) }
+    );
+}
 
 
 
