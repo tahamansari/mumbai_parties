@@ -73,18 +73,18 @@ function onDeviceReady() {
 }
 
 
-var fbLoginSuccess = function (userData) {
-alert("UserInfo: " + JSON.stringify(userData));\
+// var fbLoginSuccess = function (userData) {
+// alert("UserInfo: " + JSON.stringify(userData));\
 
-}
+// }
 
-function open_facebook(){
+// function open_facebook(){
 
-    facebookConnectPlugin.login(["public_profile"],
-        fbLoginSuccess,
-        function (error) { alert("" + error) }
-    );
-}
+//     facebookConnectPlugin.login(["public_profile"],
+//         fbLoginSuccess,
+//         function (error) { alert("" + error) }
+//     );                                                                                                                                                                                                              
+// }
 
 
 
@@ -303,9 +303,5 @@ function dec_table(){
     }
 
 }
-
-  
-
-  
 
 

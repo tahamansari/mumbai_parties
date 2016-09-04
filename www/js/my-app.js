@@ -44,7 +44,13 @@ $$(document).on('pageInit', function (e) {
     if (page.name == "mapview" || page.name =="listview" || page.name =="club_types" ) {
 
 
-        $('#home').attr('href','location.html');
+        if(Lockr.get('is_logged_in')){
+             $('#home').attr('href','location.html');
+        }else{
+             $('#home').attr('href','index.html');
+
+        }
+
         $('#home').html("<i class='material-icons'>&#xE88A;</i>"+
                         "<p class='tool-text no-mar'>HOME</p>");
 
@@ -72,6 +78,8 @@ myApp.onPageInit('location', function (page) {
 
          $("#signin-div").html("<h2 class='username'><span>Hi, "+Lockr.get("name")+"</span><br><span id='ref_points' style='color: #b7b3b3;font-size: 14px;'>Points 200</span> </h2>");
          $("#signout-div").css("display","block");
+         $("#invite_div").css("display","block");
+
     }
 
     myApp.hideIndicator();

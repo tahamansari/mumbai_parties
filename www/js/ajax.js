@@ -248,13 +248,15 @@ $(document).on("click","#signout",function(event){
 	$("#signin-div").html("<a href='login.html' class='close-panel'> <h2 class='username'>Sign in</h2> </a>");
 
     $("#signout-div").css("display","none");
+    $("#invite_div").css("display","none");
+
 
     Lockr.rm('is_logged_in');
     Lockr.rm('name');
 	// Lockr.flush();
 
 	myApp.alert("Logged out");
-	mainView.router.loadPage("login.html");
+	mainView.router.loadPage("index.html");
 
 });
 
@@ -669,14 +671,13 @@ function get_offer(id){
 
 						var offer_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
 									result['offer']['offer_name']+
-				                       "<br>"+
-				                       "<i class='fa fa-star' aria-hidden='true'></i>"+
-				                       "<i class='fa fa-star' aria-hidden='true'></i>"+
-				                       "<i class='fa fa-star' aria-hidden='true'></i>"+
 				                    "</h3>";
 				        $("#offer_heading").html(offer_heading);
 
-				        var offer_call = "<br>...<i class='fa fa-phone' onclick='call("+result['offer']['bar_contact']+")' style='font-size: 30px;color: #03A9F4;' aria-hidden='true'></i>";
+				        // var event_call = "...<i class='fa fa-phone' onclick='call("+result['event']['bar_contact']+")' style='padding-top: 10px;font-size: 30px;color: #03A9F4;' aria-hidden='true'></i>";
+				        // $("#event_call").html(event_call);
+
+				        var offer_call = "...<i class='fa fa-phone' onclick='call("+result['offer']['bar_contact']+")' style='padding-top: 10px;font-size: 30px;color: #03A9F4;' aria-hidden='true'></i>";
 				        $("#offer_call").html(offer_call);
 
 				        var offer_entitie_address = "<h3 style='margin: 5px 0;color:rgb(78, 236, 78)'>"+result['offer']['name']+"</h3>"+
@@ -1407,92 +1408,20 @@ function get_club(id){
 
           if(result['status']=='success'){
 
-  	// var club = "<div class='card demo-card-header-pic' style='margin: 0;border-bottom:1px solid gray'>"+
-   //                "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
-   //                  "<div class='list-name'>"+
-   //                      "<h3 class='no-mar color-white left'>"+result['data'][0]['club_name']+"</h3>"+
-   //                      "<i onclick='call("+result['data'][0]['contact']+")' class='fa fa-phone right call' aria-hidden='true'></i> "+
-   //                      "<i onclick='get_direction("+result['data'][0]['latitude']+","+result['data'][0]['latitude']+")'  class='fa fa-map-marker right marker' aria-hidden='true'></i>"+
-   //                  "</div>"+
-   //                "</div>"+
-   //                      "</div>"+
-   //                      "<div class='content-block no-mar'>"+
-   //                        "<div class='content-block-inner color-white' style='background-color:black'>"+
-   //                         " <p>"+result['data'][0]['address']+"</p>"+
-   //                          "<p>FROM "+result['data'][0]['opening_hours']+" TO "+result['data'][0]['closing_hours']+"</p>"+
-   //                          // <a href='book_detail.html'> </a>
-   //                          // 
-   //                          // id='rzp-button1'
-                            
-   //                          "<a href='book.html'><input class='buy-btn' type='submit' value='BUY NOW'></a>"+
-   //                          "<div class='price-label'>"+
-   //                            "<input type='submit' value='RS "+result['data'][0]['single_price']+"'>"+
-   //                            "<br>"+
-   //                            "<input type='submit' value='RS "+result['data'][0]['couple_price']+"'>"+
-   //                          "</div>"+
-   //                        "</div>"+
-   //                      "</div>"+
-   //                      "<div class='content-block no-mar'>"+
-   //                        "<div class='content-block-inner color-white' style='background-color:black'>"+
-   //                        "<h4 class='heading'>DISCRIPTION</h4>"+
-   //                       result['data'][0]['description']+"<br>"+
-   //                        "</div> "+
-   //                      "</div> "+
-   //                      "<div class='content-block no-mar'>"+
-   //                        "<div class='content-block-inner color-white' style='background-color:black'>"+
-   //                        "<h4 class='heading'>MUSIC</h4>"+
-   //                        result['data'][0]['music']+"<br>"+
-   //                        "</div>"+
-   //                      "</div>"+
-   //                      "<div class='content-block no-mar'>"+
-   //                        "<div class='content-block-inne color-whiter' style='background-color:black'>"+
-   //                        "<h4 class='heading'>OPENING HOURS</h4>"+
-   //                        "<div class='row'>"+
-   //                            "<div class='col-2'>"+
-   //                                "<p class='days'>"+
-   //                                  "MON<br>"+
-   //                                  "<span>CLOSED</span>"+
-   //                                "</p>"+
-   //                            "</div>"+
-   //                            "<div class='col-2'>"+
-   //                                "<p class='days'>"+
-   //                                  "MON<br>"+
-   //                                  "<span>CLOSED</span>"+
-   //                                "</p>"+
-   //                            "</div>"+
-   //                            "<div class='col-2'>"+
-   //                                "<p class='days'>"+
-   //                                  "MON<br>"+
-   //                                  "<span>CLOSED</span>"+
-   //                                "</p>"+
-   //                            "</div>"+
-   //                            "<div class='col-2'>"+
-   //                                "<p class='days'>"+
-   //                                  "MON<br>"+
-   //                                  "<span>CLOSED</span>"+
-   //                                "</p>"+
-   //                            "</div>"+
-   //                            "<div class='col-2'>"+
-   //                                "<p class='days'>"+
-   //                                  "MON<br>"+
-   //                                  "<span>CLOSED</span>"+
-   //                                "</p>"+
-   //                            "</div>"+
-   //                            "<div class='col-2'>"+
-   //                                "<p class='days'>"+
-   //                                  "MON<br>"+
-   //                                  "<span>CLOSED</span>"+
-   //                                "</p>"+
-   //                            "</div>"+
-   //                        "</div>"+
-
-   //                        "</div>"+
-   //                      "</div>";
-
-   			  var club_name = result['data'][0]['club_name'];
+   			  var club_name = result['data']['club_name'];
 	          $('#club_name').html(club_name);
 
+	          var cal_dir = "<i onclick='call("+result['data']['contact']+")' class='fa fa-phone right call' aria-hidden='true'></i>"+ 
+                            "<i onclick='get_direction("+result['data']['latitude']+","+result['data']['latitude']+")'  class='fa fa-map-marker right marker' aria-hidden='true'></i>";
+	          $('#cal_dir').html(cal_dir);
 
+
+	          $('#club_add').html(result['data']['address']);
+	          $('#club_time').html("Open from "+result['data']['opening_hours']+" to "+result['data']['closing_hours']);
+	          $('#club_desc_text').html(result['data']['description']);
+	          $('#club_music_text').html(result['data']['music']);
+
+	          
 	          // $('#club_box').html(club);
 
           }else{
@@ -1786,11 +1715,6 @@ function get_notification(){
     	url: base_url+'get_notification',
     	type: 'POST',
     	dataType: 'json',
-    	// data: {
-
-    	// 	id:id,
-    	// 	ref_code: ref_code
-    	// },
     })
 	.done(function(result) {
 
@@ -1799,17 +1723,16 @@ function get_notification(){
 		if(result['status']=="success"){
 
 		//  alert('success');
-
 			var html = "";
 	 		$.each(result['data'],function(key,value) {
 
 	 			html += "<div class='row noti-row'>"+
-				                "<div class='col-30' style='margin: auto;'>"+
-				                  "<img class='img-circle' width='100%' src='img/user.jpeg'>"+
+				                "<div class='col-30' style='margin: auto;text-align:center'>"+
+				                  "<img class='img-circle noti-img' width='100%' src='img/user.jpeg'>"+
 				                "</div>"+
 				                "<div class='col-70'>"+
 				                  "<p class='no-mar'>"+value.title+"</p>"+
-				                  "<p class='mar-5-0'>"+value.notification_text+"</p>"+
+				                  "<p class='mar-5-0 font-12'>"+value.notification_text+"</p>"+
 				                  "<p class='no-mar'>"+value.date+"</p>"+
 				                "</div>"+
 				            "</div>";
@@ -1841,8 +1764,47 @@ function get_notification(){
 	
 }
 
+function sendemail(email){
+
+    // alert("password sent to "+email);
+
+    $.ajax({
+
+    	url: base_url+'sendemail',
+    	type: 'POST',
+    	dataType: 'json',
+    	data:{
+    		email:email
+    	},   	
+    })
+	.done(function(result) {
+		console.log(result);
+		if(result['status']=="success"){
+
+			myApp.alert('Password Sent');
+			myApp.closeModal('.forgot_picker')
+
+ 		}else{
+
+ 			if(result['msg']=="no data"){
+
+ 				// alert("no data");
+				myApp.alert('Email Not Registered');
 
 
+ 			}else{
+
+ 				alert("failed");
+ 			}
+ 		}
+		
+	})
+	.fail(function() {
+		console.log("error");
+	})
+	.always(function() {
+		console.log("complete");
+	});
 
 
-
+}
