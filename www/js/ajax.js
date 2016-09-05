@@ -14,9 +14,30 @@ function isEmail(email) {
 	  return regex.test(email);
 }
 
+
+// function upload() {
+
+// 	var file    = document.querySelector('input[type=file]').files[0];
+// 	var reader  = new FileReader();
+
+// 	reader.addEventListener("load", function () {
+
+// 		alert(reader.result);
+
+// 	}, false);
+
+// 	if (file) {
+// 		reader.readAsDataURL(file);
+// 	}
+// }
+
+var profile;
+
 $(document).on('click','#register_button',function(event){
 
 	event.preventDefault();
+
+
 
 	if($('[name="name"]').val() ==""){
 
@@ -108,8 +129,6 @@ $(document).on('click','#register_button',function(event){
 
 	}
 
-
-
 	if($('[name="mobile"]').val() ==""){
 
 		$('[name="mobile"]').css("border-bottom","1px solid red");
@@ -121,8 +140,35 @@ $(document).on('click','#register_button',function(event){
 		$('[name="mobile"]').css("border-bottom","none");
 		var mobile = $('[name="mobile"]').val().trim();
 		
-
 	}
+
+	// if(!document.querySelector('input[type=file]').files[0]){
+
+	// 	$('[name="profile"]').css("border-bottom","1px solid red");
+	// 	myApp.alert("profile required");
+	// 	return false;
+
+	// }else{
+
+	// 	$('[name="profile"]').css("border-bottom","none");
+
+	// 	var file    = document.querySelector('input[type=file]').files[0];
+	// 	var reader  = new FileReader();
+
+	// 	reader.addEventListener("load", function() {
+
+	// 		profile = reader.result;
+	// 		console.log("in profile "+profile);
+
+	// 	}, false);
+
+	// 	if(file) {
+	// 		reader.readAsDataURL(file);
+	// 	}
+	// }
+
+	// console.log("out profile "+profile);
+
 
 	var nm = name.substring(0, 3);
 	var num = Math.floor(1000 + Math.random() * 9000);
@@ -144,6 +190,7 @@ $(document).on('click','#register_button',function(event){
 			age: age,
 			gender:gender,
 			mobile: mobile,
+			profile:profile,
 			ref_code:ref_code,
 			is_redeemed:is_redeemed
 
@@ -1808,3 +1855,66 @@ function sendemail(email){
 
 
 }
+
+
+function uploadImage() {
+    document.getElementById('picture_msg').innerHTML = "";
+    // Get URI of picture to upload
+    navigator.camera.getPicture(
+        function(uri) {
+            try {
+                // Pick image from div
+                var img = document.getElementById('pimage');
+                img.style.visibility = "visible";
+                img.style.display = "block";
+                var imageURI = uri;
+                if (!imageURI || (img.style.display == "none")) {
+                    document.getElementById('picture_msg').innerHTML = "Tap on picture to select image from gallery.";
+                    return;
+                }
+                // Verify server has been entered
+                // document.getElementById('server').value;
+                server = base_url+"profileupload";
+                console.log("Server "+server);
+                if (server) {
+                    // Specify transfer options
+                    var options = new FileUploadOptions();
+                    options.fileKey="file";
+                    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+                    options.mimeType="image/jpeg";
+                    options.chunkedMode = false;
+
+                    // Transfer picture to server
+                    var ft = new FileTransfer();
+                    ft.upload(imageURI, server, function(r) {
+                        document.getElementById('picture_msg').innerHTML = "Upload successful: "+r.bytesSent+" bytes uploaded.";
+                        img.src = uri;
+                        img.width = 100;
+                        img.height = 100;
+                    },
+                    function(error) {
+                        document.getElementById('picture_msg').innerHTML = "Upload failed: Code = "+error.code;
+                    }, options);
+                }
+                else {
+                    document.getElementById('picture_msg').innerHTML = "Server Not Found";
+                }
+            }
+            catch(exce) {
+                alert(exce);
+            }
+        },
+        function(e) {
+            console.log("Error getting picture: " + e);
+            document.getElementById('picture_msg').innerHTML = "No Image Found";
+        },
+        {
+            quality: 50,
+            destinationType: navigator.camera.DestinationType.FILE_URI,
+            sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+        }
+    );
+}  
+
+
+// function 
