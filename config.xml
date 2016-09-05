@@ -59,7 +59,9 @@
     
     <plugin spec="https://github.com/leecrossley/cordova-plugin-directions.git" source="git"/>
     <plugin spec="https://github.com/razorpay/razorpay-cordova.git" />
-    <!-- https://github.com/ShashiBadhuk/PhonegapFileUpload.git -->
-    <plugin spec="https://github.com/ShashiBadhuk/PhonegapFileUpload.git" />
+    <plugin spec="https://github.com/ShashiBadhuk/PhonegapFileUpload.git#rel/1.2.1" />
+
+
+    
 
 </widget>
