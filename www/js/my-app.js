@@ -26,6 +26,29 @@ var $$ = Dom7;
 
 $$(document).on('pageInit', function (e) {
 
+    var networkState = navigator.connection.type;
+
+    var states = {};
+    states[Connection.UNKNOWN]  = 'Unknown connection';
+    states[Connection.ETHERNET] = 'Ethernet connection';
+    states[Connection.WIFI]     = 'WiFi connection';
+    states[Connection.CELL_2G]  = 'Cell 2G connection';
+    states[Connection.CELL_3G]  = 'Cell 3G connection';
+    states[Connection.CELL_4G]  = 'Cell 4G connection';
+    states[Connection.CELL]     = 'Cell generic connection';
+    states[Connection.NONE]     = 'No network connection';
+
+    // alert('Connection type: ' + states[networkState]);
+
+    if(states[networkState]=='No network connection'){
+
+        alert('No network connection');
+        return false;
+    }
+
+
+
+
     if(Lockr.get('is_logged_in')){
         var id = Lockr.get('id');
         get_points(id);
