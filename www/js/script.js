@@ -67,6 +67,20 @@ function onDeviceReady() {
         }
     }, false);
 
+
+    document.addEventListener("online", onOnline, false);
+    document.addEventListener("offline", onOffline, false);
+
+}
+
+function onOnline() {
+    // Handle the online event
+    myApp.alert("offline");
+}
+
+function onOffline() {
+    // Handle the online event
+    myApp.alert("online");
 }
 
 // function getImage() {
