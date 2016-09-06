@@ -42,6 +42,10 @@
     <plugin spec="https://github.com/apache/cordova-plugin-network-information.git#rel/1.2.1" />
 
     <plugin spec="https://github.com/apache/cordova-plugin-camera.git#rel/2.2.0" />
+    <plugin spec="https://github.com/apache/cordova-plugin-file-transfer.git#rel/1.5.1" />
+
+    
+    
 
     <plugin name="com.phonegap.plugins.facebookconnect" spec="0.9.0" source="pgb">
         <param name="APP_ID" value="649298491886916" />

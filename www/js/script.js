@@ -395,23 +395,25 @@ function dec_table(){
 function type_gallery() {
     navigator.camera.getPicture(on_success, on_fail, {
         quality: 50,
-        destinationType: Camera.DestinationType.DATA_URL,
+        destinationType: Camera.DestinationType.FILE_URI,
         sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
         targetWidth: 720,
         targetHeight: 640,
         correctOrientation: true,
-        allowEdit: true
+        allowEdit: true,
     });
 }
 
 function type_camera() {
+
+
     navigator.camera.getPicture(on_success, on_fail, {
         quality: 50,
         destinationType: Camera.DestinationType.FILE_URI,
         targetWidth: 720,
         targetHeight: 640,
         correctOrientation: true,
-        allowEdit: true
+        allowEdit: true,
     });
 }
 
