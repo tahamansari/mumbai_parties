@@ -408,16 +408,16 @@ function onSuccess(fileURL) {
 
     alert(fileURL);
 
-    // var uri = encodeURI(base_url + "/upload_user");
-    // var options = new FileUploadOptions();
-    // options.fileKey = "file";
-    // options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
-    // options.mimeType = "image/jpeg";
-    // var headers = {
-    //     'headerParam': 'headerValue'
-    // };
-    // options.headers = headers;
-    // new FileTransfer().upload(fileURL, uri, upload_success, upload_failed, options);
+    var uri = encodeURI("http://casaestilo.in/taha/mp_admin"+"/uploads");
+    var options = new FileUploadOptions();
+    options.fileKey = "file";
+    options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
+    options.mimeType = "image/jpeg";
+    var headers = {
+        'headerParam': 'headerValue'
+    };
+    options.headers = headers;
+    new FileTransfer().upload(fileURL, uri, upload_success, upload_failed, options);
 }
 
 function onFail(message) {
@@ -427,14 +427,11 @@ function onFail(message) {
 function upload_success(res) {
 
     myApp.hidePreloader();
+
     if (res.responseCode == 200) {
-        uploaded_image = res.response.replace(/\"/g, "");
-        image_from_device = uploaded_image;
-        console.log('uploaded_image: ' + uploaded_image);
-        // $('#shopper_register-profile_image').val(uploaded_image);
         myApp.alert("Image Uploaded Successfully");
     } else {
-        myApp.hidePreloader();
+
         myApp.alert('Some error occurred on uploading');
     }
 }
