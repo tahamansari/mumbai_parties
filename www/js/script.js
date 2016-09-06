@@ -144,54 +144,67 @@ function onOffline() {
 // 
 
 
-function graphsuccess(response){
-
-    alert(response);
-
-}
-
-function graphfail(failed){
-    
-    alert(failed);
-
-}
 
 
 
 var login = function () {
 
-    if (!window.cordova) {
 
-        var appId = prompt("Enter FB Application ID", "");
-        facebookConnectPlugin.browserInit(appId);
+    var fbLoginSuccess = function (userData) {
+        
+        facebookConnectPlugin.api('/me?fields=id,name,picture,email', ["basic_info"],
+
+            function (result) {
+                alert("Result: " + JSON.stringify(result));
+            }, 
+            function (error) { 
+                alert("Failed: " + error);
+            }
+        );
+
     }
-    
-    facebookConnectPlugin.login( ["email"],
-    function (response) { 
 
-        if(response.status == "connected"){
-
-            alert(response);
-
-            facebookConnectPlugin.api('http://graph.facebook.com/', ["public_profile", "user_birthday"], graphsuccess(), graphfail());
-
-
-
-        	Lockr.set("name","Facebook");
-            Lockr.set("type","fb");
-			Lockr.set("is_logged_in",true);
-
-			myApp.alert("Success");				
-			mainView.router.loadPage("location.html");
-
-        }else{
-
-        	alert("Invalid Login");
+    facebookConnectPlugin.login(
+        ["basic_info"], 
+        fbLoginSuccess, 
+        function (error) { 
+            alert("" + error);
         }
-    },
-    function (response) { 
-    	alert(JSON.stringify(response)) 
-    });
+    );
+
+
+
+
+
+   //  if (!window.cordova) {
+
+   //      var appId = prompt("Enter FB Application ID", "");
+   //      facebookConnectPlugin.browserInit(appId);
+   //  }
+    
+   //  facebookConnectPlugin.login( ["email"],
+   //  function (response) { 
+
+   //      if(response.status == "connected"){
+
+
+   //          facebookConnectPlugin.api('http://graph.facebook.com/', ["public_profile", "user_birthday"], graphsuccess(), graphfail());
+
+   //      	Lockr.set("name","Facebook");
+   //          Lockr.set("type","fb");
+			// Lockr.set("is_logged_in",true);
+
+			// myApp.alert("Success");				
+			// mainView.router.loadPage("location.html");
+
+   //      }else{
+
+   //      	alert("Invalid Login");
+   //      }
+   //  },
+   //  function (response) { 
+   //  	alert(JSON.stringify(response)) 
+   //  });
 }
 
 
