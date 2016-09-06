@@ -48,10 +48,15 @@
                   <input id="age" name="age" onkeyup="check_age(this.id)" type="text" placeholder="Age">
                   <i class="fa fa-calendar-o icon-font" aria-hidden="true"></i>
                </div>
-               <div class="row">
-                  Male
+               <div class="row reg-input cust-radio">
+
+<!--                   <label for="r1"> button one</label>
+                  <input type="radio" name="group1" id="r1" value="1" /> -->
+
+                  <label for="radio1">Male</label>
                   <input type='radio' name="gender" value='Male' id='radio1'/>
-                  Female
+
+                  <label for="radio2">Female</label>
                   <input type='radio' name="gender" value='Female'  id='radio2'/>                    
                </div>
                <div class="reg-input">
@@ -59,7 +64,8 @@
                   <i style="font-size: xx-large;" class="fa fa-mobile icon-font" aria-hidden="true"></i>
                </div>
 
-               <!-- <button onclick="getImage();">Upload a Photo</button> -->
+               <a href="#" id='profile_picker' data-picker=".profile_picker" class="open-picker"><button class="upload_buttom">Upload a Photo</button></a>
+               <br>
 
              
                <!-- <input name="profile" type="file"><br> -->
@@ -72,6 +78,42 @@
             </form>
          </div>
       </div>
+
+
+
+
+        <div class="picker-modal profile_picker" style="position:fixed;bottom:0;height:200px">
+        <div class="toolbar" style="background-color: black;">
+          <div class="toolbar-inner">
+            <div class="left"></div>
+            <div class="right"><a href="#" style="border:none" class="close-picker">Close</a></div>
+          </div>
+        </div>
+        <div class="picker-modal-inner">
+          <div class="content-block" style="margin:0">
+               <div class="list-block" style="margin:0">
+                  <ul>
+                    <li onclick="type_camera()" class="item-content photo-type">
+                      <div class="item-media"></div>
+                      <div class="item-inner" style="margin: 0px;">
+                        <div class="item-title" style="color:black">Camera</div>
+                        <div class="item-after"></div>
+                      </div>
+                    </li>
+                    <li onclick="type_gallery()" class="item-content photo-type">
+                      <div class="item-media"></div>
+                      <div class="item-inner" style="margin: 0px;">
+                        <div class="item-title"  style="color:black">Gallery</div>
+                        <div class="item-after"></div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+          </div>
+        </div>
+      </div>
+
+
       <!-- <input id="register_button" type="submit" class="button bottom-button"> -->
    </div>
 </div>
