@@ -417,6 +417,8 @@ function type_camera() {
 
 function on_success(fileURL) {
 
+    alert('on success');
+
     var uri = encodeURI("http://casaestilo.in/taha/mp_admin/uploads");
     var options = new FileUploadOptions();
     options.fileKey = "file";
@@ -430,20 +432,29 @@ function on_success(fileURL) {
 }
 
 function on_fail(message) {
+
+    alert('on failed');
+
     alert('Failed because: ' + message);
 }
 
 function upload_success(res) {
 
-    if (res.responseCode == 200) {
+    alert('on upload success');
+
+
+    if(res.responseCode == 200) {
         myApp.alert("Image Uploaded Successfully");
-    } else {
+    }else{
 
         myApp.alert('Some error occurred on uploading');
     }
 }
 
 function upload_failed(error) {
+
+    alert('on upload failed');
+
 
     console.log("An error has occurred: Code = " + error.code);
     console.log("upload error source " + error.source);
