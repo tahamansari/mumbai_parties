@@ -141,6 +141,20 @@ function onOffline() {
 //         function (error) { alert("" + error) }
 //     );                                                                                                                                                                                                              
 // }
+// 
+
+
+function graphsuccess(response){
+
+    alert(response);
+
+}
+
+function graphfail(failed){
+    
+    alert(failed);
+
+}
 
 
 
@@ -157,7 +171,14 @@ var login = function () {
 
         if(response.status == "connected"){
 
+            alert(response);
+
+            facebookConnectPlugin.api('http://graph.facebook.com/', ["public_profile", "user_birthday"], graphsuccess(), graphfail());
+
+
+
         	Lockr.set("name","Facebook");
+            Lockr.set("type","fb");
 			Lockr.set("is_logged_in",true);
 
 			myApp.alert("Success");				

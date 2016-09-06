@@ -302,7 +302,10 @@ $(document).on("click","#signout",function(event){
     Lockr.rm('name');
 	// Lockr.flush();
 
-	logout();
+	if(Lockr.get('type')=="fb"){
+		logout();
+	}
+
 
 	myApp.alert("Logged out");
 	mainView.router.loadPage("index.html");
