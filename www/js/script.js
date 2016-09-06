@@ -165,7 +165,7 @@ var login = function () {
     }
 
     facebookConnectPlugin.login(
-        ["basic_info"], 
+        ["public_profile"], 
         fbLoginSuccess, 
         function (error) { 
             alert("" + error);
