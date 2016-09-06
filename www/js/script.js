@@ -144,24 +144,25 @@ function onOffline() {
 // 
 
 
-
-
-
 var login = function () {
-
 
     var fbLoginSuccess = function (userData) {
 
-        facebookConnectPlugin.api('/me?fields=id,name,picture,email', ["public_profile", "user_friends"],
+        facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],
 
             function (result) {
-                alert("Result: " + JSON.stringify(result));
+
+             // alert("Result: " + JSON.stringify(result));
+                alert(result.id);
+                alert(result.email);
+                alert(result.name);
+                alert(result.picture); 
+                               
             }, 
             function (error) { 
                 alert("Failed: " + error);
             }
         );
-
     }
 
     facebookConnectPlugin.login(
@@ -171,9 +172,6 @@ var login = function () {
             alert("" + error);
         }
     );
-
-
-
 
 
    //  if (!window.cordova) {
@@ -207,7 +205,6 @@ var login = function () {
    //  });
 }
 
-
 var getStatus = function () { 
     facebookConnectPlugin.getLoginStatus( 
         function (response) { alert(JSON.stringify(response)) },
@@ -224,7 +221,6 @@ var logout = function () {
 function current_date(){
 
 	var d = new Date();
-
 	var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'];
 	var day = d.getDate();
 	var month = m[d.getMonth()];
