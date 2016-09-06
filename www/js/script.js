@@ -403,7 +403,7 @@ function cameraError(message){
 
 function type_camera(){
 
-    // alert('camera');
+    alert('camera');
     // Camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
             // destinationType: Camera.DestinationType.DATA_URL });
 
@@ -414,7 +414,7 @@ function type_camera(){
 
 function type_gallery(){
     
-    // alert('gallery');
+    alert('gallery');
     navigator.camera.getPicture(cameraSuccess, cameraError, Camera.PictureSourceType.PHOTOLIBRARY);
     
 }
