@@ -391,24 +391,33 @@ function dec_table(){
 
 }
 
+
+function type_gallery() {
+    navigator.camera.getPicture(on_success, on_fail, {
+        quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
+        targetWidth: 720,
+        targetHeight: 640,
+        correctOrientation: true,
+        allowEdit: true
+    });
+}
+
 function type_camera() {
-    navigator.camera.getPicture(onSuccess, onFail, {
+    navigator.camera.getPicture(on_success, on_fail, {
         quality: 50,
         destinationType: Camera.DestinationType.FILE_URI,
         targetWidth: 720,
         targetHeight: 640,
         correctOrientation: true,
-        allowEdit: true,
+        allowEdit: true
     });
 }
 
-function onSuccess(fileURL) {
+function on_success(fileURL) {
 
-    myApp.showPreloader('uploading image');
-
-    alert(fileURL);
-
-    var uri = encodeURI("http://casaestilo.in/taha/mp_admin"+"/uploads");
+    var uri = encodeURI("http://casaestilo.in/taha/mp_admin/uploads");
     var options = new FileUploadOptions();
     options.fileKey = "file";
     options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
@@ -420,13 +429,11 @@ function onSuccess(fileURL) {
     new FileTransfer().upload(fileURL, uri, upload_success, upload_failed, options);
 }
 
-function onFail(message) {
+function on_fail(message) {
     alert('Failed because: ' + message);
 }
 
 function upload_success(res) {
-
-    myApp.hidePreloader();
 
     if (res.responseCode == 200) {
         myApp.alert("Image Uploaded Successfully");
@@ -437,7 +444,7 @@ function upload_success(res) {
 }
 
 function upload_failed(error) {
-    myApp.hidePreloader();
+
     console.log("An error has occurred: Code = " + error.code);
     console.log("upload error source " + error.source);
     console.log("upload error target " + error.target);
@@ -445,27 +452,47 @@ function upload_failed(error) {
 }
 
 
-function type_gallery() {
-    navigator.camera.getPicture(onSuccess, onFail, {
-        quality: 50,
-        destinationType: Camera.DestinationType.DATA_URL,
-        sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
-        targetWidth: 720,
-        targetHeight: 640,
-        correctOrientation: true,
-        allowEdit: true,
-    });
-}
 
-function onSuccess(imageData) {
-    var image = document.getElementById('myImage');
-    image.src = "data:image/jpeg;base64," + imageData;
-    document.getElementById("text1").innerHTML = imageData;
-}
 
-function onFail(message) {
-    alert('Failed because: ' + message);
-}
+// function on_gallery_success(imageData) {
+
+//     myApp.showPreloader('uploading image');
+//     alert(fileURL);
+//     var uri = encodeURI("http://casaestilo.in/taha/mp_admin/uploads");
+//     var options = new FileUploadOptions();
+//     options.fileKey = "file";
+//     options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
+//     options.mimeType = "image/jpeg";
+//     var headers = {
+//         'headerParam': 'headerValue'
+//     };
+//     options.headers = headers;
+//     new FileTransfer().upload(fileURL, uri, upload_gallery_success, upload_gallery_fail, options);
+// }
+
+// function on_gallery_fail(message) {
+//     alert('Failed because: ' + message);
+// }
+
+// function upload_gallery_success(res) {
+
+//     myApp.hidePreloader();
+//     if (res.responseCode == 200) {
+//         myApp.alert("Image Uploaded Successfully");
+//     } else {
+
+//         myApp.alert('Some error occurred on uploading');
+//     }
+// }
+
+// function upload_gallery_fail(error) {
+//     myApp.hidePreloader();
+//     console.log("An error has occurred: Code = " + error.code);
+//     console.log("upload error source " + error.source);
+//     console.log("upload error target " + error.target);
+//     myApp.alert("Some Error Occured While image upload please try again");
+// }
+
 
 
 
