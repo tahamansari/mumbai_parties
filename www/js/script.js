@@ -151,8 +151,8 @@ var login = function () {
 
 
     var fbLoginSuccess = function (userData) {
-        
-        facebookConnectPlugin.api('/me?fields=id,name,picture,email', ["basic_info"],
+
+        facebookConnectPlugin.api('/me?fields=id,name,picture,email', ["public_profile", "user_friends"],
 
             function (result) {
                 alert("Result: " + JSON.stringify(result));
