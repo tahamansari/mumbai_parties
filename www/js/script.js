@@ -156,8 +156,8 @@ var login = function () {
                 alert(result.id);
                 alert(result.email);
                 alert(result.name);
-                alert(result.picture); 
-                               
+                alert(result.picture.data); 
+
             }, 
             function (error) { 
                 alert("Failed: " + error);
