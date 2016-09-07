@@ -310,7 +310,8 @@ function type_gallery() {
     },{
         quality: 50, 
         destinationType: navigator.camera.DestinationType.FILE_URI,
-        sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+        sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY,
+        allowEdit:true
     }
         );
 }
@@ -322,29 +323,20 @@ function type_camera() {
     },{
         quality: 50, 
         destinationType: navigator.camera.DestinationType.FILE_URI,
-        sourceType: navigator.camera.PictureSourceType.CAMERA
+        sourceType: navigator.camera.PictureSourceType.CAMERA,
+        cameraDirection:FRONT,
+        allowEdit:true
     }
         );
 }
 
 function uploadPhoto(imageURI) {
 
-    // 
-    alert('image uri is '+imageURI);
-
     var options = new FileUploadOptions();
     options.fileKey="file";
     options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
     options.mimeType="image/jpeg";
-
-    // var params = new Object();
-    // params.value1 = "test";
-    // params.value2 = "param";
-
-    // options.params = params;
-
     options.chunkedMode = false;
-
     var ft = new FileTransfer();
     ft.upload(imageURI, base_url+"profileupload", win, fail, options);
     
