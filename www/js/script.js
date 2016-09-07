@@ -324,7 +324,7 @@ function type_camera() {
         quality: 50, 
         destinationType: navigator.camera.DestinationType.FILE_URI,
         sourceType: navigator.camera.PictureSourceType.CAMERA,
-        cameraDirection:FRONT,
+        cameraDirection: Camera.Direction.FRONT,
         allowEdit:true
     }
         );
