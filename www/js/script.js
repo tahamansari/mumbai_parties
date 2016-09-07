@@ -318,18 +318,17 @@ function type_gallery() {
 
 function type_camera() {
 
-    navigator.camera.getPicture(on_success, on_fail, {
-        quality: 50,
-        destinationType: Camera.DestinationType.FILE_URI,
-        sourceType: Camera.PictureSourceType.CAMERA,
-        targetWidth: 720,
-        targetHeight: 640,
-        correctOrientation: true,
-        allowEdit: true,
-    });
+    navigator.camera.getPicture(uploadPhoto, function(message) {
+            alert('get picture failed');
+    },{
+        quality: 50, 
+        destinationType: navigator.camera.DestinationType.FILE_URI,
+        sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+    }
+        );
 }
 
-function on_success(imageURI) {
+function uploadPhoto(imageURI) {
 
     // 
     var options = new FileUploadOptions();
