@@ -331,6 +331,8 @@ function type_camera() {
 function uploadPhoto(imageURI) {
 
     // 
+    alert('image uri is '+imageURI);
+
     var options = new FileUploadOptions();
     options.fileKey="file";
     options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
@@ -344,17 +346,14 @@ function uploadPhoto(imageURI) {
     options.chunkedMode = false;
 
     var ft = new FileTransfer();
-    ft.upload(imageURI, "http://casaestilo.in/taha/mp_admin/index.php/Api/profileupload", win, fail, options);
-    
-}
-
-function on_fail(message) {
-
-    alert(""+message);
+    ft.upload(imageURI, base_url+"profileupload", win, fail, options);
     
 }
 
 function win(r) {
+
+    alert('win');
+
     console.log("Code = " + r.responseCode);
     console.log("Response = " + r.response);
     console.log("Sent = " + r.bytesSent);
@@ -362,6 +361,9 @@ function win(r) {
 }
 
 function fail(error) {
+    
+    alert('fail');
+
     alert("An error has occurred: Code = " = error.code);
 }
 
