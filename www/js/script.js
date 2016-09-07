@@ -305,15 +305,14 @@ function dec_table(){
 
 function type_gallery() {
 
-    navigator.camera.getPicture(on_success, on_fail, {
-        quality: 50,
-        destinationType: Camera.DestinationType.FILE_URI,
-        sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
-        targetWidth: 720,
-        targetHeight: 640,
-        correctOrientation: true,
-        allowEdit: true,
-    });
+    navigator.camera.getPicture(uploadPhoto, function(message) {
+            alert('get picture failed');
+    },{
+        quality: 50, 
+        destinationType: navigator.camera.DestinationType.FILE_URI,
+        sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+    }
+        );
 }
 
 function type_camera() {
@@ -323,7 +322,7 @@ function type_camera() {
     },{
         quality: 50, 
         destinationType: navigator.camera.DestinationType.FILE_URI,
-        sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+        sourceType: navigator.camera.PictureSourceType.CAMERA
     }
         );
 }
@@ -338,11 +337,12 @@ function uploadPhoto(imageURI) {
     options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
     options.mimeType="image/jpeg";
 
-    var params = new Object();
-    params.value1 = "test";
-    params.value2 = "param";
+    // var params = new Object();
+    // params.value1 = "test";
+    // params.value2 = "param";
 
-    options.params = params;
+    // options.params = params;
+
     options.chunkedMode = false;
 
     var ft = new FileTransfer();
@@ -361,7 +361,7 @@ function win(r) {
 }
 
 function fail(error) {
-    
+
     alert('fail');
 
     alert("An error has occurred: Code = " = error.code);
