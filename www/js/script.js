@@ -304,6 +304,7 @@ function dec_table(){
 
 
 function type_gallery() {
+
     navigator.camera.getPicture(on_success, on_fail, {
         quality: 50,
         destinationType: Camera.DestinationType.FILE_URI,
@@ -317,10 +318,10 @@ function type_gallery() {
 
 function type_camera() {
 
-
     navigator.camera.getPicture(on_success, on_fail, {
         quality: 50,
         destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: Camera.PictureSourceType.CAMERA,
         targetWidth: 720,
         targetHeight: 640,
         correctOrientation: true,
@@ -330,9 +331,10 @@ function type_camera() {
 
 function on_success(imageURI) {
 
+    // 
     var options = new FileUploadOptions();
     options.fileKey="file";
-    // options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
     options.mimeType="image/jpeg";
 
     var params = new Object();
@@ -343,42 +345,25 @@ function on_success(imageURI) {
     options.chunkedMode = false;
 
     var ft = new FileTransfer();
-    ft.upload(imageURI, "http://casaestilo.in/taha/mp_admin/index.php/Api/profileupload", win, fail, options); 
+    ft.upload(imageURI, "http://casaestilo.in/taha/mp_admin/index.php/Api/profileupload", win, fail, options);
+    
 }
 
 function on_fail(message) {
 
-    alert('on failed');
-
-    alert('Failed because: ' + message);
+    alert(""+message);
+    
 }
 
-function win(res) {
-
-    alert('on upload success');
-    if(res.responseCode == 200) {
-
-        uploaded_image = res.response.replace(/\"/g, "");
-        image_from_device = uploaded_image;
-        console.log('uploaded_image: ' + uploaded_image);
-        // $('#shopper_register-profile_image').val(uploaded_image);
-myApp.alert("Image Uploaded Successfully");
-
-    }else{
-
-        myApp.alert('Some error occurred on uploading'+res.responseCode);
-    }
+function win(r) {
+    console.log("Code = " + r.responseCode);
+    console.log("Response = " + r.response);
+    console.log("Sent = " + r.bytesSent);
+    alert(r.response);
 }
 
 function fail(error) {
-
-    alert('on upload failed');
-
-
-    console.log("An error has occurred: Code = " + error.code);
-    console.log("upload error source " + error.source);
-    console.log("upload error target " + error.target);
-    myApp.alert("Some Error Occured While image upload please try again");
+    alert("An error has occurred: Code = " = error.code);
 }
 
 
