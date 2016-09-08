@@ -32,8 +32,9 @@
     <plugin name="cordova-plugin-console" spec="~1.0.1" />
     <plugin name="cordova-plugin-statusbar" spec="~1.0.1" />
     
+    
     <preference name="android-build-tool" value="gradle" />
-
+    
     
     <plugin name="cordova-plugin-social-message" source="npm" />
     <plugin spec="https://github.com/leecrossley/cordova-plugin-directions.git" source="git"/>
