@@ -123,33 +123,6 @@ $(document).on('click','#register_button',function(event){
 		
 	}
 
-	// if(!document.querySelector('input[type=file]').files[0]){
-
-	// 	$('[name="profile"]').css("border-bottom","1px solid red");
-	// 	myApp.alert("profile required");
-	// 	return false;
-
-	// }else{
-
-	// 	$('[name="profile"]').css("border-bottom","none");
-
-	// 	var file    = document.querySelector('input[type=file]').files[0];
-	// 	var reader  = new FileReader();
-
-	// 	reader.addEventListener("load", function() {
-
-	// 		profile = reader.result;
-	// 		console.log("in profile "+profile);
-
-	// 	}, false);
-
-	// 	if(file) {
-	// 		reader.readAsDataURL(file);
-	// 	}
-	// }
-
-	// console.log("out profile "+profile);
-
 
 	var nm = name.substring(0, 3);
 	var num = Math.floor(1000 + Math.random() * 9000);
@@ -157,10 +130,8 @@ $(document).on('click','#register_button',function(event){
 	var ref_code = nm+num;
 	var is_redeemed = 0;
 
-	
-	
-
-	
+	var imageURI = Lockr.get('imageURI');
+	var img_name = imageURI.substr(imageURI.lastIndexOf('/')+1);
 
 
 	$.ajax({
@@ -177,7 +148,7 @@ $(document).on('click','#register_button',function(event){
 			age: age,
 			gender:gender,
 			mobile: mobile,
-			profile:profile,
+			img_name:img_name,
 			ref_code:ref_code,
 			is_redeemed:is_redeemed
 
@@ -189,11 +160,10 @@ $(document).on('click','#register_button',function(event){
 				if(Lockr.get('imageURI')){
 
 					alert('true');
-
-					var imageURI = Lockr.get('imageURI');
+					
 					var options = new FileUploadOptions();
 				    options.fileKey="file";
-				    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+				    options.fileName=img_name;
 				    options.mimeType="image/jpeg";
 				    options.chunkedMode = false;
 				    var ft = new FileTransfer();
