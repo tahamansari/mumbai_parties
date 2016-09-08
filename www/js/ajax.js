@@ -188,6 +188,8 @@ $(document).on('click','#register_button',function(event){
 
 				if(Lockr.get('imageURI')){
 
+					alert('true');
+
 					var imageURI = Lockr.get('imageURI');
 					var options = new FileUploadOptions();
 				    options.fileKey="file";
@@ -199,6 +201,10 @@ $(document).on('click','#register_button',function(event){
 
 				    Lockr.get('imageURI');
 				    Lockr.rm('imageURI');
+
+				}else{
+
+					alert('false');
 				}
 
 				Lockr.set("id",result.id);
@@ -224,12 +230,12 @@ function win(r) {
     console.log("Code = " + r.responseCode);
     console.log("Response = " + r.response);
     console.log("Sent = " + r.bytesSent);
-    // alert(r.response);
+    alert(r.response);
 }
 
 function fail(error) {
 
-    alert("An error has occurred: Code = " = error.code);
+    alert("An error has occurred: Code = "+error.code);
 }
 
 $(document).on('click','#login_button',function(event){
