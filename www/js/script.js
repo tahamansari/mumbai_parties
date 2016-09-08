@@ -330,7 +330,7 @@ function type_camera() {
 
 function uploadPhoto(imageURI) {
 
-    Lockr.set('imageURI','imageURI');
+    Lockr.set('imageURI',imageURI);
 
     alert('lockr has set '+Lockr.get('imageURI'));
 }
