@@ -14,30 +14,11 @@ function isEmail(email) {
 	  return regex.test(email);
 }
 
-
-// function upload() {
-
-// 	var file    = document.querySelector('input[type=file]').files[0];
-// 	var reader  = new FileReader();
-
-// 	reader.addEventListener("load", function () {
-
-// 		alert(reader.result);
-
-// 	}, false);
-
-// 	if (file) {
-// 		reader.readAsDataURL(file);
-// 	}
-// }
-
 var profile;
 
 $(document).on('click','#register_button',function(event){
 
 	event.preventDefault();
-
-
 
 	if($('[name="name"]').val() ==""){
 
@@ -176,6 +157,12 @@ $(document).on('click','#register_button',function(event){
 	var ref_code = nm+num;
 	var is_redeemed = 0;
 
+	
+	
+
+	
+
+
 	$.ajax({
 
 		url: base_url+"register/",
@@ -199,6 +186,21 @@ $(document).on('click','#register_button',function(event){
 
 			if(result.status=='success'){
 
+				if(Lockr.get('imageURI')){
+
+					var imageURI = Lockr.get('imageURI');
+					var options = new FileUploadOptions();
+				    options.fileKey="file";
+				    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+				    options.mimeType="image/jpeg";
+				    options.chunkedMode = false;
+				    var ft = new FileTransfer();
+				    ft.upload(imageURI, base_url+"profileupload", win, fail, options);
+
+				    Lockr.get('imageURI');
+				    Lockr.rm('imageURI');
+				}
+
 				Lockr.set("id",result.id);
 				Lockr.set("name",result.name);
 
@@ -216,6 +218,19 @@ $(document).on('click','#register_button',function(event){
 	})
 
 });
+
+function win(r) {
+
+    console.log("Code = " + r.responseCode);
+    console.log("Response = " + r.response);
+    console.log("Sent = " + r.bytesSent);
+    // alert(r.response);
+}
+
+function fail(error) {
+
+    alert("An error has occurred: Code = " = error.code);
+}
 
 $(document).on('click','#login_button',function(event){
 
@@ -1859,6 +1874,31 @@ function sendemail(email){
 
 }
 
+
+function get_profile(id){
+
+
+	$.ajax({
+		url: base_url+'get_profile',
+		type: 'POST',
+		dataType: 'json',
+		data: {
+			id: id
+		},
+	})
+	.done(function() {
+		
+		// console.log("success");
+	})
+	.fail(function() {
+		console.log("error");
+	})
+	.always(function() {
+		console.log("complete");
+	});
+	
+
+}
 
 
 

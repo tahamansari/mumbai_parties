@@ -302,7 +302,6 @@ function dec_table(){
 
 }
 
-
 function type_gallery() {
 
     navigator.camera.getPicture(uploadPhoto, function(message) {
@@ -324,40 +323,16 @@ function type_camera() {
         quality: 50, 
         destinationType: navigator.camera.DestinationType.FILE_URI,
         sourceType: navigator.camera.PictureSourceType.CAMERA,
-        // cameraDirection: Camera.Direction.FRONT,
         allowEdit:true
     }
         );
 }
 
 function uploadPhoto(imageURI) {
-
-    var options = new FileUploadOptions();
-    options.fileKey="file";
-    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
-    options.mimeType="image/jpeg";
-    options.chunkedMode = false;
-    var ft = new FileTransfer();
-    ft.upload(imageURI, base_url+"profileupload", win, fail, options);
-    
+    Lockr.set('imageURI','imageURI');
 }
 
-function win(r) {
 
-    alert('win');
-
-    console.log("Code = " + r.responseCode);
-    console.log("Response = " + r.response);
-    console.log("Sent = " + r.bytesSent);
-    alert(r.response);
-}
-
-function fail(error) {
-
-    alert('fail');
-
-    alert("An error has occurred: Code = " = error.code);
-}
 
 
 
