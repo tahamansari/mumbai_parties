@@ -36,7 +36,6 @@ function get_direction(para1,para2){
 	directions.navigateTo(para1,para2); // latitude, longitude
 }
 
-
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
@@ -56,17 +55,6 @@ function onDeviceReady() {
         e.preventDefault();
         var page = myApp.getCurrentView().activePage;
         myApp.hideIndicator();
-
-        // if(page.name == "location") {
-        //     if(Lockr.get('is_logged_in')){
-        //         myApp.confirm('would you like to exit app.', function() {
-        //             navigator.app.clearHistory();
-        //             navigator.app.exitApp();
-        //         });
-        //     }else{
-        //         mainView.router.back({});
-        //     }
-        // }
         
         if (page.name == "index") {
 
@@ -119,21 +107,19 @@ function onOffline() {
 var login = function () {
 
     var fbLoginSuccess = function (userData) {
-
         facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],
+            function(result){
 
-            function(result) {
+                alert('success');
+                alert(JSON.stringify(result));
 
-                var result = JSON.stringify(result);
-
-                alert(result);
-
+                // var result = JSON.stringify(result);
+                // alert(result);
 
                 // alert(result.id);
                 // alert(result.email);
                 // alert(result.name);
-                // alert(result.picture.data); 
-
+                // alert(result.picture.data);
             }, 
             function (error) { 
                 alert("Failed: " + error);
