@@ -104,7 +104,19 @@ function onOffline() {
 }
 
 
-var login = function () {
+var mylogin = function () {
+
+    alert('fb login clicked');
+
+    facebookConnectPlugin.login(
+        ["public_profile"], 
+        fbLoginSuccess, 
+        function (error) { 
+            alert("" + error);
+        }
+    );
+
+    
 
     var fbLoginSuccess = function (userData) {
 
@@ -191,15 +203,6 @@ var login = function () {
             }
         );
     }
-
-    facebookConnectPlugin.login(
-        ["public_profile"], 
-        fbLoginSuccess, 
-        function (error) { 
-            alert("" + error);
-        }
-    );
-
 }
 
 var getStatus = function () { 
