@@ -4,11 +4,13 @@ var img_url = "http://mumbaiparties.com/assets/uploads/";
 var casa_img_url = "http://casaestilo.in/taha/mp_admin/assets/img/";
 var profile_img_path = "http://casaestilo.in/taha/mp_admin/uploads/";
 
+var scroll_amount = 250;
+var offset = 0;
 
 $(document).ready(function(){
 	
 	// mainView.hideToolbar();
-	alert('doc is ready');
+	// alert('doc is ready');
 
 	// // Lockr.flush();
 	// var arr = Lockr.getAll();
@@ -572,10 +574,6 @@ function get_entitie(id){
 		},
 		success: function(result){
 
-			console.log(result);
-			console.log(result['events']);
-			console.log(result['events']['event_name']);
-
 			if(result['status']=="success"){
 
 				var entitie_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
@@ -605,8 +603,11 @@ function get_entitie(id){
 				}else{
 					$.each(result['menu_images'],function(key,value){
 
-						menu_data += "<div id='menu-box'><a href='http://mumbaiparties.com/assets/uploads/"+value.url+"' class='fancybox'><img style='padding:5px' width='100%' height='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'></a></div>";
+						menu_data += "<div class='menu-box'><a href='http://mumbaiparties.com/assets/uploads/"+value.url+"' class='fancybox'><img style='padding:5px' width='100%' height='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'></a></div>";
 					})
+
+					menu_data+="<div class='menu-box'><img onclick='loadmoremenu("+result['entitie']['id']+")' style='padding:5px' width='100%' height='100%' src='https://www.medable.com/images/Icon---Plus-Sign.png' alt='no img'></div>";
+
 					$("#menu_data_entitie").html(menu_data);
 				}
 
@@ -892,8 +893,10 @@ function get_event(id){
 						}else{
 							$.each(result['menu_images'],function(key,value){
 								
-								menu_data += "<div id='menu-box'><a href='http://mumbaiparties.com/assets/uploads/"+value.url+"' class='fancybox'><img width='100%' height='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'></a></div>";
+								menu_data += "<div class='menu-box'><a href='http://mumbaiparties.com/assets/uploads/"+value.url+"' class='fancybox'><img width='100%' height='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'></a></div>";
 							})
+
+							menu_data+="<div class='menu-box'><img onclick='loadmoremenuevent("+result['event']['id']+")' style='padding:5px' width='100%' height='100%' src='https://www.medable.com/images/Icon---Plus-Sign.png' alt='no img'></div>";
 
 							$("#menu_data_event").html(menu_data);
 						}
@@ -965,8 +968,13 @@ function get_event_type(){
 
 $(document).on('click','.get-event-data',function(event){
 
+ 
+     scroll_amount = 250;
+     offset=4;
+
 	 var loc_id = $("#list_top_select").val();
 	 var event_type = $(this).attr("data-id");
+	 $('#scroll-data-attr').attr('data-id', event_type);
 
 	 $.ajax({
 
@@ -987,8 +995,8 @@ $(document).on('click','.get-event-data',function(event){
 	 			var html = "";
 		 		$.each(result['data'],function(key,value) {
 
-		 			html +="<div data-id="+value.event_id+" class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 2px;width:100%'>"+
-			                  "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
+		 			html +="<div data-id="+value.event_id+" class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 0px;width:100%'>"+
+			                  "<div style='background-image:url("+img_url+value.image+")' valign='bottom' class='card-header no-border'>"+
 			                  "<h3 class='no-mar list-name'>"+value.event_name+"</h3>" +
 			                  "</div>"+
 			                  "<div class='card-footer color-white'>"+
@@ -1015,6 +1023,73 @@ $(document).on('click','.get-event-data',function(event){
 	})
 });
 
+
+function onscroll_getevent(para1){
+
+	var loc_id = $("#list_top_select").val();
+	var event_type = $("#scroll-data-attr").attr('data-id');
+
+	$('#alert').html(para1.scrollTop);
+
+	if(para1.scrollTop > scroll_amount){
+
+
+
+		myApp.showIndicator();
+		offset+=4;
+		scroll_amount+=250;
+
+		$.ajax({
+
+		 	type:"POST",
+		 	url: base_url+"get_event_data_on_scroll/",
+		 	dataType:"json",
+		 	data:{
+
+		 		loc_id:loc_id,
+		 		event_type:event_type,
+		 		offset:offset
+		 	},
+		 	success:function(result){
+
+		 		console.log(result);
+
+		 		if(result['status']=="success"){
+
+		 			var html = "";
+			 		$.each(result['data'],function(key,value) {
+
+			 			html +="<div data-id="+value.event_id+" class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 0px;width:100%'>"+
+				                  "<div style='background-image:url("+img_url+value.image+")' valign='bottom' class='card-header no-border'>"+
+				                  "<h3 class='no-mar list-name'>"+value.event_name+"</h3>" +
+				                  "</div>"+
+				                  "<div class='card-footer color-white'>"+
+				                    "<span class='footer-left'>@ "+value.name+"</span>"+
+				                    "<span class='footer-text'>"+value.time_event_start+" to "+value.time_event_ends+"</span>"+
+				                  "</div>"+
+				                "</div>";
+			 		});
+
+			 		$('#event_box').append(html);
+					myApp.hideIndicator();
+
+		 		}else{
+
+		 			if(result['msg']=="no data"){
+
+						myApp.hideIndicator();
+
+
+		 			}else{
+
+		 				alert("failed");
+		 			}
+		 		}
+		 	}
+		})
+		
+	}
+}
 
 function marker_clicked_event(para1){
 
@@ -1904,6 +1979,76 @@ function get_profile(id){
 
 }
 
+
+function loadmoremenu(id){
+    
+    $.ajax({
+        url: base_url+'get_more_menu_images',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+        	id: id
+        },
+    })
+    .done(function(result) {
+
+    	// alert("response recive");
+     //    console.log(result);
+     	if(result['status']=='success'){
+
+     		menu_data = "";
+ 			$.each(result['data'],function(key,value){
+
+				menu_data += "<div class='menu-box'><a href='http://mumbaiparties.com/assets/uploads/"+value.url+"' class='fancybox'><img style='padding:5px' width='100%' height='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'></a></div>";
+			})
+
+			$("#menu_data_entitie").html(menu_data);
+
+     	}
+
+    })
+    .fail(function() {
+        console.log("error");
+    })
+    .always(function() {
+        console.log("complete");
+    });
+    
+}
+
+function loadmoremenuevent(id){
+    
+    $.ajax({
+        url: base_url+'get_more_menu_images',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+        	id: id
+        },
+    })
+    .done(function(result) {
+
+     	if(result['status']=='success'){
+
+     		menu_data = "";
+ 			$.each(result['data'],function(key,value){
+
+				menu_data += "<div class='menu-box'><a href='http://mumbaiparties.com/assets/uploads/"+value.url+"' class='fancybox'><img style='padding:5px' width='100%' height='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'></a></div>";
+			})
+
+			$("#menu_data_event").html(menu_data);
+
+     	}
+
+    })
+    .fail(function() {
+        console.log("error");
+    })
+    .always(function() {
+        console.log("complete");
+    });
+    
+}
 
 
 // function 

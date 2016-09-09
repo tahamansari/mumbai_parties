@@ -15,65 +15,36 @@
    </div>
 </div>
 <div data-page="listview" class="page">
-   <div class="page-content" onscroll='OnScrollDiv(this)'>
+   <div id="scroll-data-attr" class="page-content" data-id='10' onscroll='onscroll_getevent(this)'>
       <div class="content-block" style="padding:0">
          <div id="tab-container-listview">
+            <div class="swipe-tab" id="owl-demo-list" style="background: url('img/topbg.png')">
+                 <div onclick="get_event_type();" class="tab active-tab">
+                    <p>WHATS HAPPENING</p>
+                 </div>
+                 <div data-id="1" id="list-tab-1" class="tab get-event-data">
+                    <p>KARAOKE</p>
+                 </div>
+                 <div data-id="2" id="list-tab-2" class="tab get-event-data">
+                    <p>HAPPY HOURS</p>
+                 </div>
+                 <div data-id="3" id="list-tab-3" class="tab get-event-data">
+                    <p>LADIES NIGHT</p>
+                 </div>
+                 <div data-id="4" id="list-tab-4" class="tab get-event-data">
+                    <p>SPECIAL EVENTS</p>
+                 </div>
+                 <div data-id="5" id="list-tab-5" class="tab get-event-data">
+                    <p>CRICKET EVENTS</p>
+                 </div>
+                 <div data-id="6" id="list-tab-6" class="tab get-event-data">
+                    <p>FOOTBALL EVENTS</p>
+                 </div>
 
-               <div class="swipe-tab" id="owl-demo-list" style="background: url('img/topbg.png')">
-
-                     <div onclick="get_event_type();" class="tab active-tab">
-                        <p>WHATS HAPPENING</p>
-                     </div>
-                     <div data-id="1" id="list-tab-1" class="tab get-event-data">
-                        <p>KARAOKE</p>
-                     </div>
-                     <div data-id="2" id="list-tab-2" class="tab get-event-data">
-                        <p>HAPPY HOURS</p>
-                     </div>
-                     <div data-id="3" id="list-tab-3" class="tab get-event-data">
-                        <p>LADIES NIGHT</p>
-                     </div>
-                     <div data-id="4" id="list-tab-4" class="tab get-event-data">
-                        <p>SPECIAL EVENTS</p>
-                     </div>
-                     <div data-id="5" id="list-tab-5" class="tab get-event-data">
-                        <p>CRICKET EVENTS</p>
-                     </div>
-                     <div data-id="6" id="list-tab-6" class="tab get-event-data">
-                        <p>FOOTBALL EVENTS</p>
-                     </div>
-
-                     <div data-id="6" id="list-tab-6" class="tab get-list-offers">
-                        <p>OFFERS</p>
-                     </div>
-
-               </div>
-
-            <!-- <div class="swipe-tab" id="owl-demo-listview">
-               <div onclick="get_event_type()" class="tab active-tab">
-                  <p>WHATS HAPPENING</p>
-               </div>
-               <div data-id="1" class="tab get-event-data">
-                  <p>KARAOKE</p>
-               </div>
-               <div data-id="2" class="tab get-event-data">
-                  <p>HAPPY HOURS</p>
-               </div>
-               <div data-id="3" class="tab get-event-data">
-                  <p>LADIES NIGHT</p>
-               </div>
-               <div data-id="4" class="tab get-event-data">
-                  <p>SPECIAL EVENTS</p>
-               </div>
-               <div data-id="5" class="tab get-event-data">
-                  <p>CRICKET EVENTS</p>
-               </div>
-               <div data-id="6" class="tab get-event-data">
-                  <p>FOOTBALL EVENTS</p>
-               </div>
-            </div> -->
-
-
+                 <div data-id="6" id="list-tab-6" class="tab get-list-offers">
+                    <p>OFFERS</p>
+                 </div>
+            </div>
             <div class="date-box">
                <span class="date-text"></span>
 
@@ -91,28 +62,27 @@
    </div>
    <div class="toolbar" style="text-align:center">
       <div class="toolbar-inner">
-
-          <a class='home' href="">
-            <i class='material-icons'>&#xE88A;</i>
-            <p class="tool-text no-mar">HOME</p>
+          <a href="search.html">
+            <i class="material-icons">&#xE8B6;</i>
+            <p class="tool-text no-mar">SEARCH</p>
           </a>
           
-          <a href="#">
+         <!--  <a href="#">
             <i class="material-icons">&#xE54E;</i>
             <p class="tool-text no-mar">MY OFFERS</p>
-          </a>
+          </a> -->
           <a href="club_types.html">
             <i class="material-icons">&#xE147;</i>
             <p class="tool-text no-mar">CLUBS</p>
           </a>
           <!-- class="open-popup" data-popup=".popup-notification" -->
-          <a href="notification.html">
+          <a class='notify-toolbar' href="#">
             <i class="material-icons">&#xE7F4;</i>
             <p class="tool-text no-mar">NOTIFY</p>
           </a>
-          <a href="#" style="border:0">
+          <a id="alert" href="#" style="border:0">
             <i class="material-icons">&#xE7F4;</i>
-            <p id="alert" class="tool-text no-mar">ALERTS</p>
+            <p class="tool-text no-mar">ALERTS</p>
           </a>
       </div>
   </div>

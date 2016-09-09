@@ -495,8 +495,9 @@ a{
 }
 .card-footer{
 
-      background: #2f2a2a;
-      padding: 10px;
+      background: beige;
+    color: black;
+    padding: 10px;
 }
 
 .location-select{
@@ -874,7 +875,7 @@ a{
   font-size: 12px;
 }
 
-#menu-box{
+.menu-box{
 
     width: 90px;
     height: 100px;
@@ -987,7 +988,8 @@ font-smoothing: antialiased;
 
 .toolbar-inner a{
 
-  padding-right: 15px;
+  /*padding-right: 15px;*/
+  padding-right: 25px;
   border-right: 1px solid #343434;
 
 }
@@ -1376,4 +1378,11 @@ display: block;
 .preloader-white{
 
   background-image:url("../img/5.png");
+}
+
+#tab-container-listview{
+  
+/*    position: fixed;
+    top: 55px;
+    z-index: 99;*/
 }

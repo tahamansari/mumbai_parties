@@ -68,24 +68,31 @@ function onDeviceReady() {
         //     }
         // }
         
-        if (page.name == "index" || page.name == "location") {
-
-            if(Lockr.get('is_logged_in')){
+        if (page.name == "index") {
 
                 myApp.confirm('would you like to exit app.', function() {
                     navigator.app.clearHistory();
                     navigator.app.exitApp();
                 });
-
-            }else{
-
-                mainView.router.back({});
-
-            }
-
             
-        } else {
+        }else if(page.name == "location"){
+
+                if(Lockr.get('is_logged_in')){
+
+                    myApp.confirm('would you like to exit app.', function() {
+                        navigator.app.clearHistory();
+                        navigator.app.exitApp();
+                    });
+
+                }else{
+
+                    mainView.router.back({});
+
+                }
+        }else{
+
             mainView.router.back({});
+
         }
         
     }, false);
@@ -115,9 +122,8 @@ var login = function () {
 
         facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],
 
-            function (result) {
+            function(result) {
 
-             // alert("Result: " + JSON.stringify(result));
                 alert(result.id);
                 alert(result.email);
                 alert(result.name);
@@ -411,23 +417,25 @@ function win(r) {
     // alert(r.response);
 }
 
+
 function fail(error) {
 
     alert("An error has occurred: Code = "+error.code);
 }
 
 
+$(document).on('click','.notify-toolbar',function(){
 
-function onscroll_getevent(amount){
+    if(Lockr.get('is_logged_in')){
 
-    $('#alert').html(div.scrollTop);
+        mainView.router.loadPage('notification.html');
 
+    }else{
 
-    
+        myApp.alert('Sign In Required');
+    }
 
-}
-
-
+});
 
 
 
