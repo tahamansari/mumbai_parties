@@ -124,10 +124,15 @@ var login = function () {
 
             function(result) {
 
-                alert(result.id);
-                alert(result.email);
-                alert(result.name);
-                alert(result.picture.data); 
+                var result = JSON.stringify(result);
+
+                alert(result);
+
+
+                // alert(result.id);
+                // alert(result.email);
+                // alert(result.name);
+                // alert(result.picture.data); 
 
             }, 
             function (error) { 
