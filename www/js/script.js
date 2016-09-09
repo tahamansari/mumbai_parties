@@ -107,11 +107,14 @@ function onOffline() {
 var login = function () {
 
     var fbLoginSuccess = function (userData) {
+
+        alert('success called');
+
         facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],
             function(result){
 
-                alert('success');
-                alert(JSON.stringify(result));
+                alert('inside success');
+                // alert(JSON.stringify(result));
 
                 // var fb_id = result.id;
                 // var type = "fb";
