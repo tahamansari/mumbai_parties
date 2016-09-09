@@ -114,7 +114,7 @@ var mylogin = function () {
 
     facebookConnectPlugin.login(["public_profile"],
         fbLoginSuccess,
-        function (error) { alert("error is " + error) }
+        function (error) { alert("error is " + JSON.stringfy(error))}
     );
 
 
