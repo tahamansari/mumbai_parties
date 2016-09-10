@@ -119,7 +119,7 @@ var mylogin = function () {
             if(result['status']=='success'){
 
                 Lockr.set("id",result['data']['id']);
-                Lockr.set("name",result['data']['name']);
+                Lockr.set("name",result['data']['first_name']);
                 Lockr.set("type","fb");
                 Lockr.set("is_logged_in",true);
 
