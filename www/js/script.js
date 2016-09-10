@@ -75,12 +75,9 @@ function onDeviceReady() {
                 }else{
 
                     mainView.router.back({});
-
                 }
         }else{
-
             mainView.router.back({});
-
         }
         
     }, false);
@@ -103,106 +100,122 @@ function onOffline() {
 
 }
 
-
 var mylogin = function () {
-
-    alert('fb login clicked');
-
-    // var fbLoginSuccess = function (userData) {
-    //     alert("UserInfo: " + JSON.stringify(userData));
-    // }
-
-    // facebookConnectPlugin.login(["public_profile"],
-    //     fbLoginSuccess,
-    //     function (error) { alert("error is " + JSON.stringify(error))}
-    // );
-
 
     var fbLoginSuccess = function (userData) {
 
-        alert('success called');
+        alert('fb success called');
+        alert(JSON.stringify(userData));
 
-        facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],
-            function(result){
+        var id = userData.id;
+        alert('id is '+id);
 
-                alert('inside success');
-                
-                // alert(JSON.stringify(result));
+        $.ajax({
+            url: base_url+'check_user',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id: id
+            },
+        })
+        .done(function(result) {
 
-                var fb_id = result.id;
-                var type = "fb";
-                var email = result.email;
-                var name = result.name;
+            alert('ajax succes complaet');
+            alert(JSON.stringify(result));
 
-                var nm = name.substring(0, 3);
-                var num = Math.floor(1000 + Math.random() * 9000);
+            if(result['status']=='success'){
 
-                var ref_code = nm+num;
-                var is_redeemed = 0;
+                alert('succes');
 
-                $.ajax({
+            }else{
 
-                    url: base_url+"register/",
-                    type:'POST',
-                    dataType:'json',
-                    data:{
+            }
+            
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+        
+        // facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],
+        //     function(result){
 
-                        fb_id:fb_id,
-                        type:type,
-                        email: email,
-                        name: name,
-                        ref_code:ref_code,
-                        is_redeemed:is_redeemed
+        //         var fb_id = result.id;
+        //         var type = "fb";
+        //         var email = result.email;
+        //         var name = result.name;
 
-                    },
-                    success:function(result){
+        //         var nm = name.substring(0, 3);
+        //         var num = Math.floor(1000 + Math.random() * 9000);
 
-                        alert('insert success');
+        //         var ref_code = nm+num;
+        //         var is_redeemed = 0;
 
-                        if(result.status=='success'){
+        //         $.ajax({
 
-                            // if(Lockr.get('imageURI')){
+        //             url: base_url+"register/",
+        //             type:'POST',
+        //             dataType:'json',
+        //             data:{
 
-                            //     alert('true');
+        //                 fb_id:fb_id,
+        //                 type:type,
+        //                 email: email,
+        //                 name: name,
+        //                 ref_code:ref_code,
+        //                 is_redeemed:is_redeemed
+
+        //             },
+        //             success:function(result){
+
+        //                 alert('insert success');
+
+        //                 if(result.status=='success'){
+
+        //                     // if(Lockr.get('imageURI')){
+
+        //                     //     alert('true');
                                 
-                            //     // var options = new FileUploadOptions();
-                            //     // options.fileKey="file";
-                            //     // options.fileName=img_name;
-                            //     // options.mimeType="image/jpeg";
-                            //     // options.chunkedMode = false;
-                            //     // var ft = new FileTransfer();
-                            //     // ft.upload(imageURI, base_url+"profileupload", win, fail, options);
+        //                     //     // var options = new FileUploadOptions();
+        //                     //     // options.fileKey="file";
+        //                     //     // options.fileName=img_name;
+        //                     //     // options.mimeType="image/jpeg";
+        //                     //     // options.chunkedMode = false;
+        //                     //     // var ft = new FileTransfer();
+        //                     //     // ft.upload(imageURI, base_url+"profileupload", win, fail, options);
 
-                            //     // Lockr.get('imageURI');
-                            //     // Lockr.rm('imageURI');
+        //                     //     // Lockr.get('imageURI');
+        //                     //     // Lockr.rm('imageURI');
 
-                            // }else{
+        //                     // }else{
 
-                            //     alert('false');
-                            // }
+        //                     //     alert('false');
+        //                     // }
 
-                            Lockr.set("id",result.id);
-                            Lockr.set("name",result.name);
-                            Lockr.set("email",result.email);
+        //                     Lockr.set("id",result.id);
+        //                     Lockr.set("name",result.name);
+        //                     Lockr.set("email",result.email);
                             
 
-                            Lockr.set("is_logged_in",true);
+        //                     Lockr.set("is_logged_in",true);
 
-                            myApp.alert("Success");             
-                            mainView.router.loadPage("location.html");
-                        }
+        //                     myApp.alert("Success");             
+        //                     mainView.router.loadPage("location.html");
+        //                 }
 
-                    },
-                    error: function(jqXHR, exception) {
+        //             },
+        //             error: function(jqXHR, exception) {
 
-                        alert("error");
-                    }
-                })
-            }, 
-            function (error) { 
-                alert("Failed: " + error);
-            }
-        );
+        //                 alert("error");
+        //             }
+        //         })
+        //     }, 
+        //     function (error) { 
+        //         alert("Failed: " + error);
+        //     }
+        // );
     }
 
     facebookConnectPlugin.login(["public_profile"], fbLoginSuccess, 
