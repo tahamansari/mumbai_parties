@@ -123,7 +123,6 @@ var mylogin = function () {
                 Lockr.set("type","fb");
                 Lockr.set("is_logged_in",true);
 
-                // myApp.alert("Success");             
                 mainView.router.loadPage("location.html");
 
             }else{
@@ -185,7 +184,6 @@ var mylogin = function () {
 
                             Lockr.set("id",result.id);
                             Lockr.set("name",result.name);
-                            Lockr.set("email",result.email);
                             
 
                             Lockr.set("is_logged_in",true);

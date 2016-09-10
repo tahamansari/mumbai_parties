@@ -25,6 +25,8 @@ var myApp = new Framework7({
 var $$ = Dom7;
 $$(document).on('pageInit', function (e) {
 
+    alert(Lockr.getAll());
+
     var networkState = navigator.connection.type;
 
     var states = {};
@@ -71,7 +73,7 @@ myApp.onPageInit('location', function (page) {
     get_location();
 
     if(Lockr.get("is_logged_in")){
-      
+
          get_profile(Lockr.get("id"));
          $("#signin-div").html("<h2 class='username'><span>Hi, "+Lockr.get("name")+"</span><br><span id='ref_points' style='color: #b7b3b3;font-size: 14px;'>Points 200</span> </h2>");
          $("#signout-div").css("display","block");
