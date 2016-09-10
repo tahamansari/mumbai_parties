@@ -199,7 +199,7 @@ $(document).on('click','#register_button',function(event){
 
 				Lockr.set("is_logged_in",true);
 
-				myApp.alert("Success");				
+				// myApp.alert("Success");				
 				mainView.router.loadPage("location.html");
 			}
 
@@ -279,7 +279,6 @@ $(document).on('click','#login_button',function(event){
 
 
 				Lockr.set("is_logged_in",true);
-
 				mainView.router.loadPage("location.html");
 
 			}else{
@@ -318,7 +317,7 @@ $(document).on("click","#signout",function(event){
 		logout();
 	}
 
-	myApp.alert("Logged out");
+	// myApp.alert("Logged out");
 	mainView.router.loadPage("index.html");
 
 });
