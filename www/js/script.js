@@ -107,7 +107,7 @@ var mylogin = function () {
         alert('fb success called');
         alert(JSON.stringify(userData));
 
-        var id = userData.id;
+        var id = userData['authResponse']['userID'];
         alert('id is '+id);
 
         $.ajax({
