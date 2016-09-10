@@ -49,8 +49,15 @@
     
 
     <plugin name="com.phonegap.plugins.facebookconnect" spec="0.9.0" source="pgb">
-        <param name="APP_ID" value="649298491886916" />
-        <param name="APP_NAME" value="mumbai parties" />
+        <!-- old app id 908572929213032 -->
+        <!-- old app name Mumbai Parties -->
+        
+         <!-- new app id 649298491886916 -->
+         <!-- new app name mumbai parties -->
+
+
+        <param name="APP_ID" value="908572929213032" />
+        <param name="APP_NAME" value="Mumbai Parties" />
     </plugin>
 
 </widget>
