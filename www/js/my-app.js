@@ -1,13 +1,13 @@
 // Initialize app
 var myApp = new Framework7({
 
-    cache:false,
+    // cache:false,
     modalTitle:"Mumbai Parties",    
     // smartSelectOpenIn:'picker',
     swipeBackPage:false,
     smartSelectSearchbar:true,
-    preloadPreviousPage: true,
-    cacheIgnore:['index','location'],
+    // preloadPreviousPage: true,
+    // cacheIgnore:['index','location'],
     // uniqueHistory: true,
     // animateNavBackIcon:true,
 
@@ -25,7 +25,7 @@ var myApp = new Framework7({
 var $$ = Dom7;
 $$(document).on('pageInit', function (e) {
 
-    alert(Lockr.getAll());
+    // alert(Lockr.getAll());
 
     var networkState = navigator.connection.type;
 

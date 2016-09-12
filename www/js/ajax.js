@@ -301,11 +301,8 @@ $(document).on("click","#signout",function(event){
 	$("#signin-div").html("<a href='login.html' class='close-panel'> <h2 class='username'>Sign in</h2> </a>");
     $("#signout-div").css("display","none");
     $("#invite_div").css("display","none");
-    $("#camera-icon").css("display","none");
-
 
     $('#profile_img').attr('src', 'img/placeholder.png');
-
 
     Lockr.rm('is_logged_in');
 
@@ -1858,8 +1855,8 @@ function redeem(ref_code){
 
     	if(result['status']=='success'){
 
-    		mainView.router.loadPage('index.html');
     		myApp.alert("Points Added");
+    		mainView.router.loadPage('location.html');
 
     	}else{
 

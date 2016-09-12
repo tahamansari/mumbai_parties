@@ -1,0 +1,90 @@
+<div class="navbar">
+   <div class="navbar-inner" style="background-color: black">
+      <div class="left">
+         <a href="#" class="link icon-only open-panel">
+            <img src="img/drawer.png" width="25px">
+         </a>
+      </div>
+      <div class="center top-select-container">
+         <select id="list_top_select" placeholder="Select Location" class="top-select" placeholder="Select your Location">
+         </select>
+      </div>
+      <div class="right">
+         <a  id="map_view_link"  class="view-button" href="mapview.html">MAP VIEW</a>
+      </div>
+   </div>
+</div>
+<div data-page="listview" class="page">
+   <div id="scroll-data-attr" class="page-content" data-id='10' onscroll='onscroll_getevent(this)'>
+      <div class="content-block" style="padding:0">
+         <div id="tab-container-listview">
+            <div class="swipe-tab" id="owl-demo-list" style="background: url('img/topbg.png')">
+                 <div onclick="get_event_type();" class="tab active-tab">
+                    <p>WHATS HAPPENING</p>
+                 </div>
+                 <div data-id="1" id="list-tab-1" class="tab get-event-data">
+                    <p>KARAOKE</p>
+                 </div>
+                 <div data-id="2" id="list-tab-2" class="tab get-event-data">
+                    <p>HAPPY HOURS</p>
+                 </div>
+                 <div data-id="3" id="list-tab-3" class="tab get-event-data">
+                    <p>LADIES NIGHT</p>
+                 </div>
+                 <div data-id="4" id="list-tab-4" class="tab get-event-data">
+                    <p>SPECIAL EVENTS</p>
+                 </div>
+                 <div data-id="5" id="list-tab-5" class="tab get-event-data">
+                    <p>CRICKET EVENTS</p>
+                 </div>
+                 <div data-id="6" id="list-tab-6" class="tab get-event-data">
+                    <p>FOOTBALL EVENTS</p>
+                 </div>
+
+                 <div data-id="6" id="list-tab-6" class="tab get-list-offers">
+                    <p>OFFERS</p>
+                 </div>
+            </div>
+            <div class="date-box">
+               <span class="date-text"></span>
+
+               <input id="date" class="list-view-date" name="date" type="date">
+               <!-- <i style="padding: 11px;float:right;" class="fa fa-calendar" aria-hidden="true"></i> -->
+
+            </div>
+         </div>
+
+         <div class="row no-gutter" id="event_box">
+
+            
+         </div>
+      </div>
+   </div>
+   <div class="toolbar" style="text-align:center">
+      <div class="toolbar-inner">
+          <a id="home" href="search.html">
+            <i class="material-icons">&#xE88A;</i>
+            <p class="tool-text no-mar">HOME</p>
+          </a>
+          
+         <!--  <a href="#">
+            <i class="material-icons">&#xE54E;</i>
+            <p class="tool-text no-mar">MY OFFERS</p>
+          </a> -->
+          
+          <a href="club_types.html">
+            <i class="material-icons">&#xE147;</i>
+            <p class="tool-text no-mar">CLUBS</p>
+          </a>
+          <!-- class="open-popup" data-popup=".popup-notification" -->
+          <a class='notify-toolbar' href="#">
+            <i class="material-icons">&#xE7F4;</i>
+            <p class="tool-text no-mar">NOTIFY</p>
+          </a>
+          <a id="alert" href="#" style="border:0">
+            <i class="material-icons">&#xE7F4;</i>
+            <p class="tool-text no-mar">ALERTS</p>
+          </a>
+      </div>
+  </div>
+</div>

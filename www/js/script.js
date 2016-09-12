@@ -158,8 +158,6 @@ var mylogin = function () {
                     },
                     success:function(result){
 
-                        alert('insert success');
-
                         if(result.status=='success'){
 
                             // if(Lockr.get('imageURI')){
@@ -184,8 +182,7 @@ var mylogin = function () {
 
                             Lockr.set("id",result.id);
                             Lockr.set("name",result.name);
-                            
-
+                            Lockr.set("type","fb");
                             Lockr.set("is_logged_in",true);
 
                             // myApp.alert("Success");             
@@ -220,7 +217,8 @@ var mylogin = function () {
 
         function (error) {
 
-            alert("error is " + error);
+             // + error
+            alert("Invalid Credentials");
         }
     );
 
@@ -236,8 +234,8 @@ var getStatus = function () {
 var logout = function () { 
 
     facebookConnectPlugin.logout( 
-        function (response) { alert(JSON.stringify(response)) },
-        function (response) { alert(JSON.stringify(response)) });
+        function (response) {  },
+        function (response) {  });
 }
 
 function current_date(){
@@ -520,7 +518,21 @@ $(document).on('click','.notify-toolbar',function(){
 
 });
 
+function book_login(){
 
+    // alert("clicked");
+    
+    if(Lockr.get('is_logged_in')){
+
+        mainView.router.loadPage('book.html');
+
+    }else{
+
+        myApp.alert('Sign In Required');
+        mainView.router.loadPage('login.html');
+    }
+
+}
 
 
 
