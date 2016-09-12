@@ -841,11 +841,19 @@ a{
 /* positioning of infowindow */
 .gm-style-iw
 {
-    top: 100px !important;
+   /* top: 100px !important;
     left: 110px !important;
-    color: #6D6D7E;
-    background-color: none;
+    color: black;
+    background-color: white;*/
     /*background-color: rgba(0,0,0,.5);*/
+
+    top: 100px !important;
+    left: 100px !important;
+    color: #2aff08;
+    padding-left: 15px;
+    background-color: #777;
+    padding-top: 5px;
+
 
 }
 
