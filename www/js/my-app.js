@@ -221,17 +221,20 @@ myApp.onPageInit('offer', function (page) {
 
 myApp.onPageInit('mapview', function (page) {
 
-      // myApp.showIndicator();
-        if(Lockr.get('is_logged_in')){
-             // alert('logged in');
-             $('.home').attr('href','location.html');
-        }else{
-            // alert('NOT logged in');
-            $('.home').attr('href','index.html');
-        }
-        
-      var owl = $("#owl-demo-map");
+      var id = page.query.id;  
+      get_initial_map_data(id);
+      // get_owl_map();
+      get_top_location(id);
 
+      $('#whatshappening_map').attr('onclick', 'get_initial_map_data('+id+')');
+
+      if(Lockr.get('is_logged_in')){
+        $('.home').attr('href','location.html');
+      }else{
+        $('.home').attr('href','index.html');
+      }
+
+      var owl = $("#owl-demo-map");
       owl.owlCarousel({
 
       items : 5, //10 items above 1000px browser width
@@ -244,20 +247,10 @@ myApp.onPageInit('mapview', function (page) {
 
 
       $(document).on('click', '.owl-item', function(){
-            
             n = $(this).index();
             console.log(n)
             $('.owl-wrapper').trigger('owl.goTo', n);
-      });
-
-    var id = page.query.id;  
-    get_initial_map_data(id);
-
-    get_top_location(id);
-
-    // myApp.hideIndicator();
-
-
+     });
 });
 
 myApp.onPageInit('listview', function (page) {

@@ -361,6 +361,7 @@ $(document).on('change','#map_top_select',function(){
 
 	var id = $("#map_top_select").val();
 	$('#list_view_link').attr('href', 'listview.html?id='+$(this).val());
+    $('#whatshappening_map').attr('onclick', 'get_initial_map_data('+id+')');
 	get_initial_map_data(id);
 
 });
@@ -390,20 +391,17 @@ function get_top_location(id){
  				  var select = "";
 		          $.each(result['data'], function(key,value){
 
-		          		if(value.id == id){
-
-		          			select += "<option selected value='"+value.id+"'>in "+value.name+"</option>";
-
-		          		}else{
-
-		          			select += "<option value='"+value.id+"'>in "+value.name+"</option>";
-		          		}
+	          		if(value.id == id){
+	          			select += "<option selected value='"+value.id+"'>in "+value.name+"</option>";
+	          		}else{
+	          			select += "<option value='"+value.id+"'>in "+value.name+"</option>";
+	          		}
 
 		          });
 
 		          $('#list_view_link').attr("href","listview.html?id="+id);
 		          $('#map_view_link').attr("href","mapview.html?id="+id);
-		          $('#bottom-select').attr("href","club_types.html?id="+id);
+		          // $('#bottom-select').attr("href","club_types.html?id="+id);
 
 		          $('.top-select').html(select);
 
@@ -427,7 +425,6 @@ function get_top_location(id){
 }
 
 $(document).on('change','#select_location',function(){
-
 
 	var id = $("#select_location").val();
 	mainView.router.loadPage('mapview.html?id='+id);
@@ -1226,41 +1223,38 @@ $(document).on('click','.get_offers',function(event){
 //revise
 $(document).on('click','.get_map_data',function(event){
 
-     // myApp.showIndicator();
-     
 	 var styles = [
-                {
-                featureType: 'all',
-                elementType: 'all',
-                  stylers: [
-                    { hue: '#0800ff' },
-                    { invert_lightness: 'true' },
-                    { saturation: -100 }
-                  ]
-                },
-                {
-                featureType: 'all',
-                elementType: 'labels.icon',
-                  stylers: [
-                    { visibility: 'off' }
-                  ]
-                },
-                {
-                featureType: 'all',
-                elementType: 'labels.text',
-                  stylers: [
-                    { visibility: 'off' }
-                  ]
-                },
-                {
-                featureType: 'road.arterial',
-                elementType: 'labels',
-                  stylers: [
-                    { visibility: 'on' }
-                  ]
-                },
-            ];
-
+        {
+        featureType: 'all',
+        elementType: 'all',
+          stylers: [
+            { hue: '#0800ff' },
+            { invert_lightness: 'true' },
+            { saturation: -100 }
+          ]
+        },
+        {
+        featureType: 'all',
+        elementType: 'labels.icon',
+          stylers: [
+            { visibility: 'off' }
+          ]
+        },
+        {
+        featureType: 'all',
+        elementType: 'labels.text',
+          stylers: [
+            { visibility: 'off' }
+          ]
+        },
+        {
+        featureType: 'road.arterial',
+        elementType: 'labels',
+          stylers: [
+            { visibility: 'on' }
+          ]
+        },
+     ];
 
      var loc_id =  $('#map_top_select').val();
 	 var event_type = $(this).attr('data-id');
@@ -2071,39 +2065,46 @@ function loadmoremenu(id){
     
 }
 
-// function loadmoremenuevent(id){
-    
-//     $.ajax({
-//         url: base_url+'get_more_menu_images',
-//         type: 'POST',
-//         dataType: 'json',
-//         data: {
-//         	id: id
-//         },
-//     })
-//     .done(function(result) {
+// function get_owl_map(){
 
-//      	if(result['status']=='success'){
+// 	$.ajax({
+// 		url: base_url+'get_owl_map',
+// 		type: 'POST',
+// 		dataType: 'json'
+// 	})
+// 	.done(function(result) {
 
-//      		menu_data = "";
-//  			$.each(result['data'],function(key,value){
+// 		// console.log(result);
+// 		if(result['status']=='success'){
 
-// 				menu_data += "<div class='menu-box'><a href='http://mumbaiparties.com/assets/uploads/"+value.url+"' class='fancybox'><img style='padding:5px' width='100%' height='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'></a></div>";
-// 			})
+// 			var html="";
+// 			$.each(result['data'],function(key, value){
+			
+// 				html += "<div data-id='"+value.id+"' class='tab get_map_data'>"+
+// 		                  "<p>"+value.event_type+"</p>"+
+// 		               "</div>";
+// 			});
 
-// 			$("#menu_data_event").html(menu_data);
+// 			$('#owl-demo-map').append(html);
+// 			console.log(html);
 
-//      	}
+// 		}else{
 
-//     })
-//     .fail(function() {
-//         console.log("error");
-//     })
-//     .always(function() {
-//         console.log("complete");
-//     });
-    
+// 			if(result['msg']=='no data'){
+
+// 				alert('no data');
+
+// 			}else{
+
+// 				alert('failed');
+// 			}
+// 		}
+		
+// 	})
+// 	.fail(function() {
+// 		console.log("error");
+// 	})
+// 	.always(function() {
+// 		console.log("complete");
+// 	});
 // }
-
-
-// function 

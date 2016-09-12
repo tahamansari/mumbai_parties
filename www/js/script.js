@@ -414,7 +414,7 @@ function dec_table(){
 function type_gallery() {
 
     navigator.camera.getPicture(uploadPhoto, function(message) {
-            alert('get picture failed');
+            alert('Try Again');
     },{
         quality: 50, 
         destinationType: navigator.camera.DestinationType.FILE_URI,
@@ -427,7 +427,7 @@ function type_gallery() {
 function type_camera() {
 
     navigator.camera.getPicture(uploadPhoto, function(message) {
-            alert('get picture failed');
+            alert('Try Again');
     },{
         quality: 50, 
         destinationType: navigator.camera.DestinationType.FILE_URI,
@@ -471,6 +471,7 @@ function uploadPhoto(imageURI) {
                 var ft = new FileTransfer();
                 ft.upload(imageURI, base_url+"upload_profile", win, fail, options);
 
+                $('#profile_img').attr('src', 'http://casaestilo.in/taha/mp_admin/uploads/'+img_name); 
                 myApp.alert("Profile Updated");
                 myApp.closeModal('.profile_picker');
 
