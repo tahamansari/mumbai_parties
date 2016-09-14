@@ -104,7 +104,8 @@ function onOnline() {
 
 function onOffline() {
     // Handle the online event
-    myApp.alert("No Internet");
+    // myApp.alert("No Internet");
+    mainView.router.loadPage('offline.html');
 
 }
 
@@ -450,7 +451,8 @@ function type_camera() {
 function uploadPhoto(imageURI) {
 
 
-    myApp.closeModal('profile_picker');
+    myApp.closeModal('.profile_picker');
+
     var id = Lockr.get('id'); 
     var page = myApp.getCurrentView().activePage;
     var img_name = imageURI.substr(imageURI.lastIndexOf('/')+1);
