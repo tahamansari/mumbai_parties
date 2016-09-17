@@ -1484,3 +1484,9 @@ input[type=date]::-webkit-calendar-picker-indicator:active {
 
   /*color: blue;*/
 }
+
+.booking-list li{
+
+      border-bottom: 3px solid black;
+
+}

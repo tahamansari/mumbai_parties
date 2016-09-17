@@ -62,6 +62,7 @@ function onDeviceReady() {
                     navigator.app.clearHistory();
                     navigator.app.exitApp();
                 });
+                return false;
         }
         
         if (page.name == "index") {
