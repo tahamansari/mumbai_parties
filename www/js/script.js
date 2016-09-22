@@ -226,9 +226,8 @@ var mylogin = function () {
     facebookConnectPlugin.login(["public_profile"], fbLoginSuccess, 
 
         function (error) {
-
              // + error
-            alert("error "+ error);
+            alert("error "+ JSON.stringify(error));
         }
     );
 
