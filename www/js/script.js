@@ -421,9 +421,9 @@ function dec_table(){
 
 }
 
-function type_gallery() {
+function update_type_gallery() {
 
-    navigator.camera.getPicture(uploadPhoto, function(message) {
+    navigator.camera.getPicture(updateprofile, function(message) {
             alert('Try Again');
     },{
         quality: 50, 
@@ -434,9 +434,9 @@ function type_gallery() {
         );
 }
 
-function type_camera() {
+function update_type_camera() {
 
-    navigator.camera.getPicture(uploadPhoto, function(message) {
+    navigator.camera.getPicture(updateprofile, function(message) {
             alert('Try Again');
     },{
         quality: 50, 
@@ -448,8 +448,7 @@ function type_camera() {
 }
 
 
-function uploadPhoto(imageURI) {
-
+function updateprofile(imageURI) {
 
     myApp.closeModal('.profile_picker');
 
@@ -457,54 +456,46 @@ function uploadPhoto(imageURI) {
     var page = myApp.getCurrentView().activePage;
     var img_name = imageURI.substr(imageURI.lastIndexOf('/')+1);
 
-    if(page.name == 'register'){
 
-        Lockr.set('imageURI',imageURI);
-        // alert('page is signup');
+    $.ajax({
+        url: base_url+'update_profile',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            id: id,
+            img_name:img_name
+        },
+    })
+    .done(function(result) {
 
-    }else{
+          if(result['status']=='success'){
 
-        alert('page is register');
-        $.ajax({
-            url: base_url+'update_profile',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                id: id,
-                img_name:img_name
-            },
-        })
-        .done(function(result) {
+            var options = new FileUploadOptions();
+            options.fileKey="file";
+            options.fileName=img_name;
+            options.mimeType="image/jpeg";
+            options.chunkedMode = false;
+            var ft = new FileTransfer();
+            ft.upload(imageURI, base_url+"upload_profile", win, fail, options);
 
-              if(result['status']=='success'){
+            // $('#profile_img').attr('src', 'http://casaestilo.in/taha/mp_admin/uploads/'+img_name); 
 
-                var options = new FileUploadOptions();
-                options.fileKey="file";
-                options.fileName=img_name;
-                options.mimeType="image/jpeg";
-                options.chunkedMode = false;
-                var ft = new FileTransfer();
-                ft.upload(imageURI, base_url+"upload_profile", win, fail, options);
-
-                // $('#profile_img').attr('src', 'http://casaestilo.in/taha/mp_admin/uploads/'+img_name); 
-
-                myApp.alert("Profile Updated");
-                myApp.closeModal('.profile_picker');
+            myApp.alert("Profile Updated");
+            myApp.closeModal('.profile_picker');
 
 
-                // mainView.router.loadPage('location.html');
+            // mainView.router.loadPage('location.html');
 
-              }else{
-                alert('failed');
-              }
-        })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
-        });
-    }
+          }else{
+            alert('failed');
+          }
+    })
+    .fail(function() {
+        console.log("error");
+    })
+    .always(function() {
+        console.log("complete");
+    });
     
 }
 
@@ -522,6 +513,42 @@ function fail(error) {
     // alert("An error has occurred: Code = "+error.code);
 }
 
+
+
+
+function upload_type_gallery() {
+
+    navigator.camera.getPicture(uploadprofile, function(message) {
+            alert('Try Again');
+    },{
+        quality: 50, 
+        destinationType: navigator.camera.DestinationType.FILE_URI,
+        sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY,
+        allowEdit:true
+    }
+        );
+}
+
+function upload_type_camera() {
+
+    navigator.camera.getPicture(uploadprofile, function(message) {
+            alert('Try Again');
+    },{
+        quality: 50, 
+        destinationType: navigator.camera.DestinationType.FILE_URI,
+        sourceType: navigator.camera.PictureSourceType.CAMERA,
+        allowEdit:true
+    }
+        );
+}
+
+
+function uploadprofile(imageURI) {
+
+    myApp.closeModal('.profile_picker');
+    Lockr.set('imageURI',imageURI);
+
+}
 
 $(document).on('click','.notify-toolbar',function(){
 
