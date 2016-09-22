@@ -30,7 +30,6 @@ var profile;
 
 $(document).on('click','#register_button',function(event){
 
-
 	alert("submit clicked");
 
 	event.preventDefault();
@@ -63,7 +62,6 @@ $(document).on('click','#register_button',function(event){
 
 		$('[name="email"]').css("border-bottom","none");
 		var email = $('[name="email"]').val().trim();
-		
 
 	}
 
@@ -110,7 +108,6 @@ $(document).on('click','#register_button',function(event){
 		var age = $('[name="age"]').val().trim();
 
 	}
-
 	
 	if($('[name="gender"]').val() ==""){
 
@@ -138,7 +135,6 @@ $(document).on('click','#register_button',function(event){
 		
 	}
 
-
 	var nm = name.substring(0, 3);
 	var num = Math.floor(1000 + Math.random() * 9000);
 
@@ -146,18 +142,11 @@ $(document).on('click','#register_button',function(event){
 	var is_redeemed = 0;
 
 	if(Lockr.get('imageURI')){
-
-		alert("img uri is set");
+		
 		var imageURI = Lockr.get('imageURI');
 		var img_name = imageURI.substr(imageURI.lastIndexOf('/')+1);
-
-	}else{
-
-		alert("img uri is  not set");
-
 	}
-	
-	
+
 	$.ajax({
 
 		url: base_url+"register/",
@@ -180,23 +169,17 @@ $(document).on('click','#register_button',function(event){
 
 			if(result.status=='success'){
 
-				alert('resonse recived');
-
 				if(Lockr.get('imageURI')){
 
-					alert('inner image uri is set');
-					
 					var s_options = new FileUploadOptions();
 				    options.fileKey="file";
 				    options.fileName=img_name;
 				    options.mimeType="image/jpeg";
 				    options.chunkedMode = false;
 				    var ft = new FileTransfer();
-				    ft.upload(imageURI, base_url+"profileupload", s_win, s_fail, s_options);
+				    ft.upload(imageURI, base_url+"upload_profile", s_win, s_fail, s_options);
 				    Lockr.rm('imageURI');
 
-				}else{
-					alert('inner image uri is not  set');
 				}
 
 				Lockr.set("id",result.id);

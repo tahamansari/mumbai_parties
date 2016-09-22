@@ -480,11 +480,10 @@ function updateprofile(imageURI) {
 
             // $('#profile_img').attr('src', 'http://casaestilo.in/taha/mp_admin/uploads/'+img_name); 
 
+            myApp.closeModal('.update_picker');
+            mainView.router.loadPage('location.html');
             myApp.alert("Profile Updated");
-            myApp.closeModal('.profile_picker');
 
-
-            // mainView.router.loadPage('location.html');
 
           }else{
             alert('failed');
@@ -545,7 +544,7 @@ function upload_type_camera() {
 
 function uploadprofile(imageURI) {
 
-    myApp.closeModal('.profile_picker');
+    myApp.closeModal('.upload_picker');
     Lockr.set('imageURI',imageURI);
 
 }
