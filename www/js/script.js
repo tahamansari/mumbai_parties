@@ -228,7 +228,7 @@ var mylogin = function () {
         function (error) {
 
              // + error
-            alert("Invalid Credentials");
+            alert("error "+ error);
         }
     );
 
@@ -461,7 +461,7 @@ function uploadPhoto(imageURI) {
     if(page.name == 'register'){
 
         Lockr.set('imageURI',imageURI);
-        alert('page is signup');
+        // alert('page is signup');
 
     }else{
 
@@ -491,7 +491,7 @@ function uploadPhoto(imageURI) {
 
                 myApp.alert("Profile Updated");
                 myApp.closeModal('.profile_picker');
-                
+
 
                 // mainView.router.loadPage('location.html');
 
