@@ -30,6 +30,9 @@ var profile;
 
 $(document).on('click','#register_button',function(event){
 
+
+	alert("submit clicked");
+
 	event.preventDefault();
 
 	if($('[name="name"]').val() ==""){
@@ -144,8 +147,14 @@ $(document).on('click','#register_button',function(event){
 
 	if(Lockr.get('imageURI')){
 
+		alert("img uri is set");
+
 		var imageURI = Lockr.get('imageURI');
 		var img_name = imageURI.substr(imageURI.lastIndexOf('/')+1);
+	}else{
+
+		alert("img uri is  not set");
+
 	}
 	
 	
@@ -159,7 +168,7 @@ $(document).on('click','#register_button',function(event){
 			name: name,
 			email: email,
 			password: password,
-			confirm_password: confirm_password,
+			// confirm_password: confirm_password,
 			age: age,
 			gender:gender,
 			mobile: mobile,
@@ -172,34 +181,37 @@ $(document).on('click','#register_button',function(event){
 
 			if(result.status=='success'){
 
+
+				alert('resonse recived');
+
 				if(Lockr.get('imageURI')){
 
 					// alert('true');
+
+					alert('inner image uri is set');
+
 					
-					var options = new FileUploadOptions();
+					var s_options = new FileUploadOptions();
 				    options.fileKey="file";
 				    options.fileName=img_name;
 				    options.mimeType="image/jpeg";
 				    options.chunkedMode = false;
 				    var ft = new FileTransfer();
-				    ft.upload(imageURI, base_url+"profileupload", win, fail, options);
-
-				    Lockr.get('imageURI');
+				    ft.upload(imageURI, base_url+"profileupload", s_win, s_fail, s_options);
 				    Lockr.rm('imageURI');
 
 				}else{
 
-					// alert('false');
+					alert('inner image uri is not  set');
+					
+
 				}
 
 				Lockr.set("id",result.id);
 				Lockr.set("name",result.name);
 				Lockr.set("email",result.email);
 				
-
 				Lockr.set("is_logged_in",true);
-
-				// myApp.alert("Success");				
 				mainView.router.loadPage("location.html");
 			}
 
@@ -212,17 +224,17 @@ $(document).on('click','#register_button',function(event){
 
 });
 
-function win(r) {
+function s_win(r) {
 
-    console.log("Code = " + r.responseCode);
-    console.log("Response = " + r.response);
-    console.log("Sent = " + r.bytesSent);
-    alert(r.response);
+    // console.log("Code = " + r.responseCode);
+    // console.log("Response = " + r.response);
+    // console.log("Sent = " + r.bytesSent);
+    // alert(r.response);
 }
 
-function fail(error) {
+function s_fail(error) {
 
-    alert("An error has occurred: Code = "+error.code);
+    // alert("An error has occurred: Code = "+error.code);
 }
 
 $(document).on('click','#login_button',function(event){
@@ -2044,6 +2056,7 @@ function get_profile(id){
 			if(result['data']['img_name']==null){
 
 				$('#profile_img').attr('src', 'img/placeholder.png');
+
 			}else{
 
 				$('#profile_img').attr('src', profile_img_path+result['data']['img_name']);	

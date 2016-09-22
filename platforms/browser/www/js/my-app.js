@@ -42,7 +42,7 @@ $$(document).on('pageInit', function (e) {
 
     if(states[networkState]=='No network connection'){
 
-        alert('No network connection');
+        myApp.alert('No network connection');
         return false;
     }
 
