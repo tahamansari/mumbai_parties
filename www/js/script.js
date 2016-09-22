@@ -461,9 +461,11 @@ function uploadPhoto(imageURI) {
     if(page.name == 'register'){
 
         Lockr.set('imageURI',imageURI);
+        alert('page is signup');
 
     }else{
 
+        alert('page is register');
         $.ajax({
             url: base_url+'update_profile',
             type: 'POST',
@@ -489,8 +491,9 @@ function uploadPhoto(imageURI) {
 
                 myApp.alert("Profile Updated");
                 myApp.closeModal('.profile_picker');
+                
 
-                mainView.router.loadPage('location.html');
+                // mainView.router.loadPage('location.html');
 
               }else{
                 alert('failed');
@@ -508,16 +511,16 @@ function uploadPhoto(imageURI) {
 
 function win(r) {
 
-    console.log("Code = " + r.responseCode);
-    console.log("Response = " + r.response);
-    console.log("Sent = " + r.bytesSent);
+    // console.log("Code = " + r.responseCode);
+    // console.log("Response = " + r.response);
+    // console.log("Sent = " + r.bytesSent);
     // alert(r.response);
 }
 
 
 function fail(error) {
 
-    alert("An error has occurred: Code = "+error.code);
+    // alert("An error has occurred: Code = "+error.code);
 }
 
 

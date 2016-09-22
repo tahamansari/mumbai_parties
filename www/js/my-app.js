@@ -1,13 +1,12 @@
 // Initialize app
 var myApp = new Framework7({
 
-    cache:false,  
     modalTitle:"Mumbai Parties",
     preloadPreviousPage:false,
     swipeBackPage:false,
     smartSelectSearchbar:true,
-    uniqueHistory: true,
-    uniqueHistoryIgnoreGetParameters: true,
+    // uniqueHistory: true,
+    // uniqueHistoryIgnoreGetParameters: true,
     imagesLazyLoadPlaceholder: 'img/card.jpg',
     imagesLazyLoadThreshold: 50,
     animateNavBackIcon:true,
@@ -43,7 +42,7 @@ $$(document).on('pageInit', function (e) {
 
     if(states[networkState]=='No network connection'){
 
-        alert('No network connection');
+        myApp.alert('No network connection');
         return false;
     }
 
@@ -87,7 +86,8 @@ function check_connection(){
 
 var mainView = myApp.addView('.view-main', {
     
-    dynamicNavbar: true
+    dynamicNavbar: true,
+    // domCache:true
 });
 
 myApp.onPageInit('index', function (page) {
@@ -95,6 +95,10 @@ myApp.onPageInit('index', function (page) {
 });
 
 myApp.onPageInit('location', function (page) {
+
+
+    // mainView.router.refreshPage();
+    // mainView.router.refreshPreviousPage();
 
     get_location();
 
@@ -107,8 +111,6 @@ myApp.onPageInit('location', function (page) {
          $("#booking_div").css("display","block");
 
          $("#profile_picker").addClass('open-picker close-panel');
-         
-         // 
          // $("#camera-icon").css("display","block");
     }
 
