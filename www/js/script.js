@@ -114,8 +114,6 @@ var mylogin = function () {
 
     var fbLoginSuccess = function (userData) {
 
-        alert('fb login success');
-
         var id = userData['authResponse']['userID'];
 
         $.ajax({

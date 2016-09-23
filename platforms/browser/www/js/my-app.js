@@ -27,7 +27,7 @@ $$(document).on('pageInit', function (e) {
 
     // alert(Lockr.getAll());
 
-    alert(Lockr.get('type'));
+    // alert(Lockr.get('imageURI'));
 
     var networkState = navigator.connection.type;
     var states = {};
