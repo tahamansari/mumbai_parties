@@ -27,6 +27,8 @@ $$(document).on('pageInit', function (e) {
 
     // alert(Lockr.getAll());
 
+    alert(Lockr.get('type'));
+
     var networkState = navigator.connection.type;
     var states = {};
     states[Connection.UNKNOWN]  = 'Unknown connection';
@@ -96,22 +98,18 @@ myApp.onPageInit('index', function (page) {
 
 myApp.onPageInit('location', function (page) {
 
-
-    // mainView.router.refreshPage();
-    // mainView.router.refreshPreviousPage();
-
     get_location();
 
     if(Lockr.get("is_logged_in")){
 
          get_profile(Lockr.get("id"));
+         
          $("#signin-div").html("<h2 class='username'><span>Hi, "+Lockr.get("name")+"</span><br><span id='ref_points' style='color: #b7b3b3;font-size: 14px;'>Points 200</span> </h2>");
          $("#signout-div").css("display","block");
          $("#invite_div").css("display","block");
          $("#booking_div").css("display","block");
 
          $("#profile_picker").addClass('open-picker close-panel');
-         // $("#camera-icon").css("display","block");
     }
 
 });

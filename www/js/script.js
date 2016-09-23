@@ -114,6 +114,8 @@ var mylogin = function () {
 
     var fbLoginSuccess = function (userData) {
 
+        alert('fb login success');
+
         var id = userData['authResponse']['userID'];
 
         $.ajax({
@@ -451,9 +453,7 @@ function update_type_camera() {
 function updateprofile(imageURI) {
 
     myApp.closeModal('.profile_picker');
-
     var id = Lockr.get('id'); 
-    var page = myApp.getCurrentView().activePage;
     var img_name = imageURI.substr(imageURI.lastIndexOf('/')+1);
 
 
@@ -548,6 +548,7 @@ function uploadprofile(imageURI) {
     Lockr.set('imageURI',imageURI);
 
 }
+
 
 $(document).on('click','.notify-toolbar',function(){
 

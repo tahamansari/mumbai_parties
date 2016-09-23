@@ -30,10 +30,9 @@ var profile;
 
 $(document).on('click','#register_button',function(event){
 
-
-	alert("submit clicked");
-
 	event.preventDefault();
+
+	// alert('clcked');
 
 	if($('[name="name"]').val() ==""){
 
@@ -63,7 +62,6 @@ $(document).on('click','#register_button',function(event){
 
 		$('[name="email"]').css("border-bottom","none");
 		var email = $('[name="email"]').val().trim();
-		
 
 	}
 
@@ -110,7 +108,6 @@ $(document).on('click','#register_button',function(event){
 		var age = $('[name="age"]').val().trim();
 
 	}
-
 	
 	if($('[name="gender"]').val() ==""){
 
@@ -138,6 +135,15 @@ $(document).on('click','#register_button',function(event){
 		
 	}
 
+	if(Lockr.get('imageURI')){
+
+		var imageURI = Lockr.get('imageURI');
+		var img_name = imageURI.substr(imageURI.lastIndexOf('/')+1);
+
+	}else{
+
+		var img_name="user.jpeg";
+	}
 
 	var nm = name.substring(0, 3);
 	var num = Math.floor(1000 + Math.random() * 9000);
@@ -145,19 +151,6 @@ $(document).on('click','#register_button',function(event){
 	var ref_code = nm+num;
 	var is_redeemed = 0;
 
-	if(Lockr.get('imageURI')){
-
-		alert("img uri is set");
-		var imageURI = Lockr.get('imageURI');
-		var img_name = imageURI.substr(imageURI.lastIndexOf('/')+1);
-
-	}else{
-
-		alert("img uri is  not set");
-
-	}
-	
-	
 	$.ajax({
 
 		url: base_url+"register/",
@@ -178,32 +171,34 @@ $(document).on('click','#register_button',function(event){
 		},
 		success:function(result){
 
-			if(result.status=='success'){
+			// alert(JSON.stringify(result));
 
-				alert('resonse recived');
+			if(result.status=='success'){
 
 				if(Lockr.get('imageURI')){
 
-					alert('inner image uri is set');
-					
-					var s_options = new FileUploadOptions();
+					// alert('imageuri is set');
+
+					var imageURI = Lockr.get('imageURI');
+					var img_name = imageURI.substr(imageURI.lastIndexOf('/')+1);
+
+					var options = new FileUploadOptions();
 				    options.fileKey="file";
 				    options.fileName=img_name;
 				    options.mimeType="image/jpeg";
 				    options.chunkedMode = false;
 				    var ft = new FileTransfer();
-				    ft.upload(imageURI, base_url+"profileupload", s_win, s_fail, s_options);
-				    Lockr.rm('imageURI');
+				    ft.upload(imageURI, base_url+"upload_profile", s_win, s_fail, options);
 
-				}else{
-					alert('inner image uri is not  set');
 				}
 
+				Lockr.rm('imageURI');
 				Lockr.set("id",result.id);
 				Lockr.set("name",result.name);
 				Lockr.set("email",result.email);
 				
 				Lockr.set("is_logged_in",true);
+
 				mainView.router.loadPage("location.html");
 			}
 
@@ -221,12 +216,12 @@ function s_win(r) {
     // console.log("Code = " + r.responseCode);
     // console.log("Response = " + r.response);
     // console.log("Sent = " + r.bytesSent);
-    alert("response is "+r.response);
+    // alert("success response is "+r.response);
 }
 
 function s_fail(error) {
 
-    alert("An error has occurred: Code = "+error.code);
+    // alert("An error has occurred: Code = "+error.code);
 }
 
 $(document).on('click','#login_button',function(event){
@@ -312,7 +307,7 @@ $(document).on("click","#signout",function(event){
 
 
 
-    $('#profile_img').attr('src', 'img/placeholder.png');
+    $('#profile_img').attr('src', 'http://casaestilo.in/taha/mp_admin/uploads/user.jpeg');
 
     Lockr.rm('is_logged_in');
 
@@ -2045,14 +2040,7 @@ function get_profile(id){
 
 		if(result['status']=="success"){
 
-			if(result['data']['img_name']==null){
-
-				$('#profile_img').attr('src', 'img/placeholder.png');
-
-			}else{
-
-				$('#profile_img').attr('src', profile_img_path+result['data']['img_name']);	
-			}
+			$('#profile_img').attr('src', profile_img_path+result['data']['img_name']);	
 
  		}else{
 
