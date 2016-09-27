@@ -7,13 +7,24 @@ function initilize(){
 function check_age(age){
 
 	var age = $('#'+age).val();
-
 	if(isNaN(age)){
 
 		myApp.alert("age should be numeric");
 		$('[name="age"]').val("");
 		return false;
 	}
+
+}
+
+function check_mobile(mobile){
+    
+    var mobile = $('#'+mobile).val();
+    if(isNaN(mobile)){
+
+        myApp.alert("Mobile Number Should Be Numeric");
+        $('[name="mobile"]').val("");
+        return false;
+    }
 
 }
 
@@ -128,8 +139,11 @@ var mylogin = function () {
 
             if(result['status']=='success'){
 
+                var name = result['data']['first_name'];
+                var name = name.split(" ");
+
                 Lockr.set("id",result['data']['id']);
-                Lockr.set("name",result['data']['first_name']);
+                Lockr.set("name",name[0]);
                 Lockr.set("type","fb");
                 Lockr.set("is_logged_in",true);
 
@@ -139,6 +153,9 @@ var mylogin = function () {
 
                 facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],
             function(result){
+
+
+                alert(JSON.stringify(result));
 
                 var fb_id = result.id;
                 var type = "fb";
@@ -190,8 +207,11 @@ var mylogin = function () {
                             //     alert('false');
                             // }
 
+                            var name = result['data']['first_name'];
+                            var name = name.split(" ");
+
                             Lockr.set("id",result.id);
-                            Lockr.set("name",result.name);
+                            Lockr.set("name",name[0]);
                             Lockr.set("type","fb");
                             Lockr.set("is_logged_in",true);
 

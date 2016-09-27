@@ -42,7 +42,7 @@
                   <i class="fa fa-lock icon-font" aria-hidden="true"></i>
                </div>
                <div class="reg-input">
-                  <input id="age" name="age" onkeyup="check_age(this.id)" type="text" placeholder="Age">
+                  <input id="age" name="age" onblur="check_age(this.id)" type="text" placeholder="Age">
                   <i class="fa fa-calendar-o icon-font" aria-hidden="true"></i>
                </div>
                <div class="row reg-input cust-radio">
@@ -57,7 +57,7 @@
                   <input type='radio' name="gender" value='Female'  id='radio2'/>                    
                </div>
                <div class="reg-input">
-                  <input name="mobile" type="text" placeholder="Mobile Number">
+                  <input id='mobile' name="mobile" type="text" onblur="check_mobile(this.id)" placeholder="Mobile Number">
                   <i style="font-size: xx-large;" class="fa fa-mobile icon-font" aria-hidden="true"></i>
                </div>
                  <!-- id='profile_picker' -->

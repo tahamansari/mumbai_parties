@@ -177,8 +177,6 @@ $(document).on('click','#register_button',function(event){
 
 				if(Lockr.get('imageURI')){
 
-					// alert('imageuri is set');
-
 					var imageURI = Lockr.get('imageURI');
 					var img_name = imageURI.substr(imageURI.lastIndexOf('/')+1);
 
@@ -198,8 +196,16 @@ $(document).on('click','#register_button',function(event){
 				Lockr.set("email",result.email);
 				
 				Lockr.set("is_logged_in",true);
-
 				mainView.router.loadPage("location.html");
+
+			}else{
+
+				if(result.msg=='email exist'){
+					myApp.alert("Email Already Exist");
+				}else{
+					myApp.alert('failed');
+				}
+
 			}
 
 		},
@@ -461,22 +467,7 @@ function initial_marker_clicked_event(id){
 
 function get_initial_map_data(id){
 
-	$.ajax({
-
-		type:"POST",
-		url:base_url+"get_initial_map_data/",
-		dataType:'json',
-		data:{
-
-			id:id
-		},
-		success:function(result){
-
-			console.log(result);
-
-			if(result['status'] == "success"){
-
-				var styles = [
+	var styles = [
                 {
                 featureType: 'all',
                 elementType: 'all',
@@ -508,6 +499,23 @@ function get_initial_map_data(id){
                   ]
                 },
             ];
+
+	$('#map').html('Loading..');
+
+	$.ajax({
+
+		type:"POST",
+		url:base_url+"get_initial_map_data/",
+		dataType:'json',
+		data:{
+
+			id:id
+		},
+		success:function(result){
+
+			console.log(result);
+
+			if(result['status'] == "success"){
 
 		    var map = new google.maps.Map(document.getElementById('map'), {
 		      zoom: 14,
@@ -2041,6 +2049,7 @@ function get_profile(id){
 		if(result['status']=="success"){
 
 			$('#profile_img').attr('src', profile_img_path+result['data']['img_name']);	
+
 
  		}else{
 

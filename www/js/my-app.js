@@ -2,7 +2,7 @@
 var myApp = new Framework7({
 
     modalTitle:"Mumbai Parties",
-    preloadPreviousPage:false,
+    // preloadPreviousPage:false,
     swipeBackPage:false,
     smartSelectSearchbar:true,
     // uniqueHistory: true,
@@ -255,18 +255,17 @@ myApp.onPageInit('offer', function (page) {
 
 myApp.onPageInit('mapview', function (page) {
 
-      // var id = page.query.id;
       var id= Lockr.get('loc_id');
       get_initial_map_data(id);
       get_top_location(id);
 
       $('#whatshappening_map').attr('onclick', 'get_initial_map_data('+id+')');
 
-      if(Lockr.get('is_logged_in')){
-        $('.home').attr('href','location.html');
-      }else{
-        $('.home').attr('href','index.html');
-      }
+      // if(Lockr.get('is_logged_in')){
+      //   $('.home').attr('href','location.html');
+      // }else{
+      //   $('.home').attr('href','index.html');
+      // }
 
       var owl = $("#owl-demo-map");
       owl.owlCarousel({
@@ -349,13 +348,13 @@ myApp.onPageInit('listview', function (page) {
 
 myApp.onPageInit('club_types', function (page) {
 
-    if(Lockr.get('is_logged_in')){
-         // alert('logged in');
-         $('.home').attr('href','location.html');
-    }else{
-        // alert('NOT logged in');
-        $('.home').attr('href','index.html');
-    }
+    // if(Lockr.get('is_logged_in')){
+    //      // alert('logged in');
+    //      $('.home').attr('href','location.html');
+    // }else{
+    //     // alert('NOT logged in');
+    //     $('.home').attr('href','index.html');
+    // }
 
 });
 
