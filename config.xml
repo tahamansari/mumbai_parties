@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!-- com.technostrats.mumbaiparties -->
-<widget id="com.mumbaiparties.mumbaiparties" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.mumbaiparties.mumbaiparties" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Mumbai Parties</name>
     <description>
         A basic Framework7 template for PhoneGap.
@@ -18,6 +18,7 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <!-- 15 -->
+
         <preference name="android-minSdkVersion" value="14" />
         <allow-intent href="market:*" />
     </platform>
@@ -28,7 +29,7 @@
     </platform>
 
     <preference name="android-build-tool" value="gradle" />
-    
+
     <preference name="DisallowOverscroll" value="true" />
 
 
