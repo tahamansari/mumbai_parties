@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.mumbaiparties.mumbaiparties" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.mumbaiparties.mumbaiparties" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Mumbai Parties</name>
     <description>
         A basic Framework7 template for PhoneGap.
@@ -15,6 +15,10 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <preference name="DisallowOverscroll" value="true" />
+    <icon height="72" src="www/img/icon.jpg" width="72" />
+    <icon height="48" src="www/img/icon.jpg" width="48" />
+    <icon height="36" src="www/img/icon.jpg" width="36" />
     <preference name="android-build-tool" value="gradle" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
 </widget>

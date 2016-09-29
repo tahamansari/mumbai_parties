@@ -4,8 +4,9 @@ var myApp = new Framework7({
     modalTitle:"Mumbai Parties",
     // preloadPreviousPage:false,
     swipeBackPage:false,
+    cache:false,
     smartSelectSearchbar:true,
-    // uniqueHistory: true,
+    uniqueHistory: true,
     // uniqueHistoryIgnoreGetParameters: true,
     imagesLazyLoadPlaceholder: 'img/card.jpg',
     imagesLazyLoadThreshold: 50,
@@ -28,6 +29,15 @@ $$(document).on('pageInit', function (e) {
     // alert(Lockr.getAll());
 
     // alert(Lockr.get('imageURI'));
+
+    // if(Lockr.get('is_logged_in')){
+
+    //     $('.home').attr('href','location.html');
+
+    //   }else{
+
+    //     $('.home').attr('href','index.html');
+    // }
 
     var networkState = navigator.connection.type;
     var states = {};
@@ -88,8 +98,7 @@ function check_connection(){
 
 var mainView = myApp.addView('.view-main', {
     
-    dynamicNavbar: true,
-    // domCache:true
+    dynamicNavbar: true
 });
 
 myApp.onPageInit('index', function (page) {
@@ -261,11 +270,7 @@ myApp.onPageInit('mapview', function (page) {
 
       $('#whatshappening_map').attr('onclick', 'get_initial_map_data('+id+')');
 
-      // if(Lockr.get('is_logged_in')){
-      //   $('.home').attr('href','location.html');
-      // }else{
-      //   $('.home').attr('href','index.html');
-      // }
+      
 
       var owl = $("#owl-demo-map");
       owl.owlCarousel({
@@ -412,7 +417,6 @@ myApp.onPageInit('login', function (page) {
 
 
 myApp.onPageInit('book', function (page) {
-
 
       var options = {
 

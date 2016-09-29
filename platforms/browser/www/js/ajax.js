@@ -635,7 +635,7 @@ function get_entitie(id){
 
 						img_count++;
 						if(img_count==3){
-							menu_data+="<div class='menu-box' style='text-align: center;margin: auto;'><img class='addicon' onclick='loadmoremenu("+result['entitie']['id']+")' style='padding:5px' width='100%' height='100%' src='https://www.medable.com/images/Icon---Plus-Sign.png' alt='no img'></div>";
+							menu_data+="<div class='menu-box' style='text-align: center;margin: auto;'><img class='addicon' onclick='loadmoremenu("+result['entitie']['id']+")' style='padding:5px' width='100%' height='100%' src='img/plus.ico' alt='no img'></div>";
 							return false;
 						}
 
@@ -822,7 +822,7 @@ function get_offer(id){
 							$.each(result['menu_images'],function(key,value){
 								img_count++;
 								if(img_count==3){
-									menu_data+="<div class='menu-box' style='text-align: center;margin: auto;'><img class='addicon' onclick='loadmoremenu("+result['offer']['id']+")' style='padding:5px' width='100%' height='100%' src='https://www.medable.com/images/Icon---Plus-Sign.png' alt='no img'></div>";
+									menu_data+="<div class='menu-box' style='text-align: center;margin: auto;'><img class='addicon' onclick='loadmoremenu("+result['offer']['id']+")' style='padding:5px' width='100%' height='100%' src='img/plus.ico' alt='no img'></div>";
 									return false;
 								}
 								menu_data += "<div class='menu-box'><a href='http://mumbaiparties.com/assets/uploads/"+value.url+"' class='fancybox'><img width='100%' height='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'></a></div>";
@@ -935,7 +935,7 @@ function get_event(id){
 								
 								img_count++;
 								if(img_count==3){
-									menu_data+="<div class='menu-box' style='text-align: center;margin: auto;'><img class='addicon' onclick='loadmoremenu("+result['event']['id']+")' style='padding:5px' width='100%' height='100%' src='https://www.medable.com/images/Icon---Plus-Sign.png' alt='no img'></div>";
+									menu_data+="<div class='menu-box' style='text-align: center;margin: auto;'><img class='addicon' onclick='loadmoremenu("+result['event']['id']+")' style='padding:5px' width='100%' height='100%' src='img/plus.ico' alt='no img'></div>";
 									return false;
 								}
 								menu_data += "<div class='menu-box'><a href='http://mumbaiparties.com/assets/uploads/"+value.url+"' class='fancybox'><img width='100%' height='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'></a></div>";

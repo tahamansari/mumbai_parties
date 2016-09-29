@@ -344,7 +344,7 @@ a{
 
 .navbar, .toolbar{
 
-  /*height: 60px;*/
+  height: 60px;
 }
 
 .navbar .left a+a, .navbar .right a+a{
@@ -759,8 +759,8 @@ a{
 
 .toolbar,.navbar{
 
-  /*height: 65px;*/
-  /*height: 55px;*/
+  height: 65px;
+  height: 55px;
 
 }
 
@@ -1379,10 +1379,10 @@ display: block;
 
 .addicon{
 
-    width: 40px;
+    width: 60px;
     padding: 5px;
-    height: 40px;
-    margin-top: 25px;
+    height: 60px;
+    margin-top: 20px;
 }
 
 
@@ -1404,9 +1404,11 @@ display: block;
   width: 10%;
 }
 
+
+
 .preloader-white{
 
-  background-image:url("../img/5.png");
+  background-image:url("../img/toplogo.png");
 }
 
 #tab-container-listview{
@@ -1501,9 +1503,19 @@ position: absolute;
     position: fixed;
 }
 
+.toolbar-inner{
+
+  left: 16px;
+
+}
 
 .list-view-date::-webkit-inner-spin-button,
 .list-view-date::-webkit-calendar-picker-indicator {
     display: none;
     -webkit-appearance: none;
+}
+
+.bg{
+  background:url(../img/bg.png); 
+  background-size: 100% 100%;
 }

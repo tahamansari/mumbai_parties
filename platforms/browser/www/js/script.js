@@ -1,7 +1,5 @@
 function initilize(){
-
 	myApp.alert("initiliEd");
-
 }
 
 function check_age(age){
@@ -50,7 +48,6 @@ function get_direction(para1,para2){
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-
 
     // alert('device is not ready');
     // $('input, textarea, button, a, select').off('touchstart mousedown').on('touchstart mousedown', function(e) {
@@ -605,4 +602,33 @@ function book_login(){
 
 }
 
+$(document).on('click','.home',function(){
 
+
+    if(Lockr.get('is_logged_in')){
+
+        // $('.home').attr('href','location.html');
+        // mainView.router.loadPage('location.html',{ignoreCache:true});
+
+        mainView.router.load({
+            url: 'location.html',
+            ignoreCache: true,
+        });
+
+
+      }else{
+
+        // $('.home').attr('href','index.html');
+        // mainView.router.loadPage('index.html',{ignoreCache:true});
+
+        mainView.router.load({
+            url: 'index.html',
+            ignoreCache: true,
+        });
+
+    }
+
+    // alert('home page clicked');
+
+
+})
