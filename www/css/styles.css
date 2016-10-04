@@ -413,8 +413,8 @@ a{
 
 .content-block{
 
-/*    margin-top: 55px;
-    margin-bottom: 55px;*/
+    margin-top: 55px;
+    margin-bottom: 55px;
     /*margin-bottom: 70px;*/
 
     
@@ -497,8 +497,8 @@ a{
 }
 .card-footer{
 
-      background: beige;
-    color: black;
+    background: rgb(0, 0, 0);
+    color: white;
     padding: 10px;
 }
 
@@ -530,7 +530,8 @@ a{
     width: 100%;
     height: 75%;
     overflow: hidden;
-    background-color: rgb(229, 227, 223);
+    /*background-color: black;*/
+    /*rgb(229, 227, 223)*/
 }
 
 
@@ -642,19 +643,11 @@ a{
 
 }
 
-.list-view-date{
 
-    margin-top: 13px;
-    background: #2f2a2a;
-    float: right;
-    color: white;
-    border: medium none;
-
-}
 
 .list-name{
 
-    color: #E3E9E3;
+    color: #3cd456;
     background-color: rgba(0, 0, 0, 0.61);
     width: 100%;
     padding: 5px 10px;
@@ -1270,10 +1263,6 @@ border-bottom: 2px solid #1c1d1f;
 }
 
 
-.navbar-inner{
-
-    background-color: none!important;
-}
 
 .font-12{
 
@@ -1408,7 +1397,7 @@ display: block;
 
 .preloader-white{
 
-  background-image:url("../img/toplogo.png");
+  background-image:url("../img/logo.png");
 }
 
 #tab-container-listview{
@@ -1518,4 +1507,62 @@ position: absolute;
 .bg{
   background:url(../img/bg.png); 
   background-size: 100% 100%;
+}
+
+.preloader-indicator-modal .preloader{
+
+    height: 150px;
+
+}
+
+.back img{
+
+  padding: 5px;
+}
+
+.no-event{
+
+    padding: 0px 15px;
+
+}
+
+.calender{
+
+    position: absolute;
+    width: 20px;
+    right: 10px;
+    top: 10px;
+    z-index: 1;
+}
+
+.list-view-date{
+
+    position: absolute;
+    right: 0;
+        padding: 10px 0px;
+    background: #2f2a2a;
+    color: white;
+    border: medium none;
+
+}
+
+.preloader{
+
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg%20viewBox%3D'0%200%20120%20120'%20x…%3D'.85'%20transform%3D'rotate(330%2060%2C60)'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E);
+    background-position: 50%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    -webkit-animation: inherit;
+    animation: none;
+
+
+}
+
+.preloader-indicator-modal{
+
+      background: none;
+  top: 38%;
 }

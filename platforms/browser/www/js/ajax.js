@@ -211,7 +211,7 @@ $(document).on('click','#register_button',function(event){
 		},
 		error: function(jqXHR, exception) {
 
-			alert("error");
+			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
 		}
 	})
 
@@ -294,7 +294,7 @@ $(document).on('click','#login_button',function(event){
 		},
 		error: function(jqXHR, exception) {
 			
-			alert("error");
+			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
 		}
 	})
 
@@ -363,7 +363,7 @@ function get_location(){
         },
 		error: function(jqXHR, exception) {
 			
-			alert("error");
+			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
 		}
     })
 }
@@ -446,7 +446,7 @@ function get_top_location(id){
         },
 		error: function(jqXHR, exception) {
 			
-			alert("error");
+			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
 		}
 
     })
@@ -466,6 +466,9 @@ function initial_marker_clicked_event(id){
 }
 
 function get_initial_map_data(id){
+
+	$('#map').html('<img style="margin: 25%;text-align:center;" width="50%" src="img/logo.png">');
+
 
 	var styles = [
                 {
@@ -500,7 +503,6 @@ function get_initial_map_data(id){
                 },
             ];
 
-	$('#map').html('Loading..');
 
 	$.ajax({
 
@@ -569,6 +571,8 @@ function get_initial_map_data(id){
 		      });
 
 			});
+
+			// $('.cust-preloader').css('display','none');
 			 
 			}else{
 
@@ -584,7 +588,7 @@ function get_initial_map_data(id){
 			}
 		},
 		error: function(jqXHR, exception) {
-			alert("error");
+			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
 		}
 	});
 }
@@ -734,7 +738,7 @@ function get_entitie(id){
 
 		},
 		error: function(jqXHR, exception) {
-			alert("error");
+			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
 		}
 	});
 }
@@ -979,13 +983,15 @@ function get_event_type(){
 				$.each(result['data'],function(key,value) {
 					 
 					list += "<div class='col-50 list-box'>"+
-							"<a data-id='"+value.id+"' class='get-event-data category'><img src='img/event.jpeg' width='100%' alt='img error'>"+
+							"<a data-id='"+value.id+"' class='get-event-data category'><img src='img/happyhours.jpg' width='100%' alt='img error'>"+
 							"<div class='list-overlay'>"+value.event_type+"</div></a>"+
 							"</div>";
 				})
 
 				$(".date-text").html(current_date());
-				$("#event_box").html(list);
+				$("#cust_event_box").html(list);
+
+				console.log(list);
 
 			}else{
 
@@ -1002,7 +1008,7 @@ function get_event_type(){
 		},
 		error: function(jqXHR, exception) {
 			
-			alert("error");
+			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
 		}
 
 
@@ -1011,7 +1017,6 @@ function get_event_type(){
 
 $(document).on('click','.get-event-data',function(event){
 
- 
      scroll_amount = 250;
      offset=4;
 
@@ -1033,9 +1038,9 @@ $(document).on('click','.get-event-data',function(event){
 
 	 		console.log(result);
 
+ 			var html = "";
 	 		if(result['status']=="success"){
 
-	 			var html = "";
 		 		$.each(result['data'],function(key,value) {
 
 		 			html +="<div data-id="+value.event_id+" class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 0px;width:100%'>"+
@@ -1049,13 +1054,17 @@ $(document).on('click','.get-event-data',function(event){
 			                "</div>";
 		 		});
 
-		 		$('#event_box').html(html);
+		 		$('#cust_event_box').html(html);
 
 	 		}else{
 
 	 			if(result['msg']=="no data"){
 
-	 				alert("no data");
+	 				// alert("no data");
+	 				html +="<h3 class='no-event'>No Event Available</h3>";
+
+		 			$('#cust_event_box').html(html);
+
 
 	 			}else{
 
@@ -1075,8 +1084,6 @@ function onscroll_getevent(para1){
 	// $('#alert').html(para1.scrollTop);
 
 	if(para1.scrollTop > scroll_amount){
-
-
 
 		myApp.showIndicator();
 		offset+=4;
@@ -1247,13 +1254,16 @@ $(document).on('click','.get_offers',function(event){
 	 	},
 		error: function(jqXHR, exception) {
 			
-			alert("error");
+			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
 		}
 	})
 });
 
 //revise
 $(document).on('click','.get_map_data',function(event){
+
+	$('#map').html('<img style="margin: 25%;text-align:center;" width="50%" src="img/logo.png">');
+
 
 	 var styles = [
         {
@@ -1346,7 +1356,16 @@ $(document).on('click','.get_map_data',function(event){
 
 	 			if(result['msg']=="no data"){
 
-	 				alert("no data");
+	 				// alert("no data");
+	 				var map = new google.maps.Map(document.getElementById('map'), {
+				      zoom: 14,
+				      center: new google.maps.LatLng(19.0760, 72.8777),
+				      mapTypeId: google.maps.MapTypeId.ROADMAP,
+				      disableDefaultUI: true
+				    });
+
+					map.setOptions({styles: styles});
+
 
 	 			}else{
 
@@ -1357,7 +1376,7 @@ $(document).on('click','.get_map_data',function(event){
 	 	},
 		error: function(jqXHR, exception) {
 			
-			alert("error");
+			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
 		}
 	})
 });
@@ -1389,7 +1408,7 @@ function get_location_map(){
         },
 		error: function(jqXHR, exception) {
 			
-			alert("error");
+			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
 		}
 
     })
@@ -1420,7 +1439,7 @@ function get_location_list(){
         },
 		error: function(jqXHR, exception) {
 			
-			alert("error");
+			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
 		}
 
     })
@@ -1473,7 +1492,7 @@ function get_clubs(){
         },
 		error: function(jqXHR, exception) {
 			
-			alert("error");
+			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
 		}
 
     })
@@ -1563,7 +1582,7 @@ function get_club_list(type){
         },
 		error: function(jqXHR, exception) {
 			
-			alert("error");
+			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
 		}
 
     })
@@ -1663,7 +1682,7 @@ function get_club(id){
         },
 		error: function(jqXHR, exception) {
 			
-			alert("error");
+			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
 		}
 
     })
@@ -1950,7 +1969,7 @@ function get_notification(){
 			var html = "";
 	 		$.each(result['data'],function(key,value) {
 
-	 			html += "<div class='row noti-row'>"+
+	 			html += "<a href='event.html?id="+value.event_id+"'><div class='row noti-row'>"+
 				                "<div class='col-30' style='margin: auto;text-align:center'>"+
 				                  "<img class='img-circle noti-img' width='100%' src='img/user.jpeg'>"+
 				                "</div>"+
@@ -1959,7 +1978,7 @@ function get_notification(){
 				                  "<p class='mar-5-0 font-12'>"+value.notification_text+"</p>"+
 				                  "<p class='no-mar'>"+value.date+"</p>"+
 				                "</div>"+
-				            "</div>";
+				            "</div></a>";
 	 		});
 
 	 		$('#noti-list').html(html);

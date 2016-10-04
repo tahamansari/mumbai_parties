@@ -7,7 +7,6 @@ var myApp = new Framework7({
     cache:false,
     smartSelectSearchbar:true,
     uniqueHistory: true,
-    // uniqueHistoryIgnoreGetParameters: true,
     imagesLazyLoadPlaceholder: 'img/card.jpg',
     imagesLazyLoadThreshold: 50,
     animateNavBackIcon:true,
@@ -25,19 +24,6 @@ var myApp = new Framework7({
 
 var $$ = Dom7;
 $$(document).on('pageInit', function (e) {
-
-    // alert(Lockr.getAll());
-
-    // alert(Lockr.get('imageURI'));
-
-    // if(Lockr.get('is_logged_in')){
-
-    //     $('.home').attr('href','location.html');
-
-    //   }else{
-
-    //     $('.home').attr('href','index.html');
-    // }
 
     var networkState = navigator.connection.type;
     var states = {};
@@ -102,7 +88,7 @@ var mainView = myApp.addView('.view-main', {
 });
 
 myApp.onPageInit('index', function (page) {
-    // alert("index called");
+    $('.navbar-inner').css('background','none');
 });
 
 myApp.onPageInit('location', function (page) {
@@ -251,6 +237,7 @@ myApp.onPageInit('entitie', function (page) {
 myApp.onPageInit('event', function (page) {
 
         var id = page.query.id;
+        // alert("id on event page is "+id);
         get_event(id);
         
 });
@@ -293,29 +280,16 @@ myApp.onPageInit('mapview', function (page) {
 
 myApp.onPageInit('listview', function (page) {
 
-        
-
-          if(Lockr.get('is_logged_in')){
-                 // alert('logged in');
-                 $('.home').attr('href','location.html');
-          }else{
-                // alert('NOT logged in');
-                $('.home').attr('href','index.html');
-          }
-
           var owl = $("#owl-demo-list");
-
           owl.owlCarousel({
 
-          items : 5, //10 items above 1000px browser width
-          itemsDesktop : [1000,5], //5 items between 1000px and 901px
-          itemsDesktopSmall : [900,3], // 3 items betweem 900px and 601px
-          itemsTablet: [600,2], //2 items between 600 and 0;
-          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+            items : 5, //10 items above 1000px browser width
+            itemsDesktop : [1000,5], //5 items between 1000px and 901px
+            itemsDesktopSmall : [900,3], // 3 items betweem 900px and 601px
+            itemsTablet: [600,2], //2 items between 600 and 0;
+            itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
 
           });
-
-          // owl-item
 
           $(document).on('click', '.tab', function(){
                 
@@ -324,20 +298,9 @@ myApp.onPageInit('listview', function (page) {
                 $('.owl-wrapper').trigger('owl.goTo', n);
           });
 
-
           $(document).on('click', '.category', function(){
-                
-                // var default_id = $(this).attr('data-id');
-                // console.log(id);
-
                 var number_id = Number($(this).attr('data-id'));
-
-                console.log(number_id);
-
-                // alert('done');
-
                 $('.owl-wrapper').trigger('owl.goTo', number_id);
-
                 $('.owl-item').removeClass('active-tab');
                 $('.tab').removeClass('active-tab');
                 $('#list-tab-'+number_id).addClass('active-tab');

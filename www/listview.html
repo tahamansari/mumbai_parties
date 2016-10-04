@@ -1,11 +1,9 @@
 <div class="navbar">
-   <div class="navbar-inner" style="background-color: black">
+   <div class="navbar-inner" style="background: url('img/topbg.png')">
       <div class="left">
          <a href="#" class="link icon-only open-panel">
             <!-- <img src="img/drawer.png" width="25px"> -->
             <i style="font-size: 35px;" class="material-icons">&#xE5D2;</i>
-            
-
          </a>
       </div>
       <div class="center top-select-container">
@@ -20,13 +18,11 @@
 <div data-page="listview" class="page">
    <div id="scroll-data-attr" class="page-content" data-id='10' onscroll='onscroll_getevent(this)'>
 
-
       <div class="content-block" style="padding:0">
-
-        
       
          <div id="tab-container-listview">
             <div class="swipe-tab" id="owl-demo-list" style="background: url('img/topbg.png')">
+
                  <div id="whatshappening_list" onclick="get_event_type();" class="tab active-tab">
                     <p>WHATS HAPPENING</p>
                  </div>
@@ -57,13 +53,15 @@
 
           <div class="date-box">
             <span class="date-text"></span>
-
+            
+            <img class="calender" src="img/calender.png">
             <input id="date" class="list-view-date" name="date" type="date">
-            <i class="material-icons calender-icon">&#xE8A3;</i>
-
+              <!--  -->
+            <!-- <i class="material-icons calender-icon">&#xE8A3;</i> -->
           </div>
 
-         <div class="row no-gutter" id="event_box">
+         <div class="row no-gutter" id="cust_event_box">
+
          </div>
       </div>
 

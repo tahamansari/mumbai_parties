@@ -47,12 +47,11 @@ function get_direction(para1,para2){
 
 document.addEventListener("deviceready", onDeviceReady, false);
 
+
 function onDeviceReady() {
 
-    // alert('device is not ready');
-    // $('input, textarea, button, a, select').off('touchstart mousedown').on('touchstart mousedown', function(e) {
-    //     e.stopPropagation();
-    // });
+
+    alert('device is now ready');
 
 	if(Lockr.get("is_logged_in")){
 
@@ -225,7 +224,7 @@ var mylogin = function () {
                     },
                     error: function(jqXHR, exception) {
 
-                        alert("error");
+                        alert("No Internet Connection"); mainView.router.loadPage('offline.html');
                     }
                 })
             }, 
@@ -607,28 +606,19 @@ $(document).on('click','.home',function(){
 
     if(Lockr.get('is_logged_in')){
 
-        // $('.home').attr('href','location.html');
-        // mainView.router.loadPage('location.html',{ignoreCache:true});
-
-        mainView.router.load({
-            url: 'location.html',
-            ignoreCache: true,
-        });
-
+        mainView.router.loadPage('location.html');
 
       }else{
-
-        // $('.home').attr('href','index.html');
-        // mainView.router.loadPage('index.html',{ignoreCache:true});
-
-        mainView.router.load({
-            url: 'index.html',
-            ignoreCache: true,
-        });
-
+        mainView.router.loadPage('index.html');
     }
-
-    // alert('home page clicked');
 
 
 })
+
+
+$(document).on('click','.calender',function(){
+
+    document.getElementById("date").focus();
+
+
+});
