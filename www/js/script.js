@@ -154,6 +154,7 @@ var mylogin = function () {
             }else{
 
                 facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],
+                    
             function(result){
 
 
@@ -164,8 +165,13 @@ var mylogin = function () {
                 var email = result.email;
                 var name = result.name;
 
+                var fb_image_url = result.picture;
+
                 var nm = name.substring(0, 3);
                 var num = Math.floor(1000 + Math.random() * 9000);
+
+                var img_name = fb_image_url.substr(fb_image_url.lastIndexOf('/')+1);
+
 
                 var ref_code = nm+num;
                 var is_redeemed = 0;
@@ -181,6 +187,7 @@ var mylogin = function () {
                         type:type,
                         email: email,
                         name: name,
+                        img_name:img_name,
                         ref_code:ref_code,
                         is_redeemed:is_redeemed
 
@@ -189,36 +196,41 @@ var mylogin = function () {
 
                         if(result.status=='success'){
 
-                            // if(Lockr.get('imageURI')){
+                            $.ajax({
 
-                            //     alert('true');
-                                
-                            //     // var options = new FileUploadOptions();
-                            //     // options.fileKey="file";
-                            //     // options.fileName=img_name;
-                            //     // options.mimeType="image/jpeg";
-                            //     // options.chunkedMode = false;
-                            //     // var ft = new FileTransfer();
-                            //     // ft.upload(imageURI, base_url+"profileupload", win, fail, options);
+                                url: base_url+"upload_fb/",
+                                type:'POST',
+                                dataType:'json',
+                                data:{
 
-                            //     // Lockr.get('imageURI');
-                            //     // Lockr.rm('imageURI');
+                                    fb_image_url:fb_image_url,
+                                    img_name:img_name
 
-                            // }else{
+                                },
+                                success:function(result){
 
-                            //     alert('false');
-                            // }
+                                    if(result.status=='success'){
 
-                            var name = result['data']['first_name'];
-                            var result = name.split(" ");
+                                        var name = result['data']['first_name'];
+                                        var result = name.split(" ");
 
-                            Lockr.set("id",result.id);
-                            Lockr.set("name",result[0]);
-                            Lockr.set("type","fb");
-                            Lockr.set("is_logged_in",true);
+                                        Lockr.set("id",result.id);
+                                        Lockr.set("name",result[0]);
+                                        Lockr.set("type","fb");
+                                        Lockr.set("is_logged_in",true);
 
-                            // myApp.alert("Success");             
-                            mainView.router.loadPage("location.html");
+                                        mainView.router.loadPage("location.html");
+                                    }
+
+                                },
+                                error: function(jqXHR, exception) {
+
+                                    alert("No Internet Connection"); mainView.router.loadPage('offline.html');
+                                }
+                            })
+
+
+                            
                         }
 
                     },
@@ -499,9 +511,9 @@ function updateprofile(imageURI) {
             ft.upload(imageURI, base_url+"upload_profile", win, fail, options);
 
             // $('#profile_img').attr('src', 'http://casaestilo.in/taha/mp_admin/uploads/'+img_name); 
-
+            imageURI="";
             myApp.closeModal('.update_picker');
-            mainView.router.loadPage('location.html');
+            // mainView.router.loadPage('location.html');
             myApp.alert("Profile Updated");
 
 

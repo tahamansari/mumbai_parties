@@ -1529,9 +1529,9 @@ position: absolute;
 .calender{
 
     position: absolute;
-    width: 20px;
-    right: 10px;
-    top: 10px;
+    width: 35px;
+    right: 30px;
+    top: 5px;
     z-index: 1;
 }
 
@@ -1539,7 +1539,7 @@ position: absolute;
 
     position: absolute;
     right: 0;
-        padding: 10px 0px;
+    padding: 15px 10px;
     background: #2f2a2a;
     color: white;
     border: medium none;
