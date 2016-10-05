@@ -93,9 +93,6 @@ myApp.onPageInit('index', function (page) {
 
 myApp.onPageInit('location', function (page) {
 
-
-    // alert('id is '+Lockr.get('id'));
-
     get_location();
 
     if(Lockr.get("is_logged_in")){

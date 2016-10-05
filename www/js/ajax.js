@@ -2093,6 +2093,12 @@ function get_profile(id){
 }
 
 
+function search_by_date(){
+
+	alert('called');
+}
+
+
 function loadmoremenu(id){
     
     $.ajax({

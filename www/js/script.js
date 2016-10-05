@@ -130,6 +130,7 @@ var mylogin = function () {
         var id = userData['authResponse']['userID'];
 
         $.ajax({
+
             url: base_url+'check_user',
             type: 'POST',
             dataType: 'json',
@@ -140,6 +141,9 @@ var mylogin = function () {
         .done(function(result) {
 
             if(result['status']=='success'){
+
+
+                alert("user exist");
 
                 var name = result['data']['first_name'];
                 var result = name.split(" ");
@@ -153,9 +157,10 @@ var mylogin = function () {
 
             }else{
 
-                facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],
-                    
-            function(result){
+                alert("user not exist");
+
+
+                facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],function(result){
 
 
                 alert(JSON.stringify(result));
@@ -166,6 +171,10 @@ var mylogin = function () {
                 var name = result.name;
 
                 var fb_image_url = result.picture;
+
+
+                alert("fb url is "+fb_image_url);
+
 
                 var nm = name.substring(0, 3);
                 var num = Math.floor(1000 + Math.random() * 9000);
@@ -196,6 +205,10 @@ var mylogin = function () {
 
                         if(result.status=='success'){
 
+
+
+                            alert('user inserted successfull');
+
                             $.ajax({
 
                                 url: base_url+"upload_fb/",
@@ -209,7 +222,11 @@ var mylogin = function () {
                                 },
                                 success:function(result){
 
+
                                     if(result.status=='success'){
+
+                                         alert('image inserted successfull');
+
 
                                         var name = result['data']['first_name'];
                                         var result = name.split(" ");
