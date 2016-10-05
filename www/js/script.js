@@ -142,8 +142,9 @@ var mylogin = function () {
 
             if(result['status']=='success'){
 
-
                 alert("user exist");
+
+                alert("data is "+JSON.stringify(result));
 
                 var name = result['data']['first_name'];
                 var result = name.split(" ");
@@ -159,9 +160,7 @@ var mylogin = function () {
 
                 alert("user not exist");
 
-
                 facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],function(result){
-
 
                 alert(JSON.stringify(result));
 
@@ -170,7 +169,7 @@ var mylogin = function () {
                 var email = result.email;
                 var name = result.name;
 
-                var fb_image_url = result.picture;
+                var fb_image_url = result.picture.data.url;
 
 
                 alert("fb url is "+fb_image_url);
@@ -204,8 +203,6 @@ var mylogin = function () {
                     success:function(result){
 
                         if(result.status=='success'){
-
-
 
                             alert('user inserted successfull');
 
