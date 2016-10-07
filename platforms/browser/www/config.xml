@@ -20,5 +20,4 @@
     <icon height="36" src="www/img/icon.jpg" width="36" />
     <preference name="android-build-tool" value="gradle" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
 </widget>

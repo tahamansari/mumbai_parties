@@ -546,14 +546,12 @@ function get_initial_map_data(id){
 
 	          }
 
-	          
-
 		      marker = new google.maps.Marker({
 		      	
 		        position: new google.maps.LatLng(value.latitude,value.longitude),
 		        map: map,
 		        icon: image,
-		        optimized: false,
+		        // optimized: false,
 
 
 		      });
@@ -1078,6 +1076,8 @@ $(document).on('click','.get-event-data',function(event){
 
 function onscroll_getevent(para1){
 
+	myApp.showIndicator();
+
 	var loc_id = $("#list_top_select").val();
 	var event_type = $("#scroll-data-attr").attr('data-id');
 
@@ -1085,7 +1085,6 @@ function onscroll_getevent(para1){
 
 	if(para1.scrollTop > scroll_amount){
 
-		myApp.showIndicator();
 		offset+=4;
 		scroll_amount+=250;
 
@@ -1138,6 +1137,10 @@ function onscroll_getevent(para1){
 		 	}
 		})
 		
+	}else{
+
+		myApp.hideIndicator();
+
 	}
 }
 
@@ -2090,6 +2093,12 @@ function get_profile(id){
 	});
 	
 
+}
+
+
+function search_by_date(){
+
+	alert('called');
 }
 
 

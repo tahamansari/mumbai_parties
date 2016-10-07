@@ -18,12 +18,10 @@
     <div class="page-content">
        <div class="content-block" style="padding:0">
 
-       <div class="date-box">
-            <span class="date-text">ALL CLUBS</span>
-
-            <input id="date" class="list-view-date" name="date" type="date">
-            <i class="material-icons calender-icon">&#xE8A3;</i>
-
+          <div class="date-box">
+            <span class="date-text"></span>
+            <i class="fa fa-calendar fa-2x calender" aria-hidden="true"></i>
+            <input id="date" onchange="changedate()" class="date-input" type="date">
           </div>
           
           <div class="row no-gutter" id="club_list_box">

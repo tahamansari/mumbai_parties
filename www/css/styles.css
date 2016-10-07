@@ -144,7 +144,7 @@ a{
 
 .buttons-row{
 
-	background-color:#585757;
+	background-color:#444;
 
 }
 
@@ -1516,8 +1516,7 @@ position: absolute;
 }
 
 .back img{
-
-  padding: 5px;
+  padding: 10px;
 }
 
 .no-event{
@@ -1529,10 +1528,19 @@ position: absolute;
 .calender{
 
     position: absolute;
-    width: 35px;
-    right: 30px;
-    top: 5px;
-    z-index: 1;
+    right: 20px;
+    top: 9px;
+}
+
+.date-input{
+
+    background: none;
+    border: none;
+    color: #2f2a2a;
+    position: absolute;
+    right: -10px;
+    top: 10px;
+    z-index: 999;
 }
 
 .list-view-date{
@@ -1543,6 +1551,20 @@ position: absolute;
     background: #2f2a2a;
     color: white;
     border: medium none;
+
+}
+
+.fb-box{
+
+    position: relative;
+
+}
+.fb-line{
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 
 }
 
@@ -1559,6 +1581,19 @@ position: absolute;
     animation: none;
 
 
+}
+
+.gm-style-pbc + div{
+
+  z-index: 5!important; 
+}
+
+
+
+.preloader-indicator-overlay {
+    visibility: visible;
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.88);
 }
 
 .preloader-indicator-modal{

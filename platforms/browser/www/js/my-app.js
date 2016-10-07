@@ -14,13 +14,20 @@ var myApp = new Framework7({
     onAjaxStart: function (xhr) {
 
         myApp.showIndicator();
+
     },
     onAjaxComplete: function (xhr) {
 
-        myApp.hideIndicator();
+        setTimeout(myFunction, 500);
     }
 });
 
+
+function myFunction(){
+
+        myApp.hideIndicator();
+
+}
 
 var $$ = Dom7;
 $$(document).on('pageInit', function (e) {
@@ -90,6 +97,7 @@ var mainView = myApp.addView('.view-main', {
 myApp.onPageInit('index', function (page) {
     $('.navbar-inner').css('background','none');
 });
+
 
 myApp.onPageInit('location', function (page) {
 
@@ -280,6 +288,8 @@ myApp.onPageInit('mapview', function (page) {
 
 myApp.onPageInit('listview', function (page) {
 
+
+
           var owl = $("#owl-demo-list");
           owl.owlCarousel({
 
@@ -331,6 +341,7 @@ myApp.onPageInit('club_list', function (page) {
 
     // var id = page.query.id;
     // get_top_location(id);
+    $(".date-text").html(current_date());
     
     var type = page.query.type;
     get_club_list(type);

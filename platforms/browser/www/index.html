@@ -13,12 +13,16 @@
 
 	  <link rel="stylesheet" href="css/icon.css" >
     <!-- <link rel="stylesheet" href="css/font-awesome.min.css" > -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
     <link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
     <link rel="stylesheet" type="text/css" href="css/owl.theme.min.css">
+
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"> -->
+
+
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -130,7 +134,7 @@
                  <div class="navbar-inner" style="background: url('img/topbg.png')">
                     <div class="left">
                       <!-- class="back link" -->
-                       <a href="#" class="close-popup" >
+                       <a href="#" class="close-popup" style="padding: 10px;">
                           <img style="-ms-transform: rotate(-91deg);-webkit-transform: rotate(-91deg);transform: rotate(-91deg);margin-top: 10px;margin-left: 5px;"  src="img/leftarrow.png" width="13px">
                        </a>
                     </div>
@@ -161,30 +165,6 @@
                 </div>
               </div>
 
-  <!--               <div class="toolbar" style="position: absolute;bottom: 0;text-align:center;">
-                    <div class="toolbar-inner">
-
-                        <a class="home" href="#">
-                          <i class="material-icons">&#xE88A;</i>
-                          <p class="tool-text no-mar">HOME</p>
-                        </a>
-
-                        <a href="club_types.html">
-                          <i class="material-icons">&#xE147;</i>
-                          <p class="tool-text no-mar">CLUBS</p>
-                        </a>
-
-                        <a class='notify-toolbar' href="#">
-                          <i class="material-icons">&#xE7F4;</i>
-                          <p class="tool-text no-mar">NOTIFY</p>
-                        </a>
-
-                        <a href="search.html">
-                          <i class="material-icons">&#xE8B6;</i>
-                          <p class="tool-text no-mar">SEARCH</p>
-                        </a>
-                    </div>
-                </div> -->
             </div>
 
 
@@ -218,11 +198,21 @@
               							  <a href="login.html" class="button">SIGN IN TO PARTY</a>
                               <img src="img/bottomline.png">
               							</p>
-              							<p class="buttons-row">
-              							  <a href="#" onclick="mylogin()" class="button">FACEBOOK CONNECT</a>
+
+                            <!-- <p class="buttons-row"> -->
+                              <div class="fb-box">
+                                <img onclick="mylogin()" src="img/facebook.png" style="width: 100%;height: 45px;">
+                                <img class="fb-line" src="img/bottomline.png">
+                              </div>
+                            <!--   <a href="#" onclick="mylogin()" class="button">FACEBOOK CONNECT</a>
+                              <img src="img/bottomline.png"> -->
+                            <!-- </p> -->
+
+              							<!-- <p class="buttons-row">
+              							  <a href="#"  class="button">FACEBOOK CONNECT</a>
                               <img src="img/bottomline.png">
 
-              							</p>
+              							</p> -->
               						
                             <p class="buttons-row">
                               <a href="register.html" class="button">NEW USER SIGNUP</a>
@@ -234,7 +224,6 @@
               							</p>
                         </div>
                     </div>
-
 
                 </div>
 
@@ -288,6 +277,11 @@
     <script type="text/javascript" src="js/my-app.js"></script>
     <script type="text/javascript" src="js/ajax.js"></script>
     <script type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
+
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
+
+
+
 
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCGxWQDpfQ2erARAl0RHwKkqfEDYq6rvU"
     async defer></script>

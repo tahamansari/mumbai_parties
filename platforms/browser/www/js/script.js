@@ -35,6 +35,8 @@ $(document).on('click','.owl-item',function(event){
 })
 
 
+
+
 function call(para1){
 
 	window.open('tel:'+para1);
@@ -51,7 +53,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
 
 
-    alert('device is now ready');
+    // alert('device is now ready');
 
 	if(Lockr.get("is_logged_in")){
 
@@ -123,6 +125,7 @@ function onOffline() {
 
 }
 
+
 var mylogin = function () {
 
     var fbLoginSuccess = function (userData) {
@@ -130,6 +133,7 @@ var mylogin = function () {
         var id = userData['authResponse']['userID'];
 
         $.ajax({
+
             url: base_url+'check_user',
             type: 'POST',
             dataType: 'json',
@@ -140,6 +144,10 @@ var mylogin = function () {
         .done(function(result) {
 
             if(result['status']=='success'){
+
+                alert("user exist");
+
+                alert("data is "+JSON.stringify(result));
 
                 var name = result['data']['first_name'];
                 var result = name.split(" ");
@@ -153,8 +161,9 @@ var mylogin = function () {
 
             }else{
 
-                facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],function(result){
+                alert("user not exist");
 
+                facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],function(result){
 
                 alert(JSON.stringify(result));
 
@@ -163,7 +172,11 @@ var mylogin = function () {
                 var email = result.email;
                 var name = result.name;
 
-                var fb_image_url = result.picture;
+                var fb_image_url = result.picture.data.url;
+
+
+                alert("fb url is "+fb_image_url);
+
 
                 var nm = name.substring(0, 3);
                 var num = Math.floor(1000 + Math.random() * 9000);
@@ -194,6 +207,8 @@ var mylogin = function () {
 
                         if(result.status=='success'){
 
+                            alert('user inserted successfull');
+
                             $.ajax({
 
                                 url: base_url+"upload_fb/",
@@ -207,7 +222,11 @@ var mylogin = function () {
                                 },
                                 success:function(result){
 
+
                                     if(result.status=='success'){
+
+                                         alert('image inserted successfull');
+
 
                                         var name = result['data']['first_name'];
                                         var result = name.split(" ");
@@ -286,8 +305,10 @@ function current_date(){
 	var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'];
 	var day = d.getDate();
 	var month = m[d.getMonth()];
+    var year = d.getFullYear();
 
-	return day+" "+month;
+    // 
+	return day+" "+month+" "+year;
 
 }
 
@@ -483,6 +504,7 @@ function update_type_camera() {
 function updateprofile(imageURI) {
 
     myApp.closeModal('.profile_picker');
+    
     var id = Lockr.get('id'); 
     var img_name = imageURI.substr(imageURI.lastIndexOf('/')+1);
 
@@ -595,24 +617,21 @@ $(document).on('click','.notify-toolbar',function(){
 
 });
 
-function book_login(){
+// function book_login(){
 
-    // alert("clicked");
-    
-    if(Lockr.get('is_logged_in')){
+//     if(Lockr.get('is_logged_in')){
 
-        mainView.router.loadPage('book.html');
+//         mainView.router.loadPage('book.html');
 
-    }else{
+//     }else{
 
-        myApp.alert('Sign In Required');
-        mainView.router.loadPage('login.html');
-    }
+//         myApp.alert('Sign In Required');
+//         mainView.router.loadPage('login.html');
+//     }
 
-}
+// }
 
 $(document).on('click','.home',function(){
-
 
     if(Lockr.get('is_logged_in')){
 
@@ -625,10 +644,16 @@ $(document).on('click','.home',function(){
 
 })
 
+function changedate(){
+
+    var date = $('#date').val();
+    $('.date-text').html(moment(date).format("Do MMM YYYY"));
+    console.log(date);
+}
 
 $(document).on('click','.calender',function(){
 
-    document.getElementById("date").focus();
+    alert('called');
+    $('#date').trigger('click');
 
-
-});
+})
