@@ -1139,7 +1139,7 @@ function onscroll_getevent(para1){
 		
 	}else{
 
-		0myApp.hideIndicator();
+		myApp.hideIndicator();
 
 	}
 }
