@@ -131,6 +131,8 @@ var mylogin = function () {
 
     var fbLoginSuccess = function (userData) {
 
+        alert('data is '+JSON.stringify(userData);
+
         var id = userData['authResponse']['userID'];
 
         $.ajax({
@@ -146,9 +148,7 @@ var mylogin = function () {
 
             if(result['status']=='success'){
 
-                alert("user exist");
-
-                alert("data is "+JSON.stringify(result));
+                alert("user exist data is "+JSON.stringify(result));
 
                 var name = result['data']['first_name'];
                 var result = name.split(" ");
@@ -162,11 +162,9 @@ var mylogin = function () {
 
             }else{
 
-                alert("user not exist");
-
                 facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],function(result){
 
-                alert(JSON.stringify(result));
+                alert('user not exist data is '+JSON.stringify(result));
 
                 var fb_id = result.id;
                 var type = "fb";
@@ -249,6 +247,8 @@ var mylogin = function () {
 
 
                             
+                        }else{
+                            alert("user not exists");
                         }
 
                     },
