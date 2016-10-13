@@ -165,10 +165,10 @@ var mylogin = function () {
                 alert("user exist data is "+JSON.stringify(result));
 
                 var name = result['data']['first_name'];
-                var result = name.split(" ");
+                // var result = name.split(" ");
 
                 Lockr.set("id",result['data']['id']);
-                Lockr.set("name",result[0]);
+                Lockr.set("name",name);
                 Lockr.set("type","fb");
                 Lockr.set("is_logged_in",true);
 
