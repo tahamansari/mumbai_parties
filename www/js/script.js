@@ -184,7 +184,7 @@ var mylogin = function () {
                 var nm = name.substring(0, 3);
                 var num = Math.floor(1000 + Math.random() * 9000);
 
-                var img_name = fb_image_url.substr(fb_image_url.lastIndexOf('/')+1);
+                var img_name = fb_id+".jpg";
 
 
                 var ref_code = nm+num;

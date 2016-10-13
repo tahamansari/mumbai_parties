@@ -330,7 +330,7 @@ $(document).on("click","#signout",function(event){
 
 });
 
-function get_location(){
+function get_profile(){
 
   $.ajax({
 
