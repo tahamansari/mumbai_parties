@@ -20,7 +20,7 @@
 
  <div data-page="book" class="page">
     <div class="page-content" style="background-color:white">
-        <div class="content-block no-pad" style="background-color:black;padding: 5px 30px;">
+        <div class="content-block no-pad" style="background-color:black;padding: 5px 20px;">
 
           <div class='card demo-card-header-pic' style='margin: 0;margin-bottom: 2px;width:100%'>
             <div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>
@@ -29,17 +29,18 @@
           </div>
 
 
-          <div style="background-color:black;padding: 5px 20px;">
+          <div style="background-color:black;padding: 5px 20px;min-height: 500px;position: relative;">
               <div class="row">
                 <div class="col-50">
                    <p>Select Date :</p> 
                 </div>
                 <div class="col-50">
                    <!-- <input style="height: 25px;width: 100%;" type="date" name="date"> -->
-                    <div class="date-box" style="background-color: black;">
-                      <span class="date-text"></span>
-                      <input  style="background-color: black;" id="date" class="list-view-date" name="date" type="date">
-                    </div>
+
+                  <span class="book-date-text">12th Sept</span>
+
+                  <i class="fa fa-calendar fa-2x book-calender" aria-hidden="true"></i>
+                  <!-- <input id="date" onchange="changedate()" class="book-date" type="date"> -->
                 </div>
 
               </div>
@@ -63,6 +64,9 @@
                   </div>
               </div>
 
+              <div class="row single-textbox">
+              </div>
+
               <div class="row">
                   <div class="col-50">
                     <p>Couple Entry</p>
@@ -82,7 +86,10 @@
                   </div>
               </div>
 
-              <div class="row">
+              <div class="row couple-textbox">
+              </div>
+
+             <!--  <div class="row">
                   <div class="col-50">
                     <p>Table Entry For</p>
                   </div>
@@ -93,12 +100,11 @@
                     <p>
                       <div class="input-prepend-append">
                         <button id="dec_table" onclick="dec_table()" type="button" class="btn btn-prepend" disabled> - </button>
-                        <!-- <input type="number" min="0" max="5" id="number_passengers" value="1"> -->
                         <button onclick="inc_table()" type="button" class="btn btn-append"> + </button>
                       </div>
                     </p>
                   </div>
-              </div>
+              </div> -->
 
               <div style="display:flex">
                 <h3>Total = </h3>&nbsp
@@ -132,7 +138,7 @@
             <i class="material-icons">&#xE147;</i>
             <p class="tool-text no-mar">CLUBS</p>
           </a> -->
-          <a href="#" data-popup=".popup-club" class="open-popup">
+          <a href="club_types.html" >
             <i class="material-icons">&#xE147;</i>
             <p class="tool-text no-mar">CLUBS</p>
           </a>

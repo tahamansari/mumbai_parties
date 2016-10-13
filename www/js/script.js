@@ -376,6 +376,8 @@ function inc_single(){
     $('#single_text').text(quantity);
     $('#amount').text(amount);
 
+    $('.single-textbox').append("<div class='col-50'><input class='book-name' type='text' name='single_name'></div>");
+
 }
 
 function dec_single(){
@@ -388,6 +390,12 @@ function dec_single(){
 
     $('#single_text').text(quantity);
     $('#amount').text(amount);
+
+
+     $('.single-textbox .col-50:last-child').remove();
+
+    // $('.single-textbox').remove("<div class='col-50'><input class='book-name' type='text' name='single_name'></div>");
+
 
     if(quantity == 0){
         $("#dec_single").prop('disabled', true);
@@ -409,6 +417,9 @@ function inc_couple(){
     $('#couple_text').text(quantity);
     $('#amount').text(amount);
 
+    $('.couple-textbox').append("<div class='col-50'><input class='book-name' type='text' name='single_name'></div>");
+
+
 }
 
 function dec_couple(){
@@ -421,6 +432,11 @@ function dec_couple(){
 
     $('#couple_text').text(quantity);
     $('#amount').text(amount);
+
+
+
+     $('.couple-textbox .col-50:last-child').remove();
+
 
     if(quantity == 0){
         $("#dec_couple").prop('disabled', true);
@@ -647,9 +663,70 @@ $(document).on('click','.home',function(){
 
 function changedate(){
 
-    var date = $('#date').val();
+    myApp.showIndicator();
+
+    var date = $('.date').val();
     $('.date-text').html(moment(date).format("Do MMM YYYY"));
-    console.log(date);
+
+    // id,eventtype,date
+    var loc_id = Lockr.get('loc_id');
+    var event_type = $('#scroll-data-attr').attr('data-id');
+
+
+     $.ajax({
+
+        type:"POST",
+        url: base_url+"get_event_data_bydate/",
+        dataType:"json",
+        data:{
+
+            loc_id:loc_id,
+            event_type:event_type,
+            date:date
+        },
+        success:function(result){
+
+            console.log(result);
+
+            var html = "";
+            if(result['status']=="success"){
+
+
+                $.each(result['data'],function(key,value) {
+
+                    html +="<div data-id="+value.event_id+" class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 0px;width:100%'>"+
+                              "<div style='background-image:url("+img_url+value.image+")' valign='bottom' class='card-header no-border'>"+
+                              "<h3 class='no-mar list-name'>"+value.event_name+"</h3>" +
+                              "</div>"+
+                              "<div class='card-footer color-white'>"+
+                                "<span class='footer-left'>@ "+value.name+"</span>"+
+                                "<span class='footer-text'>"+value.time_event_start+" to "+value.time_event_ends+"</span>"+
+                              "</div>"+
+                            "</div>";
+                });
+
+                $('#cust_event_box').html(html);
+
+                myApp.hideIndicator();
+
+
+            }else{
+
+                if(result['msg']=="no data"){
+
+                    html +="<h3 class='no-event'>No Event Available</h3>";
+
+                    $('#cust_event_box').html(html);
+                    myApp.hideIndicator();
+
+
+                }else{
+
+                    alert("failed");
+                }
+            }
+        }
+    })
 }
 
 $(document).on('click','.calender',function(){

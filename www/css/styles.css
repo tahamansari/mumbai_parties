@@ -1588,6 +1588,36 @@ position: absolute;
   z-index: 5!important; 
 }
 
+.book-name{
+    width: 80%;
+    border: none;
+    height: 25px;
+    margin: 5px 0;
+    color: white!important;
+
+}
+
+.book-calender{
+
+    position: absolute;
+    right: 10px;
+    top: 15px;
+}
+
+.book-date{
+
+    background: none;
+    border: none;
+    color: #2f2a2a;
+    z-index: 999;
+}
+
+.book-date-text{
+
+      position: absolute;
+    right: 50px;
+    top: 20px;
+}
 
 
 .preloader-indicator-overlay {

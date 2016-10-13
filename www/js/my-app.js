@@ -259,13 +259,13 @@ myApp.onPageInit('offer', function (page) {
 
 myApp.onPageInit('mapview', function (page) {
 
+      myApp.showIndicator();
+
       var id= Lockr.get('loc_id');
       get_initial_map_data(id);
       get_top_location(id);
 
       $('#whatshappening_map').attr('onclick', 'get_initial_map_data('+id+')');
-
-      
 
       var owl = $("#owl-demo-map");
       owl.owlCarousel({
@@ -278,17 +278,18 @@ myApp.onPageInit('mapview', function (page) {
 
       });
 
-
       $(document).on('click', '.owl-item', function(){
             n = $(this).index();
             console.log(n)
             $('.owl-wrapper').trigger('owl.goTo', n);
      });
+
+     setTimeout(myFunction, 5000);
 });
 
 myApp.onPageInit('listview', function (page) {
 
-
+          $('#scroll-data-attr').attr('data-id','1');
 
           var owl = $("#owl-demo-list");
           owl.owlCarousel({
@@ -399,7 +400,7 @@ myApp.onPageInit('book', function (page) {
         "amount": "20000", // 2000 paise = INR 20
         "name": "Test payment",
         "description": "Test Product",
-        "image": "img/logo.png",
+        "image": "img/icon.jpg",
         "handler": function (response){
 
           $.ajax({

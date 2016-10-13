@@ -417,13 +417,11 @@ function get_top_location(id){
 
  				  var select = "";
 		          $.each(result['data'], function(key,value){
-
 	          		if(value.id == id){
 	          			select += "<option selected value='"+value.id+"'>in "+value.name+"</option>";
 	          		}else{
 	          			select += "<option value='"+value.id+"'>in "+value.name+"</option>";
 	          		}
-
 		          });
 
 		          // $('#list_view_link').attr("href","listview.html?id="+id);
@@ -440,15 +438,12 @@ function get_top_location(id){
  				}else{
  					alert("failed");
  				}
-
  			}
-
         },
 		error: function(jqXHR, exception) {
 			
 			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
 		}
-
     })
 }
 
@@ -551,7 +546,7 @@ function get_initial_map_data(id){
 		        position: new google.maps.LatLng(value.latitude,value.longitude),
 		        map: map,
 		        icon: image,
-		        // optimized: false,
+		        optimized: false,
 
 
 		      });
@@ -1008,15 +1003,12 @@ function get_event_type(){
 			
 			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
 		}
-
-
 	})
 }
 
 $(document).on('click','.get-event-data',function(event){
 
-     scroll_amount = 250;
-     offset=4;
+
 
 	 var loc_id = $("#list_top_select").val();
 	 var event_type = $(this).attr("data-id");
@@ -1058,11 +1050,9 @@ $(document).on('click','.get-event-data',function(event){
 
 	 			if(result['msg']=="no data"){
 
-	 				// alert("no data");
 	 				html +="<h3 class='no-event'>No Event Available</h3>";
 
 		 			$('#cust_event_box').html(html);
-
 
 	 			}else{
 
@@ -1076,17 +1066,26 @@ $(document).on('click','.get-event-data',function(event){
 
 function onscroll_getevent(para1){
 
-	myApp.showIndicator();
+	scroll_amount = 250;
+	offset=4;
+
 
 	var loc_id = $("#list_top_select").val();
 	var event_type = $("#scroll-data-attr").attr('data-id');
 
-	// $('#alert').html(para1.scrollTop);
+	console.log(para1.scrollTop);
+
+	console.log(para1.scrollDown);
+
 
 	if(para1.scrollTop > scroll_amount){
 
-		offset+=4;
+	    myApp.showIndicator();
+
+		console.log('call api for more data');
+
 		scroll_amount+=250;
+		offset+=4;
 
 		$.ajax({
 
@@ -1101,7 +1100,7 @@ function onscroll_getevent(para1){
 		 	},
 		 	success:function(result){
 
-		 		console.log(result);
+		 		console.log(JSON.stringify(result));
 
 		 		if(result['status']=="success"){
 
@@ -1119,8 +1118,14 @@ function onscroll_getevent(para1){
 				                "</div>";
 			 		});
 
-			 		$('#event_box').append(html);
-					myApp.hideIndicator();
+			 		$('#cust_event_box').append(html);
+
+        			setTimeout(myFunction, 200);
+
+
+
+
+
 
 		 		}else{
 
@@ -1131,6 +1136,7 @@ function onscroll_getevent(para1){
 
 		 			}else{
 
+						myApp.hideIndicator();
 		 				alert("failed");
 		 			}
 		 		}
@@ -1138,6 +1144,9 @@ function onscroll_getevent(para1){
 		})
 		
 	}else{
+
+		console.log('dont call api');
+
 
 		myApp.hideIndicator();
 
