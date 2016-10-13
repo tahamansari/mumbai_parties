@@ -330,7 +330,7 @@ $(document).on("click","#signout",function(event){
 
 });
 
-function get_profile(){
+function get_location(){
 
   $.ajax({
 
@@ -1438,6 +1438,7 @@ function get_location_list(){
           console.log(result);
 
           var json = JSON.parse(result);
+          
           var select = "<option value=''>Select Location</option>";
 
           $.each(json, function(i){
