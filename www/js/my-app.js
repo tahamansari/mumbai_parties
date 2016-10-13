@@ -23,6 +23,10 @@ var myApp = new Framework7({
 });
 
 
+
+
+
+
 function myFunction(){
 
         myApp.hideIndicator();
@@ -342,7 +346,13 @@ myApp.onPageInit('club_list', function (page) {
 
     // var id = page.query.id;
     // get_top_location(id);
+
     $(".date-text").html(current_date());
+
+    // current_date();
+
+    console.log(current_date());
+
     
     var type = page.query.type;
     get_club_list(type);

@@ -126,12 +126,26 @@ function onOffline() {
 
 }
 
+function current_date(){
+
+    var d = new Date();
+    var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'];
+    var day = d.getDate();
+    var month = m[d.getMonth()];
+    var year = d.getFullYear();
+
+    // 
+    return day+" "+month+" "+year;
+
+}
 
 var mylogin = function () {
 
+    alert('facebook clicked');
+
     var fbLoginSuccess = function (userData) {
 
-        alert('data is '+JSON.stringify(userData);
+        alert('data is '+JSON.stringify(userData));
 
         var id = userData['authResponse']['userID'];
 
@@ -300,18 +314,6 @@ var logout = function () {
         function (response) {  });
 }
 
-function current_date(){
-
-	var d = new Date();
-	var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'];
-	var day = d.getDate();
-	var month = m[d.getMonth()];
-    var year = d.getFullYear();
-
-    // 
-	return day+" "+month+" "+year;
-
-}
 
 function check_login(){
 
