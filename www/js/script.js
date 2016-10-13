@@ -145,8 +145,6 @@ var mylogin = function () {
 
     var fbLoginSuccess = function (userData) {
 
-        alert('data is '+JSON.stringify(userData));
-
         var id = userData['authResponse']['userID'];
 
         $.ajax({
@@ -162,8 +160,6 @@ var mylogin = function () {
 
             if(result['status']=='success'){
 
-                alert("user exist data is "+JSON.stringify(result));
-
                 var name = result['data']['first_name'];
                 // var result = name.split(" ");
 
@@ -178,18 +174,12 @@ var mylogin = function () {
 
                 facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],function(result){
 
-                alert('user not exist data is '+JSON.stringify(result));
-
                 var fb_id = result.id;
                 var type = "fb";
                 var email = result.email;
                 var name = result.name;
 
                 var fb_image_url = result.picture.data.url;
-
-
-                alert("fb url is "+fb_image_url);
-
 
                 var nm = name.substring(0, 3);
                 var num = Math.floor(1000 + Math.random() * 9000);
@@ -238,14 +228,13 @@ var mylogin = function () {
 
                                     if(result.status=='success'){
 
-                                         alert('image inserted successfull');
-
+                                        alert('image inserted successfull');
 
                                         var name = result['data']['first_name'];
-                                        var result = name.split(" ");
+                                        // var result = name.split(" ");
 
                                         Lockr.set("id",result.id);
-                                        Lockr.set("name",result[0]);
+                                        Lockr.set("name",name);
                                         Lockr.set("type","fb");
                                         Lockr.set("is_logged_in",true);
 
