@@ -213,7 +213,7 @@ var mylogin = function () {
                             alert('user inserted successfull');
 
                             Lockr.set("id",result.id);
-                            Lockr.set("name",name);
+                            Lockr.set("name",result.name);
 
                             $.ajax({
 
@@ -233,7 +233,7 @@ var mylogin = function () {
 
                                         alert('image inserted successfull');
 
-                                        var name = result['data']['first_name'];
+                                        // var name = result['data']['first_name'];
                                         
                                         Lockr.set("type","fb");
                                         Lockr.set("is_logged_in",true);
