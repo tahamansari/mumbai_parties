@@ -4,8 +4,8 @@ var img_url = "http://mumbaiparties.com/assets/uploads/";
 var casa_img_url = "http://casaestilo.in/taha/mp_admin/assets/img/";
 var profile_img_path = "http://casaestilo.in/taha/mp_admin/uploads/";
 
-var scroll_amount = 250;
-var offset = 0;
+// var scroll_amount = 250;
+// var offset = 0;
 
 $(document).ready(function(){
 	
@@ -350,7 +350,7 @@ function get_location(){
 		                select += "<option value='"+value.id+"'>"+value.name+"</option>";
 
 		          });
-		          $('#select_location').html(select);
+		          $('.select_location').html(select);
 
  			}else{
 
@@ -382,6 +382,7 @@ $(document).on('change','#map_top_select',function(){
 
 
 	get_initial_map_data(id);
+
 
 });
 
@@ -447,9 +448,9 @@ function get_top_location(id){
     })
 }
 
-$(document).on('change','#select_location',function(){
+$(document).on('change','.select_location',function(){
 
-	var id = $("#select_location").val();
+	var id = $(".select_location").val();
 	Lockr.set('loc_id',id);
 	mainView.router.loadPage('mapview.html');
 
@@ -460,12 +461,149 @@ function initial_marker_clicked_event(id){
 	mainView.router.loadPage('entitie.html?id='+id);
 }
 
+ // //Map display nad plot markers
+ //        var map;
+ //        var image;
+ //        var marker, i;
+ //        var MY_MAPTYPE_ID = 'mumbai_parties';
+ //        function initialize(id){
+
+ //            $("#map-canvas").show();
+ //            var lat = $("#latitute").val();
+ //            var lon = $("#longitute").val();
+ //            var zm = $("#zoom").val();
+ //            var zoomd = parseInt(zm);
+ //            map = new google.maps.Map(document.getElementById('map-canvas'), {
+ //                zoom: zoomd,	
+ //                center: new google.maps.LatLng(lat, lon),
+ //                mapTypeControlOptions: {
+ //                      mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID]
+ //                    },
+ //                    mapTypeId: MY_MAPTYPE_ID
+ //            });
+ //            var styles = [
+ //                {
+ //                featureType: 'all',
+ //                elementType: 'all',
+ //                  stylers: [
+ //                    { hue: '#0800ff' },
+ //                    { invert_lightness: 'true' },
+ //                    { saturation: -100 }
+ //                  ]
+ //                },
+ //                {
+ //                featureType: 'all',
+ //                elementType: 'labels.icon',
+ //                  stylers: [
+ //                    { visibility: 'off' }
+ //                  ]
+ //                },
+ //                {
+ //                featureType: 'all',
+ //                elementType: 'labels.text',
+ //                  stylers: [
+ //                    { visibility: 'off' }
+ //                  ]
+ //                },
+ //                {
+ //                featureType: 'road.arterial',
+ //                elementType: 'labels',
+ //                  stylers: [
+ //                    { visibility: 'on' }
+ //                  ]
+ //                },
+ //            ];
+ //            var styledMapOptions = {
+ //                name: 'Mumbai Parties'
+ //            };
+ //            var customMapType = new google.maps.StyledMapType(styles, styledMapOptions);
+ //            map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
+ //            $.ajax({
+ //                url:'http://mumbaiparties.com/index.php/api/get_entities_list/',
+ //                type: 'post',
+ //                crossDomain:true,
+ //                data: {
+ //                    id : id
+ //                },
+ //                success: function(data){
+ //                    console.log(data);
+ //                    $.each(data, function(index, value){
+ //                        var v = value.latitude;
+ //                        var s = value.longitude;
+ //                        var bar = value.entity_name;
+ //                        console.log(v+' '+s);
+ //                        var eventtype = $('#filter_id').val();
+                        
+ //                        //google.maps.Marker
+ //                        var marker1 = new google.maps.Marker({
+ //                            position: new google.maps.LatLng(v, s),
+ //                            map: map,
+ //                            // icon: 'img/party-meter.gif',
+ //                            icon: value.marker,
+ //                            labelContent: bar,
+ //                            labelAnchor: new google.maps.Point(-10, 20),
+ //                            labelClass: value.css,
+ //                            labelInBackground: false
+ //                        });
+                        
+ //                        var marker = new MarkerWithLabel({
+ //                            position: new google.maps.LatLng(v, s),
+ //                            map: map,
+ //                            // icon: 'img/party-meter.gif',
+ //                            icon: value.marker,
+ //                            labelContent: bar,
+ //                            labelAnchor: new google.maps.Point(-10, 20),
+ //                            labelClass: value.css,
+ //                            labelInBackground: false
+ //                        });
+                        
+ //                        google.maps.event.addListener(marker, 'click', function(marker, i) {
+ //                            geteventsbyentity(value.id);
+ //                        });
+                        
+ //                        google.maps.event.addListener(marker1, 'click', function(marker, i) {
+ //                            geteventsbyentity(value.id);
+ //                        });
+ //                    });
+ //                }
+ //            })
+ //            $('.loader').fadeOut();
+ //        }
+
+
+
+
+
+
 function get_initial_map_data(id){
 
 	$('#map').html('<img style="margin: 25%;text-align:center;" width="50%" src="img/logo.png">');
 
+	$.ajax({
 
-	var styles = [
+		type:"POST",
+		url:base_url+"get_initial_map_data/",
+		dataType:'json',
+		data:{
+
+			id:id
+		},
+		success:function(result){
+
+			console.log(result);
+
+			if(result['status'] == "success"){
+
+		    var map = new google.maps.Map(document.getElementById('map'), {
+		      zoom: 14,
+		      center: new google.maps.LatLng(result['center'][0]['latitute'], result['center'][0]['longitute']),
+		      mapTypeId: google.maps.MapTypeId.ROADMAP,
+		      disableDefaultUI: true
+		    });
+
+
+
+		    var styles = [
                 {
                 featureType: 'all',
                 elementType: 'all',
@@ -499,28 +637,6 @@ function get_initial_map_data(id){
             ];
 
 
-	$.ajax({
-
-		type:"POST",
-		url:base_url+"get_initial_map_data/",
-		dataType:'json',
-		data:{
-
-			id:id
-		},
-		success:function(result){
-
-			console.log(result);
-
-			if(result['status'] == "success"){
-
-		    var map = new google.maps.Map(document.getElementById('map'), {
-		      zoom: 14,
-		      center: new google.maps.LatLng(result['center'][0]['latitute'], result['center'][0]['longitute']),
-		      mapTypeId: google.maps.MapTypeId.ROADMAP,
-		      disableDefaultUI: true
-		    });
-
 			map.setOptions({styles: styles});
 
 		    var marker,i;
@@ -541,6 +657,7 @@ function get_initial_map_data(id){
 
 	          }
 
+
 		      marker = new google.maps.Marker({
 		      	
 		        position: new google.maps.LatLng(value.latitude,value.longitude),
@@ -551,21 +668,29 @@ function get_initial_map_data(id){
 
 		      });
 
-			  var content = value.name; 
-			  var infowindow = new google.maps.InfoWindow()
+		      	var marker1 = new MarkerWithLabel({
+			         position: new google.maps.LatLng(value.latitude,value.longitude),
+			         map: map,
+			        icon:img_url+value.image,
+			         labelContent: value.name,
+			         labelAnchor: new google.maps.Point(22, 0),
+			         labelClass: "labels", // the CSS class for the label
+			         labelStyle: {opacity: 0.75}
+			       });
 
-			  infowindow.setContent(content);
-		      infowindow.open(map,marker);
+
+
+		   //    var content = value.name; 
+			  // var infowindow = new google.maps.InfoWindow()
+    	// 	  infowindow.setContent(content);
+		   //    infowindow.open(map,marker);
+
 
 		      marker.addListener('click', function() {
-
 		          initial_marker_clicked_event(value.id);
-
 		      });
 
 			});
-
-			// $('.cust-preloader').css('display','none');
 			 
 			}else{
 
@@ -984,7 +1109,8 @@ function get_event_type(){
 				$(".date-text").html(current_date());
 				$("#cust_event_box").html(list);
 
-				console.log(list);
+				$("#list_date_box").css('display','none');
+
 
 			}else{
 
@@ -1008,6 +1134,11 @@ function get_event_type(){
 
 $(document).on('click','.get-event-data',function(event){
 
+	console.log('scroll amount change to 1200');
+	scroll_amount = 1200;
+	offset=0;
+
+	console.log(scroll_amount);
 
 
 	 var loc_id = $("#list_top_select").val();
@@ -1031,7 +1162,10 @@ $(document).on('click','.get-event-data',function(event){
  			var html = "";
 	 		if(result['status']=="success"){
 
+	 			var count=0;
 		 		$.each(result['data'],function(key,value) {
+
+		 			console.log(count++);
 
 		 			html +="<div data-id="+value.event_id+" class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 0px;width:100%'>"+
 			                  "<div style='background-image:url("+img_url+value.image+")' valign='bottom' class='card-header no-border'>"+
@@ -1045,6 +1179,7 @@ $(document).on('click','.get-event-data',function(event){
 		 		});
 
 		 		$('#cust_event_box').html(html);
+		 		$('#list_date_box').css('display','block');
 
 	 		}else{
 
@@ -1066,8 +1201,7 @@ $(document).on('click','.get-event-data',function(event){
 
 function onscroll_getevent(para1){
 
-	scroll_amount = 250;
-	offset=4;
+	console.log('onscroll called data is '+para1.scrollTop+" "+scroll_amount);
 
 
 	var loc_id = $("#list_top_select").val();
@@ -1075,17 +1209,14 @@ function onscroll_getevent(para1){
 
 	console.log(para1.scrollTop);
 
-	console.log(para1.scrollDown);
-
-
 	if(para1.scrollTop > scroll_amount){
+
+		scroll_amount+=1200;
+		offset+=11;
 
 	    myApp.showIndicator();
 
 		console.log('call api for more data');
-
-		scroll_amount+=250;
-		offset+=4;
 
 		$.ajax({
 
@@ -1120,19 +1251,20 @@ function onscroll_getevent(para1){
 
 			 		$('#cust_event_box').append(html);
 
+					console.log("scroll amount is "+scroll_amount);
+
+
         			setTimeout(myFunction, 200);
-
-
-
-
-
 
 		 		}else{
 
 		 			if(result['msg']=="no data"){
 
-						myApp.hideIndicator();
 
+		 				console.log('no data available');
+			 			scroll_amount+=1200;
+
+						myApp.hideIndicator();
 
 		 			}else{
 
@@ -1146,8 +1278,6 @@ function onscroll_getevent(para1){
 	}else{
 
 		console.log('dont call api');
-
-
 		myApp.hideIndicator();
 
 	}
@@ -1274,41 +1404,11 @@ $(document).on('click','.get_offers',function(event){
 //revise
 $(document).on('click','.get_map_data',function(event){
 
+
 	$('#map').html('<img style="margin: 25%;text-align:center;" width="50%" src="img/logo.png">');
 
 
-	 var styles = [
-        {
-        featureType: 'all',
-        elementType: 'all',
-          stylers: [
-            { hue: '#0800ff' },
-            { invert_lightness: 'true' },
-            { saturation: -100 }
-          ]
-        },
-        {
-        featureType: 'all',
-        elementType: 'labels.icon',
-          stylers: [
-            { visibility: 'off' }
-          ]
-        },
-        {
-        featureType: 'all',
-        elementType: 'labels.text',
-          stylers: [
-            { visibility: 'off' }
-          ]
-        },
-        {
-        featureType: 'road.arterial',
-        elementType: 'labels',
-          stylers: [
-            { visibility: 'on' }
-          ]
-        },
-     ];
+	 
 
      var loc_id =  $('#map_top_select').val();
 	 var event_type = $(this).attr('data-id');
@@ -1336,6 +1436,40 @@ $(document).on('click','.get_map_data',function(event){
 			      disableDefaultUI: true
 			    });
 
+			    var styles = [
+		        {
+		        featureType: 'all',
+		        elementType: 'all',
+		          stylers: [
+		            { hue: '#0800ff' },
+		            { invert_lightness: 'true' },
+		            { saturation: -100 }
+		          ]
+		        },
+		        {
+		        featureType: 'all',
+		        elementType: 'labels.icon',
+		          stylers: [
+		            { visibility: 'off' }
+		          ]
+		        },
+		        {
+		        featureType: 'all',
+		        elementType: 'labels.text',
+		          stylers: [
+		            { visibility: 'off' }
+		          ]
+		        },
+		        {
+		        featureType: 'road.arterial',
+		        elementType: 'labels',
+		          stylers: [
+		            { visibility: 'on' }
+		          ]
+		        },
+		     ];
+
+			    
 				map.setOptions({styles: styles});
 
 		        $.each(result['data'],function(key, value) {
@@ -1343,15 +1477,25 @@ $(document).on('click','.get_map_data',function(event){
 			      marker = new google.maps.Marker({
 			        position: new google.maps.LatLng(value.latitude,value.longitude),
 			        map: map,
-			        icon:img_url+value.image
+			        icon:img_url+value.image,
+			        
 
 			      });
 
-		           var content = value.name; 
-				   var infowindow = new google.maps.InfoWindow()
 
-				   infowindow.setContent(content);
-			       infowindow.open(map,marker);
+			      var marker1 = new MarkerWithLabel({
+			         position: new google.maps.LatLng(value.latitude,value.longitude),
+			         map: map,
+			         icon:img_url+value.image,
+			         labelContent: value.name,
+			         // labelAnchor: new google.maps.Point(22, 0),
+			         labelClass: "labels", // the CSS class for the label
+			         labelStyle: {opacity: 0.75}
+			       });
+
+
+
+
 
 			      marker.addListener('click', function() {
 
@@ -1360,8 +1504,6 @@ $(document).on('click','.get_map_data',function(event){
 			      });
 
 				});
-
-     			// myApp.hideIndicator();
 
 
 	 		}else{
@@ -1438,6 +1580,7 @@ function get_location_list(){
           console.log(result);
 
           var json = JSON.parse(result);
+          
           var select = "<option value=''>Select Location</option>";
 
           $.each(json, function(i){

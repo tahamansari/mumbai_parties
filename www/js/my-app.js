@@ -2,14 +2,11 @@
 var myApp = new Framework7({
 
     modalTitle:"Mumbai Parties",
-    // preloadPreviousPage:false,
     swipeBackPage:false,
-    cache:false,
-    smartSelectSearchbar:true,
-    uniqueHistory: true,
-    imagesLazyLoadPlaceholder: 'img/card.jpg',
-    imagesLazyLoadThreshold: 50,
-    animateNavBackIcon:true,
+    // smartSelectSearchbar:true,
+    // imagesLazyLoadPlaceholder: 'img/card.jpg',
+    // imagesLazyLoadThreshold: 50,
+    // animateNavBackIcon:true,
 
     onAjaxStart: function (xhr) {
 
@@ -22,11 +19,6 @@ var myApp = new Framework7({
     }
 });
 
-
-
-
-
-
 function myFunction(){
 
         myApp.hideIndicator();
@@ -34,26 +26,27 @@ function myFunction(){
 }
 
 var $$ = Dom7;
+
 $$(document).on('pageInit', function (e) {
 
-    var networkState = navigator.connection.type;
-    var states = {};
-    states[Connection.UNKNOWN]  = 'Unknown connection';
-    states[Connection.ETHERNET] = 'Ethernet connection';
-    states[Connection.WIFI]     = 'WiFi connection';
-    states[Connection.CELL_2G]  = 'Cell 2G connection';
-    states[Connection.CELL_3G]  = 'Cell 3G connection';
-    states[Connection.CELL_4G]  = 'Cell 4G connection';
-    states[Connection.CELL]     = 'Cell generic connection';
-    states[Connection.NONE]     = 'No network connection';
+    // var networkState = navigator.connection.type;
+    // var states = {};
+    // states[Connection.UNKNOWN]  = 'Unknown connection';
+    // states[Connection.ETHERNET] = 'Ethernet connection';
+    // states[Connection.WIFI]     = 'WiFi connection';
+    // states[Connection.CELL_2G]  = 'Cell 2G connection';
+    // states[Connection.CELL_3G]  = 'Cell 3G connection';
+    // states[Connection.CELL_4G]  = 'Cell 4G connection';
+    // states[Connection.CELL]     = 'Cell generic connection';
+    // states[Connection.NONE]     = 'No network connection';
 
-    // alert('Connection type: ' + states[networkState]);
+    // // alert('Connection type: ' + states[networkState]);
 
-    if(states[networkState]=='No network connection'){
+    // if(states[networkState]=='No network connection'){
 
-        myApp.alert('No network connection');
-        return false;
-    }
+    //     myApp.alert('No network connection');
+    //     return false;
+    // }
 
     if(Lockr.get('is_logged_in')){
 
@@ -91,19 +84,22 @@ function check_connection(){
 
 }
 
-
-
 var mainView = myApp.addView('.view-main', {
     
     dynamicNavbar: true
 });
 
 myApp.onPageInit('index', function (page) {
+
     $('.navbar-inner').css('background','none');
+
 });
 
 
 myApp.onPageInit('location', function (page) {
+
+    $('.navbar-inner').css('background','none');
+    
 
     get_location();
 
@@ -261,13 +257,12 @@ myApp.onPageInit('offer', function (page) {
         
 });
 
-myApp.onPageInit('mapview', function (page) {
 
-      myApp.showIndicator();
+myApp.onPageInit('mapview', function (page) {
 
       var id= Lockr.get('loc_id');
       get_initial_map_data(id);
-      get_top_location(id);
+      get_top_location(id); 
 
       $('#whatshappening_map').attr('onclick', 'get_initial_map_data('+id+')');
 
@@ -288,7 +283,7 @@ myApp.onPageInit('mapview', function (page) {
             $('.owl-wrapper').trigger('owl.goTo', n);
      });
 
-     setTimeout(myFunction, 5000);
+
 });
 
 myApp.onPageInit('listview', function (page) {

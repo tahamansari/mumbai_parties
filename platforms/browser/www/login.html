@@ -31,7 +31,9 @@
                      <input name="password" type="password" placeholder="Enter Password">
                      <i class="fa fa-lock icon-font" aria-hidden="true"></i>
                   </div>
-                     <a data-picker=".forgot_picker" class="open-picker" href="#"><p>FORGOT PASSWORD ?</p></a>
+
+                    <!-- data-picker=".forgot_picker" class="open-picker" -->
+                     <p onclick="prompt_forgottextbox()">FORGOT PASSWORD ?</p>
                      <div class="mybtn">
                           <a href="#" id="login_button" class="button">SIGN IN</a>
                      </div>
@@ -42,7 +44,7 @@
 
         
      
-      <div class="picker-modal forgot_picker" style="height: 200px">
+<!--       <div class="picker-modal forgot_picker" style="height: 200px">
         <div class="toolbar" style="background-color: black;">
           <div class="toolbar-inner">
             <div class="left"></div>
@@ -57,6 +59,6 @@
             <input onclick="sendemail(entered_email.value)" class='redeem-btn' type='submit' value='Send'>
           </div>
         </div>
-      </div>
+      </div> -->
 
 </div>

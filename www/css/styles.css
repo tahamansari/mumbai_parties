@@ -144,7 +144,8 @@ a{
 
 .buttons-row{
 
-	background-color:#444;
+	/*background-color:#444;*/
+  background-color: rgba(99,96,96,0.5);
 
 }
 
@@ -182,22 +183,26 @@ a{
 
 input[type="text"]{
 
-  background-color: rgba(128, 128, 128, 0.7) !important;
+  /*background-color: rgba(128, 128, 128, 0.7) !important;*/
+  background-color: rgba(99,96,96,0.5)!important;
   padding-left: 10px!important;
   /*color: #f4f3f3!important;*/
-  color: black;
+  color: white;
+  /*color: black;*/
 }
 
 input[type="email"]{
 
-  background-color: rgba(128, 128, 128, 0.7) !important;
+  /*background-color: rgba(128, 128, 128, 0.7) !important;*/
+  background-color: rgba(99,96,96,0.5)!important;
   padding-left: 10px!important;
   color: #f4f3f3!important;
 }
 
 input[type="password"]{
 
-  background-color: rgba(128, 128, 128, 0.7) !important;
+  /*background-color: rgba(128, 128, 128, 0.7) !important;*/
+  background-color: rgba(99,96,96,0.5)!important;
   padding-left: 10px!important;
   color: #f4f3f3!important;
 }
@@ -259,15 +264,17 @@ input[type="password"]{
 
 .upload_buttom{
 
-  width: 100%;
-  height: 40px;
+/*  width: 100%;
+  height: 40px;*/
   font-size: 14px;
-  background-color: white;
+  /*background-color: white;*/
+  color: white;
 
 }
 .cust-radio{
 
-  background-color: rgb(96, 98, 99);
+  /*background-color: rgb(96, 98, 99);*/
+  background-color: rgba(99,96,96,0.5)!important;
   border-radius: 4px;
   padding: 10px;
   color: rgb(176, 177, 174);
@@ -399,7 +406,8 @@ a{
 }
 .top-select{
 
-    background: #2a2828;
+    /*background: #2a2828;*/
+    background-color: rgba(99,96,96,0.5)!important;
     font-family: inherit;
     font-weight: lighter;
     border-radius: 2px;
@@ -504,7 +512,8 @@ a{
 
 .location-select{
 
-    background-color: #585757;
+    /*background-color: #585757;*/
+    background-color: rgba(99,96,96,0.5)!important;
     color: white;
     width: 100%;
     padding: 10px;
@@ -515,7 +524,8 @@ a{
 
 .view-button{
 
-    background-color: #2A2828;
+    /*background-color: #2A2828;*/
+    background-color: rgba(99,96,96,0.5)!important;
     padding: 8px 10px;
     color: white;
     border-radius: 2px;
@@ -647,10 +657,11 @@ a{
 
 .list-name{
 
-    color: #3cd456;
+    color: #ffffff;
     background-color: rgba(0, 0, 0, 0.61);
     width: 100%;
     padding: 5px 10px;
+    font-size: 14px;
 }
 
 .card-header{
@@ -1529,7 +1540,8 @@ position: absolute;
 
     position: absolute;
     right: 20px;
-    top: 9px;
+    top: 12px;
+    font-size: 20px;
 }
 
 .date-input{
@@ -1538,7 +1550,7 @@ position: absolute;
     border: none;
     color: #2f2a2a;
     position: absolute;
-    right: -10px;
+    right: 0px;
     top: 10px;
     z-index: 999;
 }
@@ -1583,10 +1595,16 @@ position: absolute;
 
 }
 
-.gm-style-pbc + div{
+/*.gm-style-pbc + div{
+  /*z-index: 99!important;*/
+/*}*/
 
-  z-index: 5!important; 
-}
+/*.gmnoprint img{
+
+  position: relative;
+  z-index: 999!important;
+}*/
+
 
 .book-name{
     width: 80%;
@@ -1619,6 +1637,26 @@ position: absolute;
     top: 20px;
 }
 
+.upload-para{
+
+    margin:0;
+    text-align: center;
+
+}
+
+   .labels {
+    color: green;
+    border: none;
+    background-color: rgba(0, 0, 0, .5);
+    font-family: "Lucida Grande", "Arial", sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    width: auto;
+    border: 2px solid black;
+    white-space: nowrap;
+    padding: 5px;
+   }
 
 .preloader-indicator-overlay {
     visibility: visible;

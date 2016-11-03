@@ -21,22 +21,26 @@
     <link rel="stylesheet" type="text/css" href="css/owl.theme.min.css">
 
     <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"> -->
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCGxWQDpfQ2erARAl0RHwKkqfEDYq6rvU" async defer></script>
+    <script type="text/javascript" src="js/markerwithlabel.js"></script>
 
     <link rel="stylesheet" href="css/styles.css">
-</head>
+</head> 
 <body>
-            <!-- <div class="statusbar-overlay"></div> -->
+            <!-- <div class="statusbar-overlay"></div>
             <!--Panels overlay-->
             <div class="panel-overlay"></div>
             <!-- Left panel with reveal effect-->
+
+
             <div class="panel panel-left panel-cover">
                 <div class="content-block no-mar no-pad">
                     <div class="row drawer-row">
 
                         <div class="col-50" style="position:relative">
                           <!-- open-picker close-panel -->
-                          <a id="profile_picker" href="#" data-picker=".update_picker" class="">
+                          <!-- data-picker=".update_picker" class="" -->
+                          <a id="profile_picker" href="#">
                             <img id="profile_img" class="img-circle" width="90px" src="http://casaestilo.in/taha/mp_admin/uploads/user.jpeg" alt="">
                             <!-- <i id="camera-icon" style="display:none" class="fa fa-camera profile-overlay" aria-hidden="true"></i> -->
                           </a>
@@ -60,7 +64,14 @@
                           </a>
                         </li> -->
                         <li>
-                          <a id="booking_div" style="display:none" href="mybooking.html" class="item-link item-content close-panel">
+                          <a href="mybooking.html" class="item-link item-content close-panel">
+                            <div class="item-inner cust-menu">
+                              <div class="item-title">My Wallet</div>
+                            </div>
+                          </a>
+                        </li>
+                        <li id="booking_div" style="display:none">
+                          <a  href="mybooking.html" class="item-link item-content close-panel">
                             <div class="item-inner cust-menu">
                               <div class="item-title">My Bookings</div>
                             </div>
@@ -103,6 +114,24 @@
                             </div>
                           </a>
                         </li> -->
+
+
+                        <li id="invite_div">
+                          <a href="invite.html" class="item-link item-content  close-panel">
+                            <div class="item-inner cust-menu">
+                              <div class="item-title">Refer & Earn</div>
+                            </div>
+                          </a>
+                        </li>
+
+
+                        <li id="invite_div">
+                          <a href="invite.html" class="item-link item-content  close-panel">
+                            <div class="item-inner cust-menu">
+                              <div class="item-title">Redeem</div>
+                            </div>
+                          </a>
+                        </li>
 
                         <li id="invite_div" style="display:none">
                           <a href="invite.html" class="item-link item-content  close-panel">
@@ -226,7 +255,9 @@
 
                 </div>
 
-                <div class="picker-modal update_picker" style="height:200px">
+                
+
+<!--                 <div class="picker-modal update_picker" style="height:200px">
               <div class="toolbar" style="background-color: black;">
                 <div class="toolbar-inner">
                   <div class="left"></div>
@@ -255,51 +286,36 @@
                       </div>
                 </div>
               </div>
-            </div>
+            </div> -->
+
+
             </div>
 
             
         </div>
     </div>
 
-
     <div id="fb-root"></div>
-    
     <script src="js/jquery-2.2.4.min.js"></script>
-
+<!--     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCGxWQDpfQ2erARAl0RHwKkqfEDYq6rvU"
+    async defer></script>
+    <script src="js/markerwithlabel.js"></script> -->
     <script type="text/javascript" src="cordova.js"></script>
-
-
     <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
     <script type="text/javascript" src="js/lockr.js"></script>
-
     <script type="text/javascript" src="js/owl.carousel.min.js"></script>
     <script type="text/javascript" src="js/ajax.js"></script>
     <script type="text/javascript" src="js/my-app.js"></script>
-    
     <script type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
-
     <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
 
-
-
-
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCGxWQDpfQ2erARAl0RHwKkqfEDYq6rvU"
-    async defer></script>
-
-    <!-- <script src="js/markerwithlabel.js"></script> -->
-
-   <script src="js/checkout.js"></script>
-
+    <script src="js/checkout.js"></script>
     <script type="text/javascript" src="js/moment.js"></script>
 
     <script>
     $(document).ready(function() {
-
         $('.fancybox').fancybox();
-
-        
     });
     </script>
 </body>

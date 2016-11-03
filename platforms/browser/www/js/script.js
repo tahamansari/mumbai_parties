@@ -126,6 +126,18 @@ function onOffline() {
 
 }
 
+function current_date(){
+
+    var d = new Date();
+    var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'];
+    var day = d.getDate();
+    var month = m[d.getMonth()];
+    var year = d.getFullYear();
+
+    // 
+    return day+" "+month+" "+year;
+
+}
 
 var mylogin = function () {
 
@@ -146,15 +158,11 @@ var mylogin = function () {
 
             if(result['status']=='success'){
 
-                alert("user exist");
-
-                alert("data is "+JSON.stringify(result));
-
                 var name = result['data']['first_name'];
-                var result = name.split(" ");
+                // var result = name.split(" ");
 
                 Lockr.set("id",result['data']['id']);
-                Lockr.set("name",result[0]);
+                Lockr.set("name",name);
                 Lockr.set("type","fb");
                 Lockr.set("is_logged_in",true);
 
@@ -162,11 +170,7 @@ var mylogin = function () {
 
             }else{
 
-                alert("user not exist");
-
                 facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],function(result){
-
-                alert(JSON.stringify(result));
 
                 var fb_id = result.id;
                 var type = "fb";
@@ -175,14 +179,10 @@ var mylogin = function () {
 
                 var fb_image_url = result.picture.data.url;
 
-
-                alert("fb url is "+fb_image_url);
-
-
                 var nm = name.substring(0, 3);
                 var num = Math.floor(1000 + Math.random() * 9000);
 
-                var img_name = fb_image_url.substr(fb_image_url.lastIndexOf('/')+1);
+                var img_name = fb_id+".jpg";
 
 
                 var ref_code = nm+num;
@@ -210,6 +210,9 @@ var mylogin = function () {
 
                             alert('user inserted successfull');
 
+                            Lockr.set("id",result.id);
+                            Lockr.set("name",result.name);
+
                             $.ajax({
 
                                 url: base_url+"upload_fb/",
@@ -226,14 +229,10 @@ var mylogin = function () {
 
                                     if(result.status=='success'){
 
-                                         alert('image inserted successfull');
+                                        alert('image inserted successfull');
 
-
-                                        var name = result['data']['first_name'];
-                                        var result = name.split(" ");
-
-                                        Lockr.set("id",result.id);
-                                        Lockr.set("name",result[0]);
+                                        // var name = result['data']['first_name'];
+                                        
                                         Lockr.set("type","fb");
                                         Lockr.set("is_logged_in",true);
 
@@ -249,6 +248,8 @@ var mylogin = function () {
 
 
                             
+                        }else{
+                            alert("user not exists");
                         }
 
                     },
@@ -300,18 +301,6 @@ var logout = function () {
         function (response) {  });
 }
 
-function current_date(){
-
-	var d = new Date();
-	var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'];
-	var day = d.getDate();
-	var month = m[d.getMonth()];
-    var year = d.getFullYear();
-
-    // 
-	return day+" "+month+" "+year;
-
-}
 
 function check_login(){
 
@@ -650,11 +639,13 @@ $(document).on('click','.notify-toolbar',function(){
 
 $(document).on('click','.home',function(){
 
+
     if(Lockr.get('is_logged_in')){
 
         mainView.router.loadPage('location.html');
 
       }else{
+
         mainView.router.loadPage('index.html');
     }
 
@@ -735,3 +726,47 @@ $(document).on('click','.calender',function(){
     $('#date').trigger('click');
 
 })
+
+
+function prompt_forgottextbox(){
+    myApp.prompt('Enter your email id', function (value) {
+        sendemail(value);
+    });
+}
+
+function prompt_upload(){
+
+      myApp.modal({
+        title:  'Choose upload type',
+        // text: 'Vivamus feugiat diam velit. Maecenas aliquet egestas lacus, eget pretium massa mattis non. Donec volutpat euismod nisl in posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae',
+        verticalButtons: true,
+        buttons: [
+          {
+            text: 'Camera',
+            onClick: function() {
+
+            upload_type_camera();
+              // myApp.alert('You clicked first button!')
+            }
+          },
+          {
+            text: 'Gallery',
+            onClick: function() {
+
+                upload_type_gallery()
+              // myApp.alert('You clicked second button!')
+            }
+          },
+          {
+            text: 'Cancel',
+            onClick: function() {
+
+            
+              // myApp.alert('You clicked second button!')
+            }
+          }
+        ]
+      })
+}
+
+    

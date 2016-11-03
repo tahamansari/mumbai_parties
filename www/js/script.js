@@ -141,8 +141,6 @@ function current_date(){
 
 var mylogin = function () {
 
-    alert('facebook clicked');
-
     var fbLoginSuccess = function (userData) {
 
         var id = userData['authResponse']['userID'];
@@ -641,11 +639,13 @@ $(document).on('click','.notify-toolbar',function(){
 
 $(document).on('click','.home',function(){
 
+
     if(Lockr.get('is_logged_in')){
 
         mainView.router.loadPage('location.html');
 
       }else{
+
         mainView.router.loadPage('index.html');
     }
 
@@ -726,3 +726,47 @@ $(document).on('click','.calender',function(){
     $('#date').trigger('click');
 
 })
+
+
+function prompt_forgottextbox(){
+    myApp.prompt('Enter your email id', function (value) {
+        sendemail(value);
+    });
+}
+
+function prompt_upload(){
+
+      myApp.modal({
+        title:  'Choose upload type',
+        // text: 'Vivamus feugiat diam velit. Maecenas aliquet egestas lacus, eget pretium massa mattis non. Donec volutpat euismod nisl in posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae',
+        verticalButtons: true,
+        buttons: [
+          {
+            text: 'Camera',
+            onClick: function() {
+
+            upload_type_camera();
+              // myApp.alert('You clicked first button!')
+            }
+          },
+          {
+            text: 'Gallery',
+            onClick: function() {
+
+                upload_type_gallery()
+              // myApp.alert('You clicked second button!')
+            }
+          },
+          {
+            text: 'Cancel',
+            onClick: function() {
+
+            
+              // myApp.alert('You clicked second button!')
+            }
+          }
+        ]
+      })
+}
+
+    
