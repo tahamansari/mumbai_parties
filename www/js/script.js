@@ -1,23 +1,23 @@
-function initilize(){
-	myApp.alert("initiliEd");
+function initilize() {
+    myApp.alert("initiliEd");
 }
 
-function check_age(age){
+function check_age(age) {
 
-	var age = $('#'+age).val();
-	if(isNaN(age)){
+    var age = $('#' + age).val();
+    if (isNaN(age)) {
 
-		myApp.alert("age should be numeric");
-		$('[name="age"]').val("");
-		return false;
-	}
+        myApp.alert("age should be numeric");
+        $('[name="age"]').val("");
+        return false;
+    }
 
 }
 
-function check_mobile(mobile){
-    
-    var mobile = $('#'+mobile).val();
-    if(isNaN(mobile)){
+function check_mobile(mobile) {
+
+    var mobile = $('#' + mobile).val();
+    if (isNaN(mobile)) {
 
         myApp.alert("Mobile Number Should Be Numeric");
         $('[name="mobile"]').val("");
@@ -26,25 +26,25 @@ function check_mobile(mobile){
 
 }
 
-$(document).on('click','.owl-item',function(event){
+$(document).on('click', '.owl-item', function(event) {
 
-	$('.tab').removeClass('active-tab');
+    $('.tab').removeClass('active-tab');
     $('.owl-item').removeClass('active-tab');
-	$(this).addClass('active-tab');
-	 
+    $(this).addClass('active-tab');
+
 })
 
 
 
 
-function call(para1){
+function call(para1) {
 
-	window.open('tel:'+para1);
+    window.open('tel:' + para1);
 }
 
-function get_direction(para1,para2){
+function get_direction(para1, para2) {
 
-	directions.navigateTo(para1,para2); // latitude, longitude
+    directions.navigateTo(para1, para2); // latitude, longitude
 }
 
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -54,57 +54,57 @@ function onDeviceReady() {
 
 
     // alert('device is now ready');
-    
 
-	if(Lockr.get("is_logged_in")){
 
-       mainView.router.loadPage("location.html");
-       console.log("user is logged in");
+    if (Lockr.get("is_logged_in")) {
 
-    }else{
+        mainView.router.loadPage("location.html");
+        console.log("user is logged in");
+
+    } else {
 
         console.log("user is not logged in");
     }
 
     document.addEventListener("backbutton", function(e) {
-        
+
         e.preventDefault();
         var page = myApp.getCurrentView().activePage;
         myApp.hideIndicator();
 
         if (page.name == "offline") {
 
-                myApp.confirm('would you like to exit app.', function() {
-                    navigator.app.clearHistory();
-                    navigator.app.exitApp();
-                });
-                return false;
+            myApp.confirm('would you like to exit app.', function() {
+                navigator.app.clearHistory();
+                navigator.app.exitApp();
+            });
+            return false;
         }
-        
+
         if (page.name == "index") {
 
+            myApp.confirm('would you like to exit app.', function() {
+                navigator.app.clearHistory();
+                navigator.app.exitApp();
+            });
+
+        } else if (page.name == "location") {
+
+            if (Lockr.get('is_logged_in')) {
+
                 myApp.confirm('would you like to exit app.', function() {
                     navigator.app.clearHistory();
                     navigator.app.exitApp();
                 });
-            
-        }else if(page.name == "location"){
 
-                if(Lockr.get('is_logged_in')){
+            } else {
 
-                    myApp.confirm('would you like to exit app.', function() {
-                        navigator.app.clearHistory();
-                        navigator.app.exitApp();
-                    });
-
-                }else{
-
-                    mainView.router.back({});
-                }
-        }else{
+                mainView.router.back({});
+            }
+        } else {
             mainView.router.back({});
         }
-        
+
     }, false);
 
 
@@ -126,189 +126,202 @@ function onOffline() {
 
 }
 
-function current_date(){
+function current_date() {
 
     var d = new Date();
-    var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'];
+    var m = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
     var day = d.getDate();
     var month = m[d.getMonth()];
     var year = d.getFullYear();
 
     // 
-    return day+" "+month+" "+year;
+    return day + " " + month + " " + year;
 
 }
 
-var mylogin = function () {
+var mylogin = function() {
 
-    var fbLoginSuccess = function (userData) {
+    var fbLoginSuccess = function(userData) {
 
         var id = userData['authResponse']['userID'];
 
         $.ajax({
 
-            url: base_url+'check_user',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                id: id
-            },
-        })
-        .done(function(result) {
+                url: base_url + 'check_user',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id: id
+                },
+            })
+            .done(function(result) {
 
-            if(result['status']=='success'){
+                if (result['status'] == 'success') {
 
-                var name = result['data']['first_name'];
-                // var result = name.split(" ");
+                    var name = result['data']['first_name'];
+                    // var result = name.split(" ");
 
-                Lockr.set("id",result['data']['id']);
-                Lockr.set("name",name);
-                Lockr.set("type","fb");
-                Lockr.set("is_logged_in",true);
+                    Lockr.set("id", result['data']['id']);
+                    Lockr.set("name", name);
+                    Lockr.set("type", "fb");
+                    Lockr.set("is_logged_in", true);
 
-                mainView.router.loadPage("location.html");
+                    mainView.router.loadPage("location.html");
 
-            }else{
+                } else {
 
-                facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"],function(result){
+                    facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"], function(result) {
 
-                var fb_id = result.id;
-                var type = "fb";
-                var email = result.email;
-                var name = result.name;
+                            var fb_id = result.id;
+                            var type = "fb";
+                            var email = result.email;
+                            var name = result.name;
 
-                var fb_image_url = result.picture.data.url;
+                            var fb_image_url = result.picture.data.url;
 
-                var nm = name.substring(0, 3);
-                var num = Math.floor(1000 + Math.random() * 9000);
+                            var nm = name.substring(0, 3);
+                            var num = Math.floor(1000 + Math.random() * 9000);
 
-                var img_name = fb_id+".jpg";
+                            var img_name = fb_id + ".jpg";
 
 
-                var ref_code = nm+num;
-                var is_redeemed = 0;
-
-                $.ajax({
-
-                    url: base_url+"register/",
-                    type:'POST',
-                    dataType:'json',
-                    data:{
-
-                        fb_id:fb_id,
-                        type:type,
-                        email: email,
-                        name: name,
-                        img_name:img_name,
-                        ref_code:ref_code,
-                        is_redeemed:is_redeemed
-
-                    },
-                    success:function(result){
-
-                        if(result.status=='success'){
-
-                            alert('user inserted successfull');
-
-                            Lockr.set("id",result.id);
-                            Lockr.set("name",result.name);
+                            var ref_code = nm + num;
+                            var is_redeemed = 0;
 
                             $.ajax({
 
-                                url: base_url+"upload_fb/",
-                                type:'POST',
-                                dataType:'json',
-                                data:{
+                                url: base_url + "register/",
+                                type: 'POST',
+                                dataType: 'json',
+                                data: {
 
-                                    fb_image_url:fb_image_url,
-                                    img_name:img_name
+                                    fb_id: fb_id,
+                                    type: type,
+                                    email: email,
+                                    name: name,
+                                    img_name: img_name,
+                                    ref_code: ref_code,
+                                    is_redeemed: is_redeemed
 
                                 },
-                                success:function(result){
+                                success: function(result) {
+
+                                    if (result.status == 'success') {
+
+                                        alert('user inserted successfull');
+
+                                        Lockr.set("id", result.id);
+                                        Lockr.set("name", result.name);
+
+                                        $.ajax({
+
+                                            url: base_url + "upload_fb/",
+                                            type: 'POST',
+                                            dataType: 'json',
+                                            data: {
+
+                                                fb_image_url: fb_image_url,
+                                                img_name: img_name
+
+                                            },
+                                            success: function(result) {
 
 
-                                    if(result.status=='success'){
+                                                if (result.status == 'success') {
 
-                                        alert('image inserted successfull');
+                                                    alert('image inserted successfull');
 
-                                        // var name = result['data']['first_name'];
-                                        
-                                        Lockr.set("type","fb");
-                                        Lockr.set("is_logged_in",true);
+                                                    // var name = result['data']['first_name'];
 
-                                        mainView.router.loadPage("location.html");
+                                                    Lockr.set("type", "fb");
+                                                    Lockr.set("is_logged_in", true);
+
+                                                    mainView.router.loadPage("location.html");
+
+                                                }else{
+
+                                                    alert('Failed');
+                                                }
+
+                                            },
+                                            error: function(jqXHR, exception) {
+
+                                                alert("Server Error");
+                                                // mainView.router.loadPage('offline.html');
+                                            }
+                                        })
+
+
+
+                                    } else {
+                                        // alert("user not exists");
+                                        alert("Failed");
                                     }
 
                                 },
                                 error: function(jqXHR, exception) {
 
-                                    alert("No Internet Connection"); mainView.router.loadPage('offline.html');
+                                    // alert("No Internet Connection");
+                                    // mainView.router.loadPage('offline.html');
+                                    alert("Server Error");
+
                                 }
                             })
-
-
-                            
-                        }else{
-                            alert("user not exists");
+                        },
+                        function(error) {
+                            alert("Failed: " + error);
                         }
+                    );
+                }
 
-                    },
-                    error: function(jqXHR, exception) {
+            })
+            .fail(function() {
+                console.log("Server Error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
 
-                        alert("No Internet Connection"); mainView.router.loadPage('offline.html');
-                    }
-                })
-            }, 
-            function (error) { 
-                alert("Failed: " + error);
-            }
-        );
-            }
-            
-        })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
-        });
-        
-        
+
     }
 
-    facebookConnectPlugin.login(["public_profile"], fbLoginSuccess, 
+    facebookConnectPlugin.login(["public_profile"], fbLoginSuccess,
 
-        function (error) {
-             // + error
-            alert("error "+ JSON.stringify(error));
+        function(error) {
+            // + error
+            alert("Error " + JSON.stringify(error));
         }
     );
 
-    
+
 }
 
-var getStatus = function () { 
-    facebookConnectPlugin.getLoginStatus( 
-        function (response) { alert(JSON.stringify(response)) },
-        function (response) { alert(JSON.stringify(response)) });
+var getStatus = function() {
+    facebookConnectPlugin.getLoginStatus(
+        function(response) {
+            alert(JSON.stringify(response))
+        },
+        function(response) {
+            alert(JSON.stringify(response))
+        });
 }
 
-var logout = function () { 
+var logout = function() {
 
     facebookConnectPlugin.logout(
 
-        function (response) {  },
-        function (response) {  });
+        function(response) {},
+        function(response) {});
 }
 
 
-function check_login(){
+function check_login() {
 
-    if(Lockr.get("is_logged_in")){
+    if (Lockr.get("is_logged_in")) {
 
         myApp.pickerModal('.review_picker');
 
-    }else{
+    } else {
 
         myApp.alert("Sign In Required");
         mainView.router.loadPage('login.html');
@@ -318,14 +331,14 @@ function check_login(){
 }
 
 
-function share(code){
+function share(code) {
 
     var message = {
 
         subject: "Mumbai Parties",
-        text: "Your Reference Code Is - "+code
-        // url: "https://play.google.com/store/apps/details?id=com.kreaserv.neonbuzz&hl=en"
-        // image: image
+        text: "Your Reference Code Is - " + code
+            // url: "https://play.google.com/store/apps/details?id=com.kreaserv.neonbuzz&hl=en"
+            // image: image
     };
 
     window.socialmessage.send(message);
@@ -353,7 +366,7 @@ function share(code){
     // window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
 }
 
-function inc_single(){
+function inc_single() {
 
     $("#dec_single").prop('disabled', false);
     var quantity = Number($('#single_text').text());
@@ -361,7 +374,7 @@ function inc_single(){
 
     quantity += 1;
     amount += 1000;
-    
+
     $('#single_text').text(quantity);
     $('#amount').text(amount);
 
@@ -369,7 +382,7 @@ function inc_single(){
 
 }
 
-function dec_single(){
+function dec_single() {
 
     var quantity = Number($('#single_text').text());
     var amount = Number($('#amount').text());
@@ -381,25 +394,25 @@ function dec_single(){
     $('#amount').text(amount);
 
 
-     $('.single-textbox .col-50:last-child').remove();
+    $('.single-textbox .col-50:last-child').remove();
 
     // $('.single-textbox').remove("<div class='col-50'><input class='book-name' type='text' name='single_name'></div>");
 
 
-    if(quantity == 0){
+    if (quantity == 0) {
         $("#dec_single").prop('disabled', true);
         return false;
     }
 
 }
 
-function inc_couple(){
+function inc_couple() {
 
     $("#dec_couple").prop('disabled', false);
 
     var quantity = Number($('#couple_text').text());
     var amount = Number($('#amount').text());
-    
+
     quantity += 1;
     amount += 2000;
 
@@ -411,7 +424,7 @@ function inc_couple(){
 
 }
 
-function dec_couple(){
+function dec_couple() {
 
     var quantity = Number($('#couple_text').text());
     var amount = Number($('#amount').text());
@@ -424,10 +437,10 @@ function dec_couple(){
 
 
 
-     $('.couple-textbox .col-50:last-child').remove();
+    $('.couple-textbox .col-50:last-child').remove();
 
 
-    if(quantity == 0){
+    if (quantity == 0) {
         $("#dec_couple").prop('disabled', true);
         return false;
     }
@@ -437,19 +450,19 @@ function dec_couple(){
 var tbl_count = 0;
 
 
-function inc_table(){
+function inc_table() {
 
     $("#dec_table").prop('disabled', false);
 
     var quantity = Number($('#table_text').text());
     var amount = Number($('#amount').text());
 
-    if(tbl_count==0){
+    if (tbl_count == 0) {
         quantity += 2;
         amount += 4000;
         tbl_count++;
-    }else{
-        quantity = quantity+1;
+    } else {
+        quantity = quantity + 1;
         amount += 2000;
     }
     $('#table_text').text(quantity);
@@ -457,23 +470,23 @@ function inc_table(){
 
 }
 
-function dec_table(){
+function dec_table() {
 
     var quantity = Number($('#table_text').text());
     var amount = Number($('#amount').text());
 
-    if(quantity == 2){
+    if (quantity == 2) {
         quantity -= 2;
         amount -= 4000;
         tbl_count = 0;
-    }else{
+    } else {
         quantity -= 1;
         amount -= 2000;
     }
     $('#table_text').text(quantity);
     $('#amount').text(amount);
 
-    if(quantity == 0){
+    if (quantity == 0) {
         $("#dec_table").prop('disabled', true);
         return false;
     }
@@ -483,77 +496,76 @@ function dec_table(){
 function update_type_gallery() {
 
     navigator.camera.getPicture(updateprofile, function(message) {
-            alert('Try Again');
-    },{
-        quality: 50, 
+        alert('Try Again');
+    }, {
+        quality: 50,
         destinationType: navigator.camera.DestinationType.FILE_URI,
         sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY,
-        allowEdit:true
-    }
-        );
+        allowEdit: true
+    });
 }
 
 function update_type_camera() {
 
     navigator.camera.getPicture(updateprofile, function(message) {
-            alert('Try Again');
-    },{
-        quality: 50, 
+        alert('Try Again');
+    }, {
+        quality: 50,
         destinationType: navigator.camera.DestinationType.FILE_URI,
         sourceType: navigator.camera.PictureSourceType.CAMERA,
-        allowEdit:true
-    }
-        );
+        allowEdit: true
+    });
 }
 
 
 function updateprofile(imageURI) {
 
     myApp.closeModal('.profile_picker');
-    
-    var id = Lockr.get('id'); 
-    var img_name = imageURI.substr(imageURI.lastIndexOf('/')+1);
+
+    var id = Lockr.get('id');
+    var img_name = imageURI.substr(imageURI.lastIndexOf('/') + 1);
 
 
     $.ajax({
-        url: base_url+'update_profile',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            id: id,
-            img_name:img_name
-        },
-    })
-    .done(function(result) {
+            url: base_url + 'update_profile',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id: id,
+                img_name: img_name
+            },
+        })
+        .done(function(result) {
 
-          if(result['status']=='success'){
+            if (result['status'] == 'success') {
 
-            var options = new FileUploadOptions();
-            options.fileKey="file";
-            options.fileName=img_name;
-            options.mimeType="image/jpeg";
-            options.chunkedMode = false;
-            var ft = new FileTransfer();
-            ft.upload(imageURI, base_url+"upload_profile", win, fail, options);
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                options.fileName = img_name;
+                options.mimeType = "image/jpeg";
+                options.chunkedMode = false;
+                var ft = new FileTransfer();
+                ft.upload(imageURI, base_url + "upload_profile", win, fail, options);
 
-            // $('#profile_img').attr('src', 'http://casaestilo.in/taha/mp_admin/uploads/'+img_name); 
-            imageURI="";
-            myApp.closeModal('.update_picker');
-            // mainView.router.loadPage('location.html');
-            myApp.alert("Profile Updated");
+                // $('#profile_img').attr('src', 'http://casaestilo.in/taha/mp_admin/uploads/'+img_name); 
+                imageURI = "";
+
+                myApp.closeModal('.update_picker');
+                // mainView.router.loadPage('location.html');
+                myApp.alert("Profile Updated");
 
 
-          }else{
-            alert('failed');
-          }
-    })
-    .fail(function() {
-        console.log("error");
-    })
-    .always(function() {
-        console.log("complete");
-    });
-    
+            } else {
+                alert('failed');
+            }
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+
 }
 
 function win(r) {
@@ -576,45 +588,43 @@ function fail(error) {
 function upload_type_gallery() {
 
     navigator.camera.getPicture(uploadprofile, function(message) {
-            alert('Try Again');
-    },{
-        quality: 50, 
+        alert('Try Again');
+    }, {
+        quality: 50,
         destinationType: navigator.camera.DestinationType.FILE_URI,
         sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY,
-        allowEdit:true
-    }
-        );
+        allowEdit: true
+    });
 }
 
 function upload_type_camera() {
 
     navigator.camera.getPicture(uploadprofile, function(message) {
-            alert('Try Again');
-    },{
-        quality: 50, 
+        alert('Try Again');
+    }, {
+        quality: 50,
         destinationType: navigator.camera.DestinationType.FILE_URI,
         sourceType: navigator.camera.PictureSourceType.CAMERA,
-        allowEdit:true
-    }
-        );
+        allowEdit: true
+    });
 }
 
 
 function uploadprofile(imageURI) {
 
     myApp.closeModal('.upload_picker');
-    Lockr.set('imageURI',imageURI);
+    Lockr.set('imageURI', imageURI);
 
 }
 
 
-$(document).on('click','.notify-toolbar',function(){
+$(document).on('click', '.notify-toolbar', function() {
 
-    if(Lockr.get('is_logged_in')){
+    if (Lockr.get('is_logged_in')) {
 
         mainView.router.loadPage('notification.html');
 
-    }else{
+    } else {
 
         myApp.alert('Sign In Required');
         mainView.router.loadPage('login.html');
@@ -637,14 +647,14 @@ $(document).on('click','.notify-toolbar',function(){
 
 // }
 
-$(document).on('click','.home',function(){
+$(document).on('click', '.home', function() {
 
 
-    if(Lockr.get('is_logged_in')){
+    if (Lockr.get('is_logged_in')) {
 
         mainView.router.loadPage('location.html');
 
-      }else{
+    } else {
 
         mainView.router.loadPage('index.html');
     }
@@ -652,7 +662,7 @@ $(document).on('click','.home',function(){
 
 })
 
-function changedate(){
+function changedate() {
 
     myApp.showIndicator();
 
@@ -664,36 +674,36 @@ function changedate(){
     var event_type = $('#scroll-data-attr').attr('data-id');
 
 
-     $.ajax({
+    $.ajax({
 
-        type:"POST",
-        url: base_url+"get_event_data_bydate/",
-        dataType:"json",
-        data:{
+        type: "POST",
+        url: base_url + "get_event_data_bydate/",
+        dataType: "json",
+        data: {
 
-            loc_id:loc_id,
-            event_type:event_type,
-            date:date
+            loc_id: loc_id,
+            event_type: event_type,
+            date: date
         },
-        success:function(result){
+        success: function(result) {
 
             console.log(result);
 
             var html = "";
-            if(result['status']=="success"){
+            if (result['status'] == "success") {
 
 
-                $.each(result['data'],function(key,value) {
+                $.each(result['data'], function(key, value) {
 
-                    html +="<div data-id="+value.event_id+" class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 0px;width:100%'>"+
-                              "<div style='background-image:url("+img_url+value.image+")' valign='bottom' class='card-header no-border'>"+
-                              "<h3 class='no-mar list-name'>"+value.event_name+"</h3>" +
-                              "</div>"+
-                              "<div class='card-footer color-white'>"+
-                                "<span class='footer-left'>@ "+value.name+"</span>"+
-                                "<span class='footer-text'>"+value.time_event_start+" to "+value.time_event_ends+"</span>"+
-                              "</div>"+
-                            "</div>";
+                    html += "<div data-id=" + value.event_id + " class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 0px;width:100%'>" +
+                        "<div style='background-image:url(" + img_url + value.image + ")' valign='bottom' class='card-header no-border'>" +
+                        "<h3 class='no-mar list-name'>" + value.event_name + "</h3>" +
+                        "</div>" +
+                        "<div class='card-footer color-white'>" +
+                        "<span class='footer-left'>@ " + value.name + "</span>" +
+                        "<span class='footer-text'>" + value.time_event_start + " to " + value.time_event_ends + "</span>" +
+                        "</div>" +
+                        "</div>";
                 });
 
                 $('#cust_event_box').html(html);
@@ -701,17 +711,17 @@ function changedate(){
                 myApp.hideIndicator();
 
 
-            }else{
+            } else {
 
-                if(result['msg']=="no data"){
+                if (result['msg'] == "no data") {
 
-                    html +="<h3 class='no-event'>No Event Available</h3>";
+                    html += "<h3 class='no-event'>No Event Available</h3>";
 
                     $('#cust_event_box').html(html);
                     myApp.hideIndicator();
 
 
-                }else{
+                } else {
 
                     alert("failed");
                 }
@@ -720,7 +730,7 @@ function changedate(){
     })
 }
 
-$(document).on('click','.calender',function(){
+$(document).on('click', '.calender', function() {
 
     alert('called');
     $('#date').trigger('click');
@@ -728,45 +738,39 @@ $(document).on('click','.calender',function(){
 })
 
 
-function prompt_forgottextbox(){
-    myApp.prompt('Enter your email id', function (value) {
+function prompt_forgottextbox() {
+    myApp.prompt('Enter your email id', function(value) {
         sendemail(value);
     });
 }
 
-function prompt_upload(){
+function prompt_upload() {
 
-      myApp.modal({
-        title:  'Choose upload type',
+    myApp.modal({
+        title: 'Choose upload type',
         // text: 'Vivamus feugiat diam velit. Maecenas aliquet egestas lacus, eget pretium massa mattis non. Donec volutpat euismod nisl in posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae',
         verticalButtons: true,
-        buttons: [
-          {
+        buttons: [{
             text: 'Camera',
             onClick: function() {
 
-            upload_type_camera();
-              // myApp.alert('You clicked first button!')
+                upload_type_camera();
+                // myApp.alert('You clicked first button!')
             }
-          },
-          {
+        }, {
             text: 'Gallery',
             onClick: function() {
 
                 upload_type_gallery()
-              // myApp.alert('You clicked second button!')
+                    // myApp.alert('You clicked second button!')
             }
-          },
-          {
+        }, {
             text: 'Cancel',
             onClick: function() {
 
-            
-              // myApp.alert('You clicked second button!')
-            }
-          }
-        ]
-      })
-}
 
-    
+                // myApp.alert('You clicked second button!')
+            }
+        }]
+    })
+}

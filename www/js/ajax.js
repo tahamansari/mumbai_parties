@@ -2,7 +2,7 @@ var base_url = "http://casaestilo.in/taha/mp_admin/index.php/Api/";
 var img_url = "http://mumbaiparties.com/assets/uploads/";
 
 var casa_img_url = "http://casaestilo.in/taha/mp_admin/assets/img/";
-var profile_img_path = "http://casaestilo.in/taha/mp_admin/uploads/";
+var profile_img_path = "http://localhost:8888/mp_back/mumbai_parties/www/img/uploads/";
 
 // var scroll_amount = 250;
 // var offset = 0;
@@ -16,7 +16,6 @@ $(document).ready(function(){
 	// // Lockr.flush();
 	// var arr = Lockr.getAll();
 	// alert('lockr is '+arr);
-
 
 });
 
@@ -137,6 +136,7 @@ $(document).on('click','#register_button',function(event){
 
 	if(Lockr.get('imageURI')){
 
+
 		var imageURI = Lockr.get('imageURI');
 		var img_name = imageURI.substr(imageURI.lastIndexOf('/')+1);
 
@@ -170,8 +170,6 @@ $(document).on('click','#register_button',function(event){
 
 		},
 		success:function(result){
-
-			// alert(JSON.stringify(result));
 
 			if(result.status=='success'){
 
@@ -313,7 +311,7 @@ $(document).on("click","#signout",function(event){
 
 
 
-    $('#profile_img').attr('src', 'http://casaestilo.in/taha/mp_admin/uploads/user.jpeg');
+    $('#profile_img').attr('src','http://casaestilo.in/taha/mp_admin/uploads/user.jpeg');
 
     Lockr.rm('is_logged_in');
 
@@ -2208,44 +2206,6 @@ function sendemail(email){
 }
 
 
-function get_profile(id){
-
-	$.ajax({
-		url: base_url+'get_profile',
-		type: 'POST',
-		dataType: 'json',
-		data: {
-			id: id
-		},
-	})
-	.done(function(result) {
-
-		if(result['status']=="success"){
-
-			$('#profile_img').attr('src', profile_img_path+result['data']['img_name']);	
-
-
- 		}else{
-
- 			if(result['msg']=="no data"){
-
-				myApp.alert('no data');
-
- 			}else{
-
- 				alert("failed");
- 			}
- 		}
-	})
-	.fail(function() {
-		console.log("error");
-	})
-	.always(function() {
-		console.log("complete");
-	});
-	
-
-}
 
 
 function search_by_date(){

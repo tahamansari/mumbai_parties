@@ -1,3 +1,9 @@
+var base_url = "http://casaestilo.in/taha/mp_admin/index.php/Api/";
+var img_url = "http://mumbaiparties.com/assets/uploads/";
+
+var casa_img_url = "http://casaestilo.in/taha/mp_admin/assets/img/";
+var profile_img_path = "http://casaestilo.in/taha/mp_admin/uploads/";
+
 // Initialize app
 var myApp = new Framework7({
 
@@ -11,7 +17,6 @@ var myApp = new Framework7({
     onAjaxStart: function (xhr) {
 
         myApp.showIndicator();
-
     },
     onAjaxComplete: function (xhr) {
 
@@ -96,23 +101,64 @@ myApp.onPageInit('index', function (page) {
 });
 
 
+
+function get_profile(id){
+
+    $.ajax({
+        url: base_url+'get_profile',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            id: id
+        },
+    })
+    .done(function(result) {
+
+        if(result['status']=="success"){
+
+            // alert(result['data']['id']);
+            // alert('img url is '+profile_img_path+result['data']['img_name']);
+            $('#profile_img').attr('src', profile_img_path+result['data']['img_name']); 
+
+
+        }else{
+
+            if(result['msg']=="no data"){
+
+                myApp.alert('no data');
+
+            }else{
+
+                alert("failed");
+            }
+        }
+    })
+    .fail(function() {
+        console.log("error");
+    })
+    .always(function() {
+        console.log("complete");
+    });
+    
+
+}
+
 myApp.onPageInit('location', function (page) {
 
     $('.navbar-inner').css('background','none');
     
-
     get_location();
 
     if(Lockr.get("is_logged_in")){
 
-         get_profile(Lockr.get("id"));
+         // get_profile(Lockr.get("id"));
          
          $("#signin-div").html("<h2 class='username'><span>Hi, "+Lockr.get("name")+"</span><br><span id='ref_points' style='color: #b7b3b3;font-size: 14px;'>Points 200</span> </h2>");
          $("#signout-div").css("display","block");
          $("#invite_div").css("display","block");
          $("#booking_div").css("display","block");
 
-         $("#profile_picker").addClass('open-picker close-panel');
+         // $("#profile_picker").addClass('open-picker close-panel');
     }
 
 });
