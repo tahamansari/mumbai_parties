@@ -143,8 +143,7 @@ var mylogin = function() {
 
     var fbLoginSuccess = function(userData) {
         var id = userData['authResponse']['userID'];
-
-        alert(id);
+        // alert(id);
 
         $.ajax({
 
@@ -159,7 +158,7 @@ var mylogin = function() {
 
                 if (result['status'] == 'success') {
 
-                    alert('check user success');
+                    // alert('check user success');
 
                     Lockr.set("id", result['data']['id']);
                     Lockr.set("name", result['data']['name']);
@@ -170,7 +169,7 @@ var mylogin = function() {
 
                 } else {
 
-                    alert('check user failed');
+                    // alert('check user failed');
 
                     facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"], function(myresult) {
 
@@ -209,7 +208,10 @@ var mylogin = function() {
                                 success: function(result) {
 
                                     if (result.status == 'success') {
-                                        alert('register success');
+                                        // alert('register success');
+
+                                        Lockr.set("id", result.id);
+                                        Lockr.set("name", result.name);
 
                                         $.ajax({
 
@@ -225,11 +227,8 @@ var mylogin = function() {
                                             success: function(result) {
 
                                                 if (result.status == 'success') {
-                                                    alert('Upload fb image success');
-                                                    // var name = result['data']['first_name'];
-
-                                                    Lockr.set("id", result.id);
-                                                    Lockr.set("name", result.name);
+                                                    // alert('Upload fb image success');
+                                                    
                                                     Lockr.set("type", "fb");
                                                     Lockr.set("is_logged_in", true);
 
@@ -244,24 +243,16 @@ var mylogin = function() {
                                             error: function(jqXHR, exception) {
 
                                                 alert("Server Error");
-                                                // mainView.router.loadPage('offline.html');
                                             }
                                         })
 
 
-
                                     } else {
-                                        // alert("user not exists");
                                         alert("Registeration Failed");
                                     }
-
                                 },
                                 error: function(jqXHR, exception) {
-
-                                    // alert("No Internet Connection");
-                                    // mainView.router.loadPage('offline.html');
                                     alert("Server Error");
-
                                 }
                             })
                         },
@@ -273,19 +264,18 @@ var mylogin = function() {
 
             })
             .fail(function() {
-                console.log("Server Error");
+
+                alert('Server Error');
             })
             .always(function() {
                 console.log("complete");
             });
-
 
     }
 
     facebookConnectPlugin.login(["public_profile"], fbLoginSuccess,
 
         function(error) {
-            // + error
             alert("Error " + JSON.stringify(error));
         }
     );
