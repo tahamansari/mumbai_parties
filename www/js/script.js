@@ -142,8 +142,9 @@ function current_date() {
 var mylogin = function() {
 
     var fbLoginSuccess = function(userData) {
-
         var id = userData['authResponse']['userID'];
+
+        alert(id);
 
         $.ajax({
 
@@ -158,11 +159,10 @@ var mylogin = function() {
 
                 if (result['status'] == 'success') {
 
-                    var name = result['data']['first_name'];
-                    // var result = name.split(" ");
+                    alert('check user success');
 
                     Lockr.set("id", result['data']['id']);
-                    Lockr.set("name", name);
+                    Lockr.set("name", result['data']['name']);
                     Lockr.set("type", "fb");
                     Lockr.set("is_logged_in", true);
 
@@ -170,14 +170,16 @@ var mylogin = function() {
 
                 } else {
 
-                    facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"], function(result) {
+                    alert('check user failed');
 
-                            var fb_id = result.id;
+                    facebookConnectPlugin.api('/me?fields=id,email,name,picture', ["public_profile"], function(myresult) {
+
+                            var fb_id = myresult.id;
                             var type = "fb";
-                            var email = result.email;
-                            var name = result.name;
+                            var email = myresult.email;
+                            var name = myresult.name;
 
-                            var fb_image_url = result.picture.data.url;
+                            var fb_image_url = myresult.picture.data.url;
 
                             var nm = name.substring(0, 3);
                             var num = Math.floor(1000 + Math.random() * 9000);
@@ -207,11 +209,7 @@ var mylogin = function() {
                                 success: function(result) {
 
                                     if (result.status == 'success') {
-
-                                        alert('user inserted successfull');
-
-                                        Lockr.set("id", result.id);
-                                        Lockr.set("name", result.name);
+                                        alert('register success');
 
                                         $.ajax({
 
@@ -226,13 +224,12 @@ var mylogin = function() {
                                             },
                                             success: function(result) {
 
-
                                                 if (result.status == 'success') {
-
-                                                    alert('image inserted successfull');
-
+                                                    alert('Upload fb image success');
                                                     // var name = result['data']['first_name'];
 
+                                                    Lockr.set("id", result.id);
+                                                    Lockr.set("name", result.name);
                                                     Lockr.set("type", "fb");
                                                     Lockr.set("is_logged_in", true);
 
@@ -240,7 +237,7 @@ var mylogin = function() {
 
                                                 }else{
 
-                                                    alert('Failed');
+                                                    alert('Upload Image Failed');
                                                 }
 
                                             },
@@ -255,7 +252,7 @@ var mylogin = function() {
 
                                     } else {
                                         // alert("user not exists");
-                                        alert("Failed");
+                                        alert("Registeration Failed");
                                     }
 
                                 },
