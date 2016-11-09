@@ -459,6 +459,148 @@ function initial_marker_clicked_event(id){
 	mainView.router.loadPage('entitie.html?id='+id);
 }
 
+
+
+function get_owl_slider_map(id){
+
+	$.ajax({
+
+		type:"POST",
+        dataType:'json',
+        url: base_url+"get_owl_slider/",
+		success:function(result){
+
+			if(result['status']=="success"){
+
+				console.log(result['data']);
+
+					var html = "<div id='whatshappening_map' onclick='' class='tab active-tab'>"+
+				               "<p>WHATS HAPPENING</p>"+
+		               		   "</div>";
+
+					$.each(result['data'],function(key,value){
+
+
+						if(value.event_type=="Liquor"){
+
+							html += "<div data-id="+value.id+" class='tab get_liquors'><p>"+value.event_type+"</p></div>";
+
+						}else if(value.event_type=="Offers"){
+
+							html += "<div data-id="+value.id+" class='tab get_offers'><p>"+value.event_type+"</p></div>";
+
+						}else{
+
+							html += "<div data-id="+value.id+" class='tab get_map_data'><p>"+value.event_type+"</p></div>";
+
+						}
+
+					})
+  
+   					  $('#owl-demo-map').html(html);
+
+      				  $('#whatshappening_map').attr('onclick', 'get_initial_map_data('+id+')');
+
+ 
+				      var owl = $("#owl-demo-map");
+				      owl.owlCarousel({
+
+				      items : 5, //10 items above 1000px browser width
+				      itemsDesktop : [1000,5], //5 items between 1000px and 901px
+				      itemsDesktopSmall : [900,3], // 3 items betweem 900px and 601px
+				      itemsTablet: [600,2], //2 items between 600 and 0;
+				      itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+
+				      });
+			
+			}else{
+
+				if(result['msg']=="no data"){
+					alert('no data');
+				}else{
+					alert("failed");
+
+				}
+			}
+		},
+		fail:function(){
+
+			alert('failed');
+		}
+	})
+
+
+}
+
+
+function get_owl_slider_list(){
+
+	$.ajax({
+
+		type:"POST",
+        dataType:'json',
+        url: base_url+"get_owl_slider/",
+		success:function(result){
+
+			if(result['status']=="success"){
+
+				console.log(result['data']);
+
+					var html = "<div id='whatshappening_list' onclick='' class='tab active-tab'>"+
+				               "<p>WHATS HAPPENING</p>"+
+		               		   "</div>";
+
+					$.each(result['data'],function(key,value){
+
+							if(value.event_type=="Liquor"){
+
+								html += "<div data-id="+value.id+" class='tab get-list-liquor'><p>"+value.event_type+"</p></div>";
+
+							}else if(value.event_type=="Offers"){
+								
+								html += "<div data-id="+value.id+" class='tab get-list-offers'><p>"+value.event_type+"</p></div>";
+
+							}else{
+
+								html += "<div data-id="+value.id+" class='tab get-event-data'><p>"+value.event_type+"</p></div>";
+
+							}
+					})
+  
+   					  $('#owl-demo-list').html(html);
+
+      				  $('#whatshappening_list').attr('onclick', 'get_event_type()');
+
+      				  var owl = $("#owl-demo-list");
+			          owl.owlCarousel({
+
+			            items : 5, //10 items above 1000px browser width
+			            itemsDesktop : [1000,5], //5 items between 1000px and 901px
+			            itemsDesktopSmall : [900,3], // 3 items betweem 900px and 601px
+			            itemsTablet: [600,2], //2 items between 600 and 0;
+			            itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+
+			          });
+			
+			}else{
+
+				if(result['msg']=="no data"){
+					alert('no data');
+				}else{
+					alert("failed");
+
+				}
+			}
+		},
+		fail:function(){
+
+			alert('failed');
+		}
+	})
+
+
+}
+
  // //Map display nad plot markers
  //        var map;
  //        var image;
@@ -592,6 +734,13 @@ function get_initial_map_data(id){
 
 			if(result['status'] == "success"){
 
+			// var map;
+	  //       map = new google.maps.Map(document.getElementById('map'), {
+	  //         center: {lat: -34.397, lng: 150.644},
+	  //         zoom: 14	
+	  //       });
+
+
 		    var map = new google.maps.Map(document.getElementById('map'), {
 		      zoom: 14,
 		      center: new google.maps.LatLng(result['center'][0]['latitute'], result['center'][0]['longitute']),
@@ -669,7 +818,7 @@ function get_initial_map_data(id){
 		      	var marker1 = new MarkerWithLabel({
 			         position: new google.maps.LatLng(value.latitude,value.longitude),
 			         map: map,
-			        icon:img_url+value.image,
+			         icon:img_url+value.image,
 			         labelContent: value.name,
 			         labelAnchor: new google.maps.Point(22, 0),
 			         labelClass: "labels", // the CSS class for the label
@@ -798,7 +947,7 @@ function get_entitie(id){
 
 						entitie_offers += "<div data-id='"+value.offer_id+"' class='card demo-card-header-pic get-offer' style='margin: 0;margin-bottom: 2px;width:100%'>"+
 
-                          "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
+                          "<div style='background-image:url("+img_url+value.image+")' valign='bottom' class='card-header no-border'>"+
                           "<h3 class='no-mar list-name'>"+value.offer_name+"</h3>"+
                           "</div>"+
                          
@@ -976,6 +1125,14 @@ $(document).on('click','.get-event',function(event){
 
 });
 
+
+$(document).on('click','.get-liquor',function(event){
+
+	var id = $(this).attr('data-id');
+	mainView.loadPage('liquor.html?id='+id);
+
+});
+
 function get_event(id){
 
 	$.ajax({
@@ -1081,6 +1238,112 @@ function get_event(id){
 
 }
 
+
+function get_liquor(id){
+
+	$.ajax({
+
+		type: 'POST',
+		url: base_url+"get_liquor/",
+		dataType: 'json',
+		data:{
+			id: id
+		},
+		success:function(result){
+			
+			console.log(result);
+
+			if(result['status'] == "success"){
+						var liquor_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
+												result['data']['shop_name']+
+							                "</h3>";
+				        $("#liquor_heading").html(liquor_heading);
+
+				        var liquor_call = "...<i class='fa fa-phone' onclick='call("+result['data']['shop_contact']+")' style='padding-top: 10px;font-size: 30px;color: #03A9F4;' aria-hidden='true'></i>";
+				        $("#liquor_call").html(liquor_call);
+
+				        // var liquor_heading = "<h3 style='margin: 5px 0;color: #40e140;'>"+result['data']['shop_name']+"</h3>";
+				        // $("#liquor_heading").html(liquor_heading);
+
+				        var liquor_address = "<span>"+result['data']['address']+"</span>";
+				        $("#liquor_address").html(liquor_address);
+
+				        var liquor_direction = "<i class='fa fa-map-marker' onclick='get_direction("+result['data']['latitute']+","+result['data']['longitute']+")' aria-hidden='true'></i><p class='no-mar'>Get Direction<p>";
+				        $("#liquor_direction").html(liquor_direction);
+
+				        var liquor_description = result['data']['description'];
+				        $("#liquor_description").html(liquor_description);
+
+				        var liquor_time = "Open from "+result['data']['shop_open']+" to "+result['data']['shop_close'];
+				        $("#liquor_time").html(liquor_time);
+
+						// var week_days =result['event']['weekly_base'];
+
+						// var arr = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+						// var days = "<table style='float: right'>"+
+					 //                  "<thead>"+
+					 //                     "<tr style='font-size: 10px;'>"+
+					 //                        "<th>S</th>"+
+					 //                        "<th>M</th>"+
+					 //                        "<th>T</th>"+
+					 //                        "<th>W</th>"+
+					 //                        "<th>T</th>"+
+					 //                        "<th>F</th>"+
+					 //                        "<th>S</th>"+
+					 //                     "</tr>"+
+					 //                  "</thead>"+
+					 //                  "<tbody>"+
+					 //                     "<tr style='font-size: 10px;'>";
+					 //            for(var i=0;i<arr.length;i++){
+						// 			if(week_days.indexOf(arr[i]) > -1){
+						// 				days += "<td><span><i class='fa fa-circle active-dot' aria-hidden='true'></i></td>";
+						// 			}else{
+						// 				days += "<td><span><i class='fa fa-circle' aria-hidden='true'></i></td>";
+						// 			}
+						// 		}
+					 //                     days += "</tr>";
+						// 	  days += "</tbody>";
+						// 	  days += "</table>";
+
+				  //       $("#event_days").html(days);
+
+						// var menu_data = "";
+						// if(result['menu_images'] == "no data"){
+
+						// 	$(".menu_data").html("No Menu Available");
+						// }else{
+
+						// 	var img_count = 0;
+						// 	$.each(result['menu_images'],function(key,value){
+								
+						// 		img_count++;
+						// 		if(img_count==3){
+						// 			menu_data+="<div class='menu-box' style='text-align: center;margin: auto;'><img class='addicon' onclick='loadmoremenu("+result['event']['id']+")' style='padding:5px' width='100%' height='100%' src='img/plus.ico' alt='no img'></div>";
+						// 			return false;
+						// 		}
+						// 		menu_data += "<div class='menu-box'><a href='http://mumbaiparties.com/assets/uploads/"+value.url+"' class='fancybox'><img width='100%' height='100%' src='http://mumbaiparties.com/assets/uploads/"+value.url+"' alt='no img'></a></div>";
+						// 	})
+
+						// 	$(".menu_data").html(menu_data);
+						// }
+
+			}else{
+
+				if(result['msg'] == "no data"){
+
+					alert("no data");
+
+				}else{
+
+					alert("failed");
+				}
+
+			}
+		}
+	});
+
+}
+
 function get_event_type(){
 
 		$.ajax({
@@ -1098,10 +1361,25 @@ function get_event_type(){
 				var list = "";
 				$.each(result['data'],function(key,value) {
 					 
-					list += "<div class='col-50 list-box'>"+
+					// list += "<div class='col-50 list-box'>"+
+					// 		"<a data-id='"+value.id+"' class='get-event-data category'><img src='img/happyhours.jpg' width='100%' alt='img error'>"+
+					// 		"<div class='list-overlay'>"+value.event_type+"</div></a>"+
+					// 		"</div>";
+
+					if(value.event_type=="Liquor"){
+
+						list += "<div class='col-50 list-box'>"+
+							"<a data-id='"+value.event_type+"' class='get-event-data category'><img src='img/happyhours.jpg' width='100%' alt='img error'>"+
+							"<div class='list-overlay'>"+value.event_type+"</div></a>"+
+							"</div>";
+
+					}else{
+
+						list += "<div class='col-50 list-box'>"+
 							"<a data-id='"+value.id+"' class='get-event-data category'><img src='img/happyhours.jpg' width='100%' alt='img error'>"+
 							"<div class='list-overlay'>"+value.event_type+"</div></a>"+
 							"</div>";
+					}
 				})
 
 				$(".date-text").html(current_date());
@@ -1132,6 +1410,7 @@ function get_event_type(){
 
 $(document).on('click','.get-event-data',function(event){
 
+
 	console.log('scroll amount change to 1200');
 	scroll_amount = 1200;
 	offset=0;
@@ -1141,59 +1420,135 @@ $(document).on('click','.get-event-data',function(event){
 
 	 var loc_id = $("#list_top_select").val();
 	 var event_type = $(this).attr("data-id");
+
+
+	 // alert("loc is "+loc_id+" event type "+event_type);
+	 // return false;
+
 	 $('#scroll-data-attr').attr('data-id', event_type);
 
-	 $.ajax({
+	 if(event_type=="Liquor"){
 
-	 	type:"POST",
-	 	url: base_url+"get_event_data/",
-	 	dataType:"json",
-	 	data:{
+			 	$.ajax({
 
-	 		loc_id:loc_id,
-	 		event_type:event_type
-	 	},
-	 	success:function(result){
+			 	type:"POST",
+			 	url: base_url+"get_liquor_data/",
+			 	dataType:"json",
+			 	data:{
 
-	 		console.log(result);
+			 		loc_id:loc_id,
+			 		// event_type:event_type
+			 	},
+			 	success:function(result){
 
- 			var html = "";
-	 		if(result['status']=="success"){
+			 		console.log(result);
 
-	 			var count=0;
-		 		$.each(result['data'],function(key,value) {
+		 			var html = "";
+			 		if(result['status']=="success"){
 
-		 			console.log(count++);
+			 			var count=0;
+				 		$.each(result['data'],function(key,value) {
 
-		 			html +="<div data-id="+value.event_id+" class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 0px;width:100%'>"+
-			                  "<div style='background-image:url("+img_url+value.image+")' valign='bottom' class='card-header no-border'>"+
-			                  "<h3 class='no-mar list-name'>"+value.event_name+"</h3>" +
-			                  "</div>"+
-			                  "<div class='card-footer color-white'>"+
-			                    "<span class='footer-left'>@ "+value.name+"</span>"+
-			                    "<span class='footer-text'>"+value.time_event_start+" to "+value.time_event_ends+"</span>"+
-			                  "</div>"+
-			                "</div>";
-		 		});
+				 			console.log(count++);
 
-		 		$('#cust_event_box').html(html);
-		 		$('#list_date_box').css('display','block');
+				 			html +="<div data-id="+value.shop_id+" class='card demo-card-header-pic get-liquor' style='margin: 0;margin-bottom: 0px;width:100%'>"+
+					                  "<div style='background-image:url("+img_url+value.image+")' valign='bottom' class='card-header no-border'>"+
+					                  "<h3 class='no-mar list-name'>"+value.shop_name+"</h3>" +
+					                  "</div>"+
+					                  "<div class='card-footer color-white'>"+
+					                    "<span class='footer-left'>@ Shop Name</span>"+
+					                    "<span class='footer-text'>"+value.shop_open+" to "+value.shop_close+"</span>"+
+					                  "</div>"+
+					                "</div>";
 
-	 		}else{
 
-	 			if(result['msg']=="no data"){
+				 		});
 
-	 				html +="<h3 class='no-event'>No Event Available</h3>";
+				 		$('#cust_event_box').html(html);
+				 		$('#list_date_box').css('display','block');
 
-		 			$('#cust_event_box').html(html);
+			 		}else{
 
-	 			}else{
+			 			if(result['msg']=="no data"){
 
-	 				alert("failed");
-	 			}
-	 		}
-	 	}
-	})
+			 				html +="<h3 class='no-event'>No Event Available</h3>";
+
+				 			$('#cust_event_box').html(html);
+
+			 			}else{
+
+			 				alert("failed");
+			 			}
+			 		}
+			 	}
+			})
+	 }else{
+
+		 	$.ajax({
+
+		 	type:"POST",
+		 	url: base_url+"get_event_data/",
+		 	dataType:"json",
+		 	data:{
+
+		 		loc_id:loc_id,
+		 		event_type:event_type
+		 	},
+		 	success:function(result){
+
+		 		console.log(result);
+
+	 			var html = "";
+		 		if(result['status']=="success"){
+
+		 			var count=0;
+			 		$.each(result['data'],function(key,value) {
+
+			 			console.log(count++);
+
+			 			html +="<div data-id="+value.event_id+" class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 0px;width:100%'>"+
+				                  "<div style='background-image:url("+img_url+value.image+")' valign='bottom' class='card-header no-border'>"+
+				                  "<h3 class='no-mar list-name'>"+value.event_name+"</h3>" +
+				                  "</div>"+
+				                  "<div class='card-footer color-white'>"+
+				                    "<span class='footer-left'>@ "+value.name+"</span>"+
+				                    "<span class='footer-text'>"+value.time_event_start+" to "+value.time_event_ends+"</span>"+
+				                  "</div>"+
+				                "</div>";
+
+
+			 		});
+
+			 		$('#cust_event_box').html(html);
+			 		$('#list_date_box').css('display','block');
+
+		 		}else{
+
+		 			if(result['msg']=="no data"){
+
+		 				html +="<h3 class='no-event'>No Event Available</h3>";
+
+			 			$('#cust_event_box').html(html);
+
+		 			}else{
+
+		 				alert("failed");
+		 			}
+		 		}
+		 	}
+		})
+
+	 }
+
+
+
+	 
+
+
+
+
+
+
 });
 
 
@@ -1376,6 +1731,112 @@ $(document).on('click','.get_offers',function(event){
 
 					marker_clicked_offer(value.offer_id);
 
+			       });
+			      
+				});
+
+	 		}else{
+
+	 			if(result['msg']=="no data"){
+
+	 				alert("no data");
+
+	 			}else{
+
+	 				alert("failed");
+	 			}
+	 		}
+	 	},
+		error: function(jqXHR, exception) {
+			
+			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
+		}
+	})
+});
+
+
+
+$(document).on('click','.get_liquors',function(event){
+
+	 var styles = [
+                {
+                featureType: 'all',
+                elementType: 'all',
+                  stylers: [
+                    { hue: '#0800ff' },
+                    { invert_lightness: 'true' },
+                    { saturation: -100 }
+                  ]
+                },
+                {
+                featureType: 'all',
+                elementType: 'labels.icon',
+                  stylers: [
+                    { visibility: 'off' }
+                  ]
+                },
+                {
+                featureType: 'all',
+                elementType: 'labels.text',
+                  stylers: [
+                    { visibility: 'off' }
+                  ]
+                },
+                {
+                featureType: 'road.arterial',
+                elementType: 'labels',
+                  stylers: [
+                    { visibility: 'on' }
+                  ]
+                },
+            ];
+
+
+     var loc_id =  $('#map_top_select').val();
+
+	 $.ajax({
+
+	 	type:"POST",
+	 	url: base_url+"get_liquors/",
+	 	dataType:"json",
+	 	data:{
+
+	 		loc_id:loc_id,
+	 	},
+	 	success:function(result){
+
+	 		console.log(result);
+
+	 		if(result['status']=="success"){
+
+	 			var map = new google.maps.Map(document.getElementById('map'), {
+			      zoom: 14,
+			      center: new google.maps.LatLng(result['center']['latitute'], result['center']['longitute']),
+			      mapTypeId: google.maps.MapTypeId.ROADMAP,
+			      disableDefaultUI: true
+			    });
+
+				map.setOptions({styles: styles});
+
+			    var marker,i;
+
+		        $.each(result['data'],function(key, value) {
+
+			      marker = new google.maps.Marker({
+			        position: new google.maps.LatLng(value.latitute,value.longitute),
+			        map: map,
+			        // icon:img_url+value.image
+
+			      });
+
+		           var content = value.shop_name; 
+				   var infowindow = new google.maps.InfoWindow()
+
+				   infowindow.setContent(content);
+			       infowindow.open(map,marker);
+
+			       marker.addListener('click', function() {
+					marker_clicked_offer(value.shop_id);
 			       });
 			      
 				});
@@ -1598,11 +2059,11 @@ function get_location_list(){
     })
 }
 
-function get_clubs(){
+function get_search(){
 
 	$.ajax({
 
-        url: base_url+"get_clubs/",
+        url: base_url+"get_search/",
         type:"POST",
         dataType:'json',
         crossDomain : true,
@@ -1613,19 +2074,21 @@ function get_clubs(){
           if(result['status']=='success'){
 
           	  var list = "";
-	          $.each(result['data'], function(key,value){
-
-
-	          		 list+="<li class='search-list'>"+
-			                  "<a href='club.html?id="+value.club_id+"' class='item-content no-pad'>"+
+          	  var i=0;
+	          $.each(result['data'][i], function(key,value){
+	          		$.each(result['data'][i],function(key,value){
+	          			list+="<li class='search-list'>"+
+			                  "<a href='"+value.type+".html?id="+value.id+"' class='item-content no-pad'>"+
 			                    "<div class='item-inner'>"+
 			                      "<div class='item-title-row'>"+
-			                        "<div class='item-title'>"+value.club_name+"</div>"+
-			                        "<div class='item-after no-mar'>"+value.club_name+", "+value.city+"</div>"+
+			                        "<div class='item-title'>"+value.name+"</div>"+
+			                        "<div class='item-after no-mar'>"+value.name+", "+value.city+"</div>"+
 			                      "</div>"+
 			                    "</div>"+
 			                  "</a>"+
 			                "</li>";
+	          		});
+	          		i++;
 	          });
 
 	          $('#search_club').html(list);
@@ -1645,7 +2108,9 @@ function get_clubs(){
         },
 		error: function(jqXHR, exception) {
 			
-			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
+			alert("Server Error");
+			// alert("No Internet Connection"); 
+			// mainView.router.loadPage('offline.html');
 		}
 
     })
@@ -1928,7 +2393,7 @@ $(document).on('click', '.get-list-offers', function(event) {
 		 		$.each(result['data'],function(key,value) {
 
 		 			html +="<div data-id="+value.offer_id+"  class='card demo-card-header-pic get-offer' style='margin: 0;margin-bottom: 2px;width:100%'>"+
-			                  "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
+			                  "<div style='background-image:url("+img_url+value.image+")' valign='bottom' class='card-header no-border'>"+
 			                  "<h3 class='no-mar list-name'>"+value.offer_name+"</h3>" +
 			                  "</div>"+
 			                 
@@ -1939,7 +2404,66 @@ $(document).on('click', '.get-list-offers', function(event) {
 			                "</div>";
 		 		});
 
-		 		$('#event_box').html(html);
+		 		$('#cust_event_box').html(html);
+
+	 		}else{
+
+	 			if(result['msg']=="no data"){
+
+	 				alert("no data");
+
+	 			}else{
+
+	 				alert("failed");
+	 			}
+	 		}
+	 	}
+	})
+
+
+});
+
+
+
+$(document).on('click', '.get-list-liquor', function(event) {
+
+	event.preventDefault();
+
+	// alert('clicked');
+
+	var loc_id = $("#list_top_select").val();
+
+	 $.ajax({
+
+	 	type:"POST",
+	 	url: base_url+"get_liquor_data/",
+	 	dataType:"json",
+	 	data:{
+
+	 		loc_id:loc_id,
+	 	},
+	 	success:function(result){
+
+	 		console.log(result);
+
+	 		if(result['status']=="success"){
+
+	 			var html = "";
+		 		$.each(result['data'],function(key,value) {
+
+		 			html +="<div data-id="+value.shop_id+"  class='card demo-card-header-pic get-liquor' style='margin: 0;margin-bottom: 2px;width:100%'>"+
+			                  "<div style='background-image:url("+img_url+value.image+")' valign='bottom' class='card-header no-border'>"+
+			                  "<h3 class='no-mar list-name'>"+value.shop_name+"</h3>" +
+			                  "</div>"+
+			                 
+			                  "<div class='card-footer color-white'>"+
+			                    "<span class='footer-text'>@woodside - All Day Bar & Eatery </span>"+
+			                    "<span class='footer-text'>"+value.shop_open+" to "+value.shop_close+"</span>"+
+			                  "</div>"+
+			                "</div>";
+		 		});
+
+		 		$('#cust_event_box').html(html);
 
 	 		}else{
 
@@ -2024,10 +2548,8 @@ function get_points(id){
 		console.log(result);
 
 	    if(result['status']=="success"){
-
  			
- 			$('#ref_points').html("Points "+result['data']['points']);
-
+ 			$('.ref_points').html("Points "+result['data']['points']);
 
  		}else{
 

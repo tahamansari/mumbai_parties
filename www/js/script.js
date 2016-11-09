@@ -270,7 +270,6 @@ var mylogin = function() {
             .always(function() {
                 console.log("complete");
             });
-
     }
 
     facebookConnectPlugin.login(["public_profile"], fbLoginSuccess,

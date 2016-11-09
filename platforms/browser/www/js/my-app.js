@@ -153,10 +153,12 @@ myApp.onPageInit('location', function (page) {
 
          // get_profile(Lockr.get("id"));
          
-         $("#signin-div").html("<h2 class='username'><span>Hi, "+Lockr.get("name")+"</span><br><span id='ref_points' style='color: #b7b3b3;font-size: 14px;'>Points 200</span> </h2>");
+         $("#signin-div").html("<h2 class='username'><span>Hi, "+Lockr.get("name")+"</span><br><span class='ref_points' style='color: #b7b3b3;font-size: 14px;'>Points 200</span> </h2>");
          $("#signout-div").css("display","block");
          $("#invite_div").css("display","block");
-         $("#booking_div").css("display","block");
+         $("#wallet_div").css("display","block");
+         $("#redeem_div").css("display","block");
+         
 
          // $("#profile_picker").addClass('open-picker close-panel');
     }
@@ -296,6 +298,15 @@ myApp.onPageInit('event', function (page) {
         
 });
 
+
+myApp.onPageInit('liquor', function (page) {
+
+        var id = page.query.id;
+        // alert("id on event page is "+id);
+        get_liquor(id);
+        
+});
+
 myApp.onPageInit('offer', function (page) {
 
         var id = page.query.id;
@@ -310,18 +321,8 @@ myApp.onPageInit('mapview', function (page) {
       get_initial_map_data(id);
       get_top_location(id); 
 
-      $('#whatshappening_map').attr('onclick', 'get_initial_map_data('+id+')');
+      get_owl_slider_map(id);
 
-      var owl = $("#owl-demo-map");
-      owl.owlCarousel({
-
-      items : 5, //10 items above 1000px browser width
-      itemsDesktop : [1000,5], //5 items between 1000px and 901px
-      itemsDesktopSmall : [900,3], // 3 items betweem 900px and 601px
-      itemsTablet: [600,2], //2 items between 600 and 0;
-      itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-
-      });
 
       $(document).on('click', '.owl-item', function(){
             n = $(this).index();
@@ -336,16 +337,7 @@ myApp.onPageInit('listview', function (page) {
 
           $('#scroll-data-attr').attr('data-id','1');
 
-          var owl = $("#owl-demo-list");
-          owl.owlCarousel({
-
-            items : 5, //10 items above 1000px browser width
-            itemsDesktop : [1000,5], //5 items between 1000px and 901px
-            itemsDesktopSmall : [900,3], // 3 items betweem 900px and 601px
-            itemsTablet: [600,2], //2 items between 600 and 0;
-            itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-
-          });
+          get_owl_slider_list();
 
           $(document).on('click', '.tab', function(){
                 
@@ -354,7 +346,9 @@ myApp.onPageInit('listview', function (page) {
                 $('.owl-wrapper').trigger('owl.goTo', n);
           });
 
+
           $(document).on('click', '.category', function(){
+
                 var number_id = Number($(this).attr('data-id'));
                 $('.owl-wrapper').trigger('owl.goTo', number_id);
                 $('.owl-item').removeClass('active-tab');
@@ -414,7 +408,7 @@ myApp.onPageInit('index', function (page) {
 
 myApp.onPageInit('search', function (page) {
 
-  get_clubs();
+  get_search();
 
 });
 
