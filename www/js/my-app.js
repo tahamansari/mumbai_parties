@@ -346,14 +346,37 @@ myApp.onPageInit('listview', function (page) {
                 $('.owl-wrapper').trigger('owl.goTo', n);
           });
 
-
           $(document).on('click', '.category', function(){
 
                 var number_id = Number($(this).attr('data-id'));
+
                 $('.owl-wrapper').trigger('owl.goTo', number_id);
                 $('.owl-item').removeClass('active-tab');
                 $('.tab').removeClass('active-tab');
                 $('#list-tab-'+number_id).addClass('active-tab');
+
+
+                // if(number_id=="Liquor"||number_id=="Offers"){
+
+                //     // alert("text is "+number_id);
+                //     $('.owl-wrapper').trigger('owl.goTo', number_id);
+                //     $('.owl-item').removeClass('active-tab');
+                //     $('.tab').removeClass('active-tab');
+                //     $('#list-tab-'+number_id).addClass('active-tab');
+
+                // }else{
+
+                //     var number_id = Number($(this).attr('data-id'));
+                //     // alert("number is "+number_id);
+                //     $('.owl-wrapper').trigger('owl.goTo', number_id);
+                //     $('.owl-item').removeClass('active-tab');
+                //     $('.tab').removeClass('active-tab');
+                //     $('#list-tab-'+number_id).addClass('active-tab');
+
+                // }
+
+
+
 
           });
 

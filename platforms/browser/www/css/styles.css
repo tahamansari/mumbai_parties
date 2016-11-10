@@ -422,6 +422,7 @@ a{
     color: white;
     width: 100%;
     font-size: 14px;
+    /*height: 35px;*/
 }
 
 .content-block{
@@ -525,6 +526,7 @@ a{
     font-size: 14px;
     border: none;
     border-radius: 2px 2px 0px 0px;
+    /*height: 40px;*/
 }
 
 .view-button{

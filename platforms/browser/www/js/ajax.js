@@ -554,15 +554,15 @@ function get_owl_slider_list(){
 
 							if(value.event_type=="Liquor"){
 
-								html += "<div data-id="+value.id+" class='tab get-list-liquor'><p>"+value.event_type+"</p></div>";
+								html += "<div data-id="+value.id+" id='list-tab-"+value.id+"' class='tab get-list-liquor'><p>"+value.event_type+"</p></div>";
 
 							}else if(value.event_type=="Offers"){
 								
-								html += "<div data-id="+value.id+" class='tab get-list-offers'><p>"+value.event_type+"</p></div>";
+								html += "<div data-id="+value.id+" id='list-tab-"+value.id+"' class='tab get-list-offers'><p>"+value.event_type+"</p></div>";
 
 							}else{
 
-								html += "<div data-id="+value.id+" class='tab get-event-data'><p>"+value.event_type+"</p></div>";
+								html += "<div data-id="+value.id+" id='list-tab-"+value.id+"' class='tab get-event-data'><p>"+value.event_type+"</p></div>";
 
 							}
 					})
@@ -1369,7 +1369,14 @@ function get_event_type(){
 					if(value.event_type=="Liquor"){
 
 						list += "<div class='col-50 list-box'>"+
-							"<a data-id='"+value.event_type+"' class='get-event-data category'><img src='img/happyhours.jpg' width='100%' alt='img error'>"+
+							"<a data-id='"+value.id+"' class='get-list-liquor category'><img src='img/happyhours.jpg' width='100%' alt='img error'>"+
+							"<div class='list-overlay'>"+value.event_type+"</div></a>"+
+							"</div>";
+
+					}else if(value.event_type=="Offers"){
+
+						list += "<div class='col-50 list-box'>"+
+							"<a data-id='"+value.id+"' class='get-list-offers category'><img src='img/happyhours.jpg' width='100%' alt='img error'>"+
 							"<div class='list-overlay'>"+value.event_type+"</div></a>"+
 							"</div>";
 
