@@ -26,13 +26,19 @@ function check_mobile(mobile) {
 
 }
 
-$(document).on('click', '.owl-item', function(event) {
+// $(document).on('click', '.owl-item', function(event) {
 
-    $('.tab').removeClass('active-tab');
-    $('.owl-item').removeClass('active-tab');
-    $(this).addClass('active-tab');
+//     $('.active-tab').css('color','');
+//     $('.active-tab').css('border-bottom','');
 
-})
+//     $('.tab').removeClass('active-tab');
+//     $('.owl-item').removeClass('active-tab');
+
+//     $(this).addClass('active-tab');
+
+//     $('.active-tab').css('color','yellow');
+//     $('.active-tab').css('border-bottom','2px solid yellow');
+// })
 
 
 
@@ -635,16 +641,11 @@ $(document).on('click', '.notify-toolbar', function() {
 
 $(document).on('click', '.home', function() {
 
-
     if (Lockr.get('is_logged_in')) {
-
         mainView.router.loadPage('location.html');
-
     } else {
-
         mainView.router.loadPage('index.html');
     }
-
 
 })
 

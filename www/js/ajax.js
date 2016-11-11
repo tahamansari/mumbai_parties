@@ -303,15 +303,11 @@ $(document).on("click","#signout",function(event){
 	event.preventDefault();
 	
 	$("#signin-div").html("<a href='login.html' class='close-panel'> <h2 class='username'>Sign in</h2> </a>");
+
     $("#signout-div").css("display","none");
+    $("#redeem_div").css("display","none");
+    $("#wallet_div").css("display","none");
     $("#invite_div").css("display","none");
-    $("#booking_div").css("display","none");
-
-    $("#profile_picker").removeClass('open-picker close-panel');
-
-
-
-    $('#profile_img').attr('src','http://casaestilo.in/taha/mp_admin/uploads/user.jpeg');
 
     Lockr.rm('is_logged_in');
 
@@ -361,7 +357,9 @@ function get_location(){
         },
 		error: function(jqXHR, exception) {
 			
-			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
+			alert('Server Error');
+			// alert("No Internet Connection"); 
+			// mainView.router.loadPage('offline.html');
 		}
     })
 }
@@ -1657,39 +1655,15 @@ function marker_clicked_offer(para1){
 
 $(document).on('click','.get_offers',function(event){
 
-	 var styles = [
-                {
-                featureType: 'all',
-                elementType: 'all',
-                  stylers: [
-                    { hue: '#0800ff' },
-                    { invert_lightness: 'true' },
-                    { saturation: -100 }
-                  ]
-                },
-                {
-                featureType: 'all',
-                elementType: 'labels.icon',
-                  stylers: [
-                    { visibility: 'off' }
-                  ]
-                },
-                {
-                featureType: 'all',
-                elementType: 'labels.text',
-                  stylers: [
-                    { visibility: 'off' }
-                  ]
-                },
-                {
-                featureType: 'road.arterial',
-                elementType: 'labels',
-                  stylers: [
-                    { visibility: 'on' }
-                  ]
-                },
-            ];
+	$('.active-tab').css('color','');
+    $('.active-tab').css('border-bottom','');
+    $('.labels').css('color','');
 
+    $('.tab').removeClass('active-tab');
+    $('.owl-item').removeClass('active-tab');
+    $(this).addClass('active-tab');
+
+   	$('#map').html('<img style="margin: 25%;text-align:center;" width="50%" src="img/logo.png">');
 
      var loc_id =  $('#map_top_select').val();
 
@@ -1708,39 +1682,79 @@ $(document).on('click','.get_offers',function(event){
 
 	 		if(result['status']=="success"){
 
-	 			var map = new google.maps.Map(document.getElementById('map'), {
-			      zoom: 14,
-			      center: new google.maps.LatLng(result['center']['latitute'], result['center']['longitute']),
-			      mapTypeId: google.maps.MapTypeId.ROADMAP,
-			      disableDefaultUI: true
-			    });
+	 			 	  var fontcolor=result['data'][0]['color'];
+				      $('.active-tab').css('color',fontcolor);
+					  $('.active-tab').css('border-bottom','2px solid '+fontcolor);
 
+					  var map = new google.maps.Map(document.getElementById('map'), {
+				      zoom: 14,
+				      center: new google.maps.LatLng(result['center']['latitute'], result['center']['longitute']),
+				      mapTypeId: google.maps.MapTypeId.ROADMAP,
+				      disableDefaultUI: true
+				    });
+
+				    var styles = [
+			        {
+			        featureType: 'all',
+			        elementType: 'all',
+			          stylers: [
+			            { hue: '#0800ff' },
+			            { invert_lightness: 'true' },
+			            { saturation: -100 }
+			          ]
+			        },
+			        {
+			        featureType: 'all',
+			        elementType: 'labels.icon',
+			          stylers: [
+			            { visibility: 'off' }
+			          ]
+			        },
+			        {
+			        featureType: 'all',
+			        elementType: 'labels.text',
+			          stylers: [
+			            { visibility: 'off' }
+			          ]
+			        },
+			        {
+			        featureType: 'road.arterial',
+			        elementType: 'labels',
+			          stylers: [
+			            { visibility: 'on' }
+			          ]
+			        },
+			     ];
+			    
 				map.setOptions({styles: styles});
-
-			    var marker,i;
 
 		        $.each(result['data'],function(key, value) {
 
 			      marker = new google.maps.Marker({
 			        position: new google.maps.LatLng(value.latitude,value.longitude),
 			        map: map,
-			        // icon:img_url+value.image
+			        icon:img_url+value.image,
+			      });
+
+			      var marker1 = new MarkerWithLabel({
+			         position: new google.maps.LatLng(value.latitude,value.longitude),
+			         map: map,
+			         icon:img_url+value.image,
+			         labelContent: value.offer_name,
+			         // labelAnchor: new google.maps.Point(22, 0),
+			         labelClass: "labels", 
+			         labelStyle: {opacity: 0.75,color:fontcolor}
+
+			       });
+
+			      marker.addListener('click', function() {
+			          marker_clicked_event(value.offer_id);
 
 			      });
 
-		           var content = value.offer_name; 
-				   var infowindow = new google.maps.InfoWindow()
-
-				   infowindow.setContent(content);
-			       infowindow.open(map,marker);
-
-			       marker.addListener('click', function() {
-
-					marker_clicked_offer(value.offer_id);
-
-			       });
-			      
 				});
+
+				
 
 	 		}else{
 
@@ -1756,7 +1770,7 @@ $(document).on('click','.get_offers',function(event){
 	 	},
 		error: function(jqXHR, exception) {
 			
-			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
+			alert("Server Error");
 		}
 	})
 });
@@ -1765,39 +1779,15 @@ $(document).on('click','.get_offers',function(event){
 
 $(document).on('click','.get_liquors',function(event){
 
-	 var styles = [
-                {
-                featureType: 'all',
-                elementType: 'all',
-                  stylers: [
-                    { hue: '#0800ff' },
-                    { invert_lightness: 'true' },
-                    { saturation: -100 }
-                  ]
-                },
-                {
-                featureType: 'all',
-                elementType: 'labels.icon',
-                  stylers: [
-                    { visibility: 'off' }
-                  ]
-                },
-                {
-                featureType: 'all',
-                elementType: 'labels.text',
-                  stylers: [
-                    { visibility: 'off' }
-                  ]
-                },
-                {
-                featureType: 'road.arterial',
-                elementType: 'labels',
-                  stylers: [
-                    { visibility: 'on' }
-                  ]
-                },
-            ];
+	$('.active-tab').css('color','');
+    $('.active-tab').css('border-bottom','');
+    $('.labels').css('color','');
 
+    $('.tab').removeClass('active-tab');
+    $('.owl-item').removeClass('active-tab');
+    $(this).addClass('active-tab');
+
+   	 $('#map').html('<img style="margin: 25%;text-align:center;" width="50%" src="img/logo.png">');
 
      var loc_id =  $('#map_top_select').val();
 
@@ -1816,36 +1806,77 @@ $(document).on('click','.get_liquors',function(event){
 
 	 		if(result['status']=="success"){
 
-	 			var map = new google.maps.Map(document.getElementById('map'), {
-			      zoom: 14,
-			      center: new google.maps.LatLng(result['center']['latitute'], result['center']['longitute']),
-			      mapTypeId: google.maps.MapTypeId.ROADMAP,
-			      disableDefaultUI: true
-			    });
+            	   // var fontcolor="blue";
+	            	  var fontcolor=result['data'][0]['color'];
+				      $('.active-tab').css('color',fontcolor);
+					  $('.active-tab').css('border-bottom','2px solid '+fontcolor);
 
+					  var map = new google.maps.Map(document.getElementById('map'), {
+				      zoom: 14,
+				      center: new google.maps.LatLng(result['center']['latitute'], result['center']['longitute']),
+				      mapTypeId: google.maps.MapTypeId.ROADMAP,
+				      disableDefaultUI: true
+				    });
+
+				    var styles = [
+			        {
+			        featureType: 'all',
+			        elementType: 'all',
+			          stylers: [
+			            { hue: '#0800ff' },
+			            { invert_lightness: 'true' },
+			            { saturation: -100 }
+			          ]
+			        },
+			        {
+			        featureType: 'all',
+			        elementType: 'labels.icon',
+			          stylers: [
+			            { visibility: 'off' }
+			          ]
+			        },
+			        {
+			        featureType: 'all',
+			        elementType: 'labels.text',
+			          stylers: [
+			            { visibility: 'off' }
+			          ]
+			        },
+			        {
+			        featureType: 'road.arterial',
+			        elementType: 'labels',
+			          stylers: [
+			            { visibility: 'on' }
+			          ]
+			        },
+			     ];
+			    
 				map.setOptions({styles: styles});
-
-			    var marker,i;
 
 		        $.each(result['data'],function(key, value) {
 
 			      marker = new google.maps.Marker({
 			        position: new google.maps.LatLng(value.latitute,value.longitute),
 			        map: map,
-			        // icon:img_url+value.image
+			        icon:img_url+value.image,
+			      });
+
+			      var marker1 = new MarkerWithLabel({
+			         position: new google.maps.LatLng(value.latitute,value.longitute),
+			         map: map,
+			         icon:img_url+value.image,
+			         labelContent: value.shop_name,
+			         // labelAnchor: new google.maps.Point(22, 0),
+			         labelClass: "labels", 
+			         labelStyle: {opacity: 0.75,color:fontcolor}
+
+			       });
+
+			      marker.addListener('click', function() {
+			          marker_clicked_event(value.shop_id);
 
 			      });
 
-		           var content = value.shop_name; 
-				   var infowindow = new google.maps.InfoWindow()
-
-				   infowindow.setContent(content);
-			       infowindow.open(map,marker);
-
-			       marker.addListener('click', function() {
-					marker_clicked_offer(value.shop_id);
-			       });
-			      
 				});
 
 	 		}else{
@@ -1862,7 +1893,7 @@ $(document).on('click','.get_liquors',function(event){
 	 	},
 		error: function(jqXHR, exception) {
 			
-			alert("No Internet Connection"); mainView.router.loadPage('offline.html');
+			alert("Server Error");
 		}
 	})
 });
@@ -1871,13 +1902,22 @@ $(document).on('click','.get_liquors',function(event){
 $(document).on('click','.get_map_data',function(event){
 
 
-	$('#map').html('<img style="margin: 25%;text-align:center;" width="50%" src="img/logo.png">');
+	// alert('clicked');
 
 
-	 
+	$('.active-tab').css('color','');
+    $('.active-tab').css('border-bottom','');
+    $('.labels').css('color','');
 
-     var loc_id =  $('#map_top_select').val();
+    $('.tab').removeClass('active-tab');
+    $('.owl-item').removeClass('active-tab');
+    $(this).addClass('active-tab');
+
+   	 $('#map').html('<img style="margin: 25%;text-align:center;" width="50%" src="img/logo.png">');
+
+	 var loc_id =  $('#map_top_select').val();
 	 var event_type = $(this).attr('data-id');
+
 
 	 $.ajax({
 
@@ -1894,6 +1934,11 @@ $(document).on('click','.get_map_data',function(event){
 	 		console.log(result);
 
 	 		if(result['status']=="success"){
+
+	 			  var fontcolor=result['data'][0]['color'];
+			      $('.active-tab').css('color',fontcolor);
+				  $('.active-tab').css('border-bottom','2px solid '+fontcolor);
+
 
 	 			var map = new google.maps.Map(document.getElementById('map'), {
 			      zoom: 14,
@@ -1934,7 +1979,6 @@ $(document).on('click','.get_map_data',function(event){
 		          ]
 		        },
 		     ];
-
 			    
 				map.setOptions({styles: styles});
 
@@ -1944,27 +1988,20 @@ $(document).on('click','.get_map_data',function(event){
 			        position: new google.maps.LatLng(value.latitude,value.longitude),
 			        map: map,
 			        icon:img_url+value.image,
-			        
-
 			      });
-
 
 			      var marker1 = new MarkerWithLabel({
 			         position: new google.maps.LatLng(value.latitude,value.longitude),
 			         map: map,
-			         icon:img_url+value.image,
+			         icon:img_url+value.image,	
 			         labelContent: value.name,
 			         // labelAnchor: new google.maps.Point(22, 0),
-			         labelClass: "labels", // the CSS class for the label
-			         labelStyle: {opacity: 0.75}
+			         labelClass: "labels", 
+			         labelStyle: {opacity: 0.75,color:fontcolor}
+
 			       });
 
-
-
-
-
 			      marker.addListener('click', function() {
-
 			          marker_clicked_event(value.event_id);
 
 			      });
@@ -1976,6 +2013,11 @@ $(document).on('click','.get_map_data',function(event){
 
 	 			if(result['msg']=="no data"){
 
+
+	 			  var fontcolor="#FFFFFF";
+			      $('.active-tab').css('color',fontcolor);
+				  $('.active-tab').css('border-bottom','2px solid '+fontcolor);
+
 	 				// alert("no data");
 	 				var map = new google.maps.Map(document.getElementById('map'), {
 				      zoom: 14,
@@ -1984,7 +2026,44 @@ $(document).on('click','.get_map_data',function(event){
 				      disableDefaultUI: true
 				    });
 
-					map.setOptions({styles: styles});
+
+				     var styles = [
+				        {
+				        featureType: 'all',
+				        elementType: 'all',
+				          stylers: [
+				            { hue: '#0800ff' },
+				            { invert_lightness: 'true' },
+				            { saturation: -100 }
+				          ]
+				        },
+				        {
+				        featureType: 'all',
+				        elementType: 'labels.icon',
+				          stylers: [
+				            { visibility: 'off' }
+				          ]
+				        },
+				        {
+				        featureType: 'all',
+				        elementType: 'labels.text',
+				          stylers: [
+				            { visibility: 'off' }
+				          ]
+				        },
+				        {
+				        featureType: 'road.arterial',
+				        elementType: 'labels',
+				          stylers: [
+				            { visibility: 'on' }
+				          ]
+				        },
+				     ];
+
+					    
+						map.setOptions({styles: styles});
+
+
 
 
 	 			}else{

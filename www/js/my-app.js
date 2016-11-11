@@ -9,6 +9,8 @@ var myApp = new Framework7({
 
     modalTitle:"Mumbai Parties",
     swipeBackPage:false,
+    cache:false,
+    uniqueHistory:true,
     // smartSelectSearchbar:true,
     // imagesLazyLoadPlaceholder: 'img/card.jpg',
     // imagesLazyLoadThreshold: 50,
@@ -145,7 +147,8 @@ function get_profile(id){
 
 myApp.onPageInit('location', function (page) {
 
-    $('.navbar-inner').css('background','none');
+    // $('.navbar-inner').css('background','none');
+
     
     get_location();
 
@@ -153,11 +156,12 @@ myApp.onPageInit('location', function (page) {
 
          // get_profile(Lockr.get("id"));
          
-         $("#signin-div").html("<h2 class='username'><span>Hi, "+Lockr.get("name")+"</span><br><span class='ref_points' style='color: #b7b3b3;font-size: 14px;'>Points 200</span> </h2>");
+         $("#signin-div").html("<h2 class='username'><span>Hi, "+Lockr.get("name")+"</span><br><span class='ref_points' style='color: #b7b3b3;font-size: 14px;'></span> </h2>");
          $("#signout-div").css("display","block");
          $("#invite_div").css("display","block");
          $("#wallet_div").css("display","block");
          $("#redeem_div").css("display","block");
+         
          
 
          // $("#profile_picker").addClass('open-picker close-panel');
@@ -344,6 +348,7 @@ myApp.onPageInit('listview', function (page) {
                 n = $(this).index();
                 console.log(n)
                 $('.owl-wrapper').trigger('owl.goTo', n);
+                
           });
 
           $(document).on('click', '.category', function(){
@@ -424,11 +429,6 @@ myApp.onPageInit('club', function (page) {
 
 });
 
-myApp.onPageInit('index', function (page) {
-  
-
-});
-
 myApp.onPageInit('search', function (page) {
 
   get_search();
@@ -437,13 +437,15 @@ myApp.onPageInit('search', function (page) {
 
 myApp.onPageInit('invite', function (page) {
 
-  
   var id = Lockr.get('id');
   get_ref_code(id);
 
 });
 
 myApp.onPageInit('login', function (page) {
+
+  // $('.navbar-inner').css('background','none');
+
 
   if(Lockr.get('email')){
 
@@ -456,6 +458,13 @@ myApp.onPageInit('login', function (page) {
 
 });
 
+
+myApp.onPageInit('register', function (page) {
+
+  // $('.navbar-inner').css('background','none');   
+
+
+});
 
 
 
