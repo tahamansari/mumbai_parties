@@ -2,7 +2,7 @@ var base_url = "http://casaestilo.in/taha/mp_admin/index.php/Api/";
 var img_url = "http://mumbaiparties.com/assets/uploads/";
 
 var casa_img_url = "http://casaestilo.in/taha/mp_admin/assets/img/";
-var profile_img_path = "http://casaestilo.in/taha/mp_admin/uploads/";
+var profile_img_path = "http://casaestilo.in/taha/mp_admin/uploads/profile_pic/";
 
 // Initialize app
 var myApp = new Framework7({
@@ -152,7 +152,7 @@ myApp.onPageInit('location', function (page) {
 
     if(Lockr.get("is_logged_in")){
 
-         // get_profile(Lockr.get("id"));
+         get_profile(Lockr.get("id"));
          
          $("#signin-div").html("<h2 class='username'><span>Hi, "+Lockr.get("name")+"</span><br><span class='ref_points' style='color: #b7b3b3;font-size: 14px;'></span> </h2>");
          $("#signout-div").css("display","block");

@@ -302,13 +302,15 @@ $(document).on("click","#signout",function(event){
 	
 	$("#signin-div").html("<a href='login.html' class='close-panel'> <h2 class='username'>Sign in</h2> </a>");
 
+    $('#profile_img').attr('src','http://casaestilo.in/taha/mp_admin/uploads/profile_pic/user.jpeg'); 
+
+
     $("#signout-div").css("display","none");
     $("#redeem_div").css("display","none");
     $("#wallet_div").css("display","none");
     $("#invite_div").css("display","none");
 
     Lockr.rm('is_logged_in');
-
     Lockr.rm('id');
     Lockr.rm('name');
 
