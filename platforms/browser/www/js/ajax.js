@@ -3,6 +3,8 @@ var img_url = "http://mumbaiparties.com/assets/uploads/";
 
 var casa_img_url = "http://casaestilo.in/taha/mp_admin/assets/img/";
 // var profile_img_path = "http://localhost:8888/mp_back/mumbai_parties/www/img/uploads/";
+var profile_img_path = "http://casaestilo.in/taha/mp_admin/uploads/profile_pic/";
+
 
 // var scroll_amount = 250;
 // var offset = 0;
@@ -215,13 +217,17 @@ $(document).on('click','#register_button',function(event){
 
 function s_win(r) {
 
-    // console.log("Code = " + r.responseCode);
-    // console.log("Response = " + r.response);
-    // console.log("Sent = " + r.bytesSent);
-    // alert("success response is "+r.response);
+	// alert("Image uploaded");
+
+    console.log("Code = " + r.responseCode);
+    console.log("Response = " + r.response);
+    console.log("Sent = " + r.bytesSent);
+    alert("success response is "+r.response);
 }
 
 function s_fail(error) {
+
+	alert("Failed to upload");
 
     // alert("An error has occurred: Code = "+error.code);
 }
@@ -302,13 +308,15 @@ $(document).on("click","#signout",function(event){
 	
 	$("#signin-div").html("<a href='login.html' class='close-panel'> <h2 class='username'>Sign in</h2> </a>");
 
+    $('#profile_img').attr('src','http://casaestilo.in/taha/mp_admin/uploads/profile_pic/user.jpeg'); 
+
+
     $("#signout-div").css("display","none");
     $("#redeem_div").css("display","none");
     $("#wallet_div").css("display","none");
     $("#invite_div").css("display","none");
 
     Lockr.rm('is_logged_in');
-
     Lockr.rm('id');
     Lockr.rm('name');
 
