@@ -17,11 +17,9 @@ var myApp = new Framework7({
     // animateNavBackIcon:true,
 
     onAjaxStart: function (xhr) {
-
         myApp.showIndicator();
     },
     onAjaxComplete: function (xhr) {
-
         setTimeout(myFunction, 500);
     }
 });
@@ -147,7 +145,7 @@ function get_profile(id){
 
 myApp.onPageInit('location', function (page) {
 
-    // $('.navbar-inner').css('background','none');
+    $('.navbar-inner').css('background','none');
 
     
     get_location();
@@ -323,6 +321,7 @@ myApp.onPageInit('mapview', function (page) {
 
       var id= Lockr.get('loc_id');
       get_initial_map_data(id);
+
       get_top_location(id); 
 
       get_owl_slider_map(id);
@@ -340,15 +339,12 @@ myApp.onPageInit('mapview', function (page) {
 myApp.onPageInit('listview', function (page) {
 
           $('#scroll-data-attr').attr('data-id','1');
-
           get_owl_slider_list();
-
+          
           $(document).on('click', '.tab', function(){
-                
                 n = $(this).index();
                 console.log(n)
                 $('.owl-wrapper').trigger('owl.goTo', n);
-                
           });
 
           $(document).on('click', '.category', function(){
@@ -444,7 +440,7 @@ myApp.onPageInit('invite', function (page) {
 
 myApp.onPageInit('login', function (page) {
 
-  // $('.navbar-inner').css('background','none');
+  $('.navbar-inner').css('background','none');
 
 
   if(Lockr.get('email')){
@@ -461,7 +457,7 @@ myApp.onPageInit('login', function (page) {
 
 myApp.onPageInit('register', function (page) {
 
-  // $('.navbar-inner').css('background','none');   
+  $('.navbar-inner').css('background','none');   
 
 
 });
@@ -544,6 +540,11 @@ myApp.onPageInit('notification', function (page) {
 });
 
 
+myApp.onPageBack('index', function(page) {
+
+    alert('called');
+
+});
 
 
 

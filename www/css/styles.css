@@ -607,17 +607,18 @@ a{
 }
 
 
-.owlgreen{
+/*.owlgreen{
     color:green;
     border-bottom: 2px solid green;
-}
+}*/
 
-.owlyellow{
+/*.owlyellow{
     color:yellow;
     border-bottom: 2px solid yellow;
-}
+}*/
 
-.active-tab{
+
+.textgreen{
     color:green;
     border-bottom: 2px solid green;
 }
@@ -1697,17 +1698,15 @@ position: absolute;
 
    .labels {
 
-    /*color: green;*/
-    color: none;
-
-    border: none;
+    color: green;
+    /*color: black;*/
     background-color: rgba(0, 0, 0, .5);
     font-family: "Lucida Grande", "Arial", sans-serif;
     font-size: 10px;
     font-weight: bold;
     text-align: center;
     width: auto;
-    border: 2px solid black;
+    /*border: 1px solid whitesmoke;*/
     white-space: nowrap;
     padding: 5px;
    }
@@ -1730,4 +1729,11 @@ position: absolute;
 
       background: none;
   top: 38%;
+}
+
+.tabbar-fixed .page-content, .tabbar-through .page-content, .toolbar-fixed .page-content, .toolbar-through .page-content {
+    padding-bottom: 55px;
+}
+.navbar-fixed .page-content, .navbar-through .page-content {
+    padding-top: 55px;
 }

@@ -26,19 +26,23 @@ function check_mobile(mobile) {
 
 }
 
-// $(document).on('click', '.owl-item', function(event) {
+
+
+// $(document).on('click', '#whatshappening_map', function(event) {
 
 //     $('.active-tab').css('color','');
 //     $('.active-tab').css('border-bottom','');
+//     $('.labels').css('color','');
 
 //     $('.tab').removeClass('active-tab');
 //     $('.owl-item').removeClass('active-tab');
-
 //     $(this).addClass('active-tab');
 
-//     $('.active-tab').css('color','yellow');
-//     $('.active-tab').css('border-bottom','2px solid yellow');
-// })
+//     $('.active-tab').css('color','green');
+//     $('.active-tab').css('border-bottom','2px solid green');
+
+
+// }
 
 
 
@@ -604,7 +608,7 @@ function upload_type_camera() {
 
 function uploadprofile(imageURI) {
 
-    myApp.closeModal('.upload_picker');
+    // myApp.closeModal('.upload_picker');
     Lockr.set('imageURI', imageURI);
 
 }
@@ -655,11 +659,9 @@ function changedate() {
 
     var date = $('.date').val();
     $('.date-text').html(moment(date).format("Do MMM YYYY"));
-
     // id,eventtype,date
     var loc_id = Lockr.get('loc_id');
     var event_type = $('#scroll-data-attr').attr('data-id');
-
 
     $.ajax({
 
@@ -717,12 +719,15 @@ function changedate() {
     })
 }
 
-$(document).on('click', '.calender', function() {
 
-    alert('called');
-    $('#date').trigger('click');
 
-})
+
+// $(document).on('click', '.calender', function() {
+
+//     alert('called');
+//     $('#date').trigger('click');
+
+// })
 
 
 function prompt_forgottextbox() {

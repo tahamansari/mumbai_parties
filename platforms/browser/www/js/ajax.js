@@ -2,7 +2,7 @@ var base_url = "http://casaestilo.in/taha/mp_admin/index.php/Api/";
 var img_url = "http://mumbaiparties.com/assets/uploads/";
 
 var casa_img_url = "http://casaestilo.in/taha/mp_admin/assets/img/";
-var profile_img_path = "http://localhost:8888/mp_back/mumbai_parties/www/img/uploads/";
+// var profile_img_path = "http://localhost:8888/mp_back/mumbai_parties/www/img/uploads/";
 
 // var scroll_amount = 250;
 // var offset = 0;
@@ -135,8 +135,6 @@ $(document).on('click','#register_button',function(event){
 	}
 
 	if(Lockr.get('imageURI')){
-
-
 		var imageURI = Lockr.get('imageURI');
 		var img_name = imageURI.substr(imageURI.lastIndexOf('/')+1);
 
@@ -366,6 +364,15 @@ function get_location(){
 
 $(document).on('change','#map_top_select',function(){
 
+
+	$('.active-tab').css('color','');
+    $('.active-tab').css('border-bottom','');
+    $('.labels').css('color','');
+
+    $('.tab').removeClass('active-tab');
+    $('.owl-item').removeClass('active-tab');
+
+
 	var id = $("#map_top_select").val();
 
  	Lockr.set('loc_id',id);
@@ -374,7 +381,9 @@ $(document).on('change','#map_top_select',function(){
  	$('.tab').removeClass('active-tab');
     $('.owl-item').removeClass('active-tab');
 
-	$('#whatshappening_map').addClass('active-tab');
+
+
+	$('#whatshappening_map').addClass('textgreen');
 
 
 	get_initial_map_data(id);
@@ -384,6 +393,13 @@ $(document).on('change','#map_top_select',function(){
 
 $(document).on('change','#list_top_select',function(){
 
+	$('.active-tab').css('color','');
+    $('.active-tab').css('border-bottom','');
+    $('.labels').css('color','');
+
+    $('.tab').removeClass('active-tab');
+    $('.owl-item').removeClass('active-tab');
+
 	var id = $("#list_top_select").val();
 
  	Lockr.set('loc_id',id);
@@ -392,7 +408,7 @@ $(document).on('change','#list_top_select',function(){
  	$('.tab').removeClass('active-tab');
     $('.owl-item').removeClass('active-tab');
     
-	$('#whatshappening_list').addClass('active-tab');
+	$('#whatshappening_list').addClass('textgreen');
 
 	get_event_type();
 
@@ -452,10 +468,21 @@ $(document).on('change','.select_location',function(){
 
 });
 
+
 function initial_marker_clicked_event(id){
 	
 	mainView.router.loadPage('entitie.html?id='+id);
 }
+
+// function initial_marker_clicked_offer(id){
+	
+// 	mainView.router.loadPage('offer.html?id='+id);
+// }
+
+// function initial_marker_clicked_liquir(id){
+	
+// 	mainView.router.loadPage('liquor.html?id='+id);
+// }
 
 
 
@@ -472,7 +499,7 @@ function get_owl_slider_map(id){
 
 				console.log(result['data']);
 
-					var html = "<div id='whatshappening_map' onclick='' class='tab active-tab'>"+
+					var html = "<div id='whatshappening_map' onclick='' class='tab textgreen'>"+
 				               "<p>WHATS HAPPENING</p>"+
 		               		   "</div>";
 
@@ -544,7 +571,7 @@ function get_owl_slider_list(){
 
 				console.log(result['data']);
 
-					var html = "<div id='whatshappening_list' onclick='' class='tab active-tab'>"+
+					var html = "<div id='whatshappening_list' onclick='' class='tab textgreen'>"+
 				               "<p>WHATS HAPPENING</p>"+
 		               		   "</div>";
 
@@ -715,7 +742,20 @@ function get_owl_slider_list(){
 
 function get_initial_map_data(id){
 
+
+    $('.active-tab').css('color','');
+    $('.active-tab').css('border-bottom','');
+    $('.labels').css('color','');
+
+    $('.tab').removeClass('active-tab');
+    $('.owl-item').removeClass('active-tab');
+
+    $("#whatshappening_map").addClass('textgreen');
+
+
 	$('#map').html('<img style="margin: 25%;text-align:center;" width="50%" src="img/logo.png">');
+
+	$('#whatshappening_map').attr('onclick', 'get_initial_map_data('+id+')');
 
 	$.ajax({
 
@@ -731,13 +771,6 @@ function get_initial_map_data(id){
 			console.log(result);
 
 			if(result['status'] == "success"){
-
-			// var map;
-	  //       map = new google.maps.Map(document.getElementById('map'), {
-	  //         center: {lat: -34.397, lng: 150.644},
-	  //         zoom: 14	
-	  //       });
-
 
 		    var map = new google.maps.Map(document.getElementById('map'), {
 		      zoom: 14,
@@ -824,13 +857,6 @@ function get_initial_map_data(id){
 			       });
 
 
-
-		   //    var content = value.name; 
-			  // var infowindow = new google.maps.InfoWindow()
-    	// 	  infowindow.setContent(content);
-		   //    infowindow.open(map,marker);
-
-
 		      marker.addListener('click', function() {
 		          initial_marker_clicked_event(value.id);
 		      });
@@ -869,6 +895,12 @@ function get_entitie(id){
 		success: function(result){
 
 			if(result['status']=="success"){
+
+
+
+
+				// $("#entitie_image").css('background-image','url('+img_url+result['entitie']['image']+')');
+
 
 				var entitie_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
 							result['entitie']['name']+
@@ -1029,6 +1061,9 @@ function get_offer(id){
 
 			if(result['status'] == "success"){
 
+
+						$("#offer_image").css('background-image','url('+img_url+result['offer']['image']+')');
+
 						var offer_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
 									result['offer']['offer_name']+
 				                    "</h3>";
@@ -1147,6 +1182,14 @@ function get_event(id){
 
 			if(result['status'] == "success"){
 
+
+						console.log(img_url+result['event']['image']);
+
+						$("#event_image").css('background-image','url('+img_url+result['event']['image']+')');
+
+						// $("#event_image").css('color','red');
+
+
 						var event_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
 												result['event']['event_name']+
 							                "</h3>";
@@ -1252,6 +1295,11 @@ function get_liquor(id){
 			console.log(result);
 
 			if(result['status'] == "success"){
+
+
+						$("#liquor_image").css('background-image','url('+img_url+result['data']['image']+')');
+
+
 						var liquor_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>"+
 												result['data']['shop_name']+
 							                "</h3>";
@@ -1344,6 +1392,18 @@ function get_liquor(id){
 
 function get_event_type(){
 
+
+		$('.active-tab').css('color','');
+	    $('.active-tab').css('border-bottom','');
+	    $('.labels').css('color','');
+
+	    $('.tab').removeClass('active-tab');
+	    $('.owl-item').removeClass('active-tab');
+	    $("#whatshappening_list").addClass('textgreen');
+
+	    $('.active-tab').css('color','green');
+	    $('.active-tab').css('border-bottom','2px solid green');
+
 		$.ajax({
 
 		type:"POST",
@@ -1358,6 +1418,11 @@ function get_event_type(){
 
 				var list = "";
 				$.each(result['data'],function(key,value) {
+
+
+
+
+
 					 
 					// list += "<div class='col-50 list-box'>"+
 					// 		"<a data-id='"+value.id+"' class='get-event-data category'><img src='img/happyhours.jpg' width='100%' alt='img error'>"+
@@ -1416,80 +1481,29 @@ function get_event_type(){
 $(document).on('click','.get-event-data',function(event){
 
 
-	console.log('scroll amount change to 1200');
-	scroll_amount = 1200;
-	offset=0;
+	$('.active-tab').css('color','');
+    $('.active-tab').css('border-bottom','');
+    $('.labels').css('color','');
 
-	console.log(scroll_amount);
+    $('.tab').removeClass('active-tab');
+    $('.owl-item').removeClass('active-tab');
+    $('#whatshappening_list').removeClass('textgreen');
 
+    $(this).addClass('active-tab');
+
+
+	 console.log('scroll amount change to 1200');
+	 scroll_amount = 1200;
+   	 offset=0;
+   	 console.log(scroll_amount);
 
 	 var loc_id = $("#list_top_select").val();
 	 var event_type = $(this).attr("data-id");
 
-
-	 // alert("loc is "+loc_id+" event type "+event_type);
-	 // return false;
-
 	 $('#scroll-data-attr').attr('data-id', event_type);
 
-	 if(event_type=="Liquor"){
 
-			 	$.ajax({
-
-			 	type:"POST",
-			 	url: base_url+"get_liquor_data/",
-			 	dataType:"json",
-			 	data:{
-
-			 		loc_id:loc_id,
-			 		// event_type:event_type
-			 	},
-			 	success:function(result){
-
-			 		console.log(result);
-
-		 			var html = "";
-			 		if(result['status']=="success"){
-
-			 			var count=0;
-				 		$.each(result['data'],function(key,value) {
-
-				 			console.log(count++);
-
-				 			html +="<div data-id="+value.shop_id+" class='card demo-card-header-pic get-liquor' style='margin: 0;margin-bottom: 0px;width:100%'>"+
-					                  "<div style='background-image:url("+img_url+value.image+")' valign='bottom' class='card-header no-border'>"+
-					                  "<h3 class='no-mar list-name'>"+value.shop_name+"</h3>" +
-					                  "</div>"+
-					                  "<div class='card-footer color-white'>"+
-					                    "<span class='footer-left'>@ Shop Name</span>"+
-					                    "<span class='footer-text'>"+value.shop_open+" to "+value.shop_close+"</span>"+
-					                  "</div>"+
-					                "</div>";
-
-
-				 		});
-
-				 		$('#cust_event_box').html(html);
-				 		$('#list_date_box').css('display','block');
-
-			 		}else{
-
-			 			if(result['msg']=="no data"){
-
-			 				html +="<h3 class='no-event'>No Event Available</h3>";
-
-				 			$('#cust_event_box').html(html);
-
-			 			}else{
-
-			 				alert("failed");
-			 			}
-			 		}
-			 	}
-			})
-	 }else{
-
-		 	$.ajax({
+	 $.ajax({
 
 		 	type:"POST",
 		 	url: base_url+"get_event_data/",
@@ -1501,10 +1515,12 @@ $(document).on('click','.get-event-data',function(event){
 		 	},
 		 	success:function(result){
 
-		 		console.log(result);
-
 	 			var html = "";
 		 		if(result['status']=="success"){
+
+		 			  var fontcolor=result['data'][0]['color'];
+				      $('.active-tab').css('color',fontcolor);
+					  $('.active-tab').css('border-bottom','2px solid '+fontcolor);
 
 		 			var count=0;
 			 		$.each(result['data'],function(key,value) {
@@ -1521,7 +1537,6 @@ $(document).on('click','.get-event-data',function(event){
 				                  "</div>"+
 				                "</div>";
 
-
 			 		});
 
 			 		$('#cust_event_box').html(html);
@@ -1530,6 +1545,10 @@ $(document).on('click','.get-event-data',function(event){
 		 		}else{
 
 		 			if(result['msg']=="no data"){
+
+		 				  var fontcolor="red";
+					      $('.active-tab').css('color',fontcolor);
+						  $('.active-tab').css('border-bottom','2px solid '+fontcolor);
 
 		 				html +="<h3 class='no-event'>No Event Available</h3>";
 
@@ -1541,31 +1560,130 @@ $(document).on('click','.get-event-data',function(event){
 		 			}
 		 		}
 		 	}
-		})
-
-	 }
+	})
 
 
 
-	 
+	 // if(event_type=="Liquor"){
+
+		// 	 	$.ajax({
+
+		// 	 	type:"POST",
+		// 	 	url: base_url+"get_liquor_data/",
+		// 	 	dataType:"json",
+		// 	 	data:{
+
+		// 	 		loc_id:loc_id,
+		// 	 		// event_type:event_type
+		// 	 	},
+		// 	 	success:function(result){
+
+		// 	 		console.log(result);
+
+		//  			var html = "";
+		// 	 		if(result['status']=="success"){
+
+		// 	 			var count=0;
+		// 		 		$.each(result['data'],function(key,value) {
+
+		// 		 			console.log(count++);
+
+		// 		 			html +="<div data-id="+value.shop_id+" class='card demo-card-header-pic get-liquor' style='margin: 0;margin-bottom: 0px;width:100%'>"+
+		// 			                  "<div style='background-image:url("+img_url+value.image+")' valign='bottom' class='card-header no-border'>"+
+		// 			                  "<h3 class='no-mar list-name'>"+value.shop_name+"</h3>" +
+		// 			                  "</div>"+
+		// 			                  "<div class='card-footer color-white'>"+
+		// 			                    "<span class='footer-left'>@ Shop Name</span>"+
+		// 			                    "<span class='footer-text'>"+value.shop_open+" to "+value.shop_close+"</span>"+
+		// 			                  "</div>"+
+		// 			                "</div>";
 
 
+		// 		 		});
+
+		// 		 		$('#cust_event_box').html(html);
+		// 		 		$('#list_date_box').css('display','block');
+
+		// 	 		}else{
+
+		// 	 			if(result['msg']=="no data"){
+
+		// 	 				html +="<h3 class='no-event'>No Event Available</h3>";
+
+		// 		 			$('#cust_event_box').html(html);
+
+		// 	 			}else{
+
+		// 	 				alert("failed");
+		// 	 			}
+		// 	 		}
+		// 	 	}
+		// 	})
+	 // }else{
+
+		//  	$.ajax({
+
+		//  	type:"POST",
+		//  	url: base_url+"get_event_data/",
+		//  	dataType:"json",
+		//  	data:{
+
+		//  		loc_id:loc_id,
+		//  		event_type:event_type
+		//  	},
+		//  	success:function(result){
+
+		//  		console.log(result);
+
+	 // 			var html = "";
+		//  		if(result['status']=="success"){
+
+		//  			var count=0;
+		// 	 		$.each(result['data'],function(key,value) {
+
+		// 	 			console.log(count++);
+
+		// 	 			html +="<div data-id="+value.event_id+" class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 0px;width:100%'>"+
+		// 		                  "<div style='background-image:url("+img_url+value.image+")' valign='bottom' class='card-header no-border'>"+
+		// 		                  "<h3 class='no-mar list-name'>"+value.event_name+"</h3>" +
+		// 		                  "</div>"+
+		// 		                  "<div class='card-footer color-white'>"+
+		// 		                    "<span class='footer-left'>@ "+value.name+"</span>"+
+		// 		                    "<span class='footer-text'>"+value.time_event_start+" to "+value.time_event_ends+"</span>"+
+		// 		                  "</div>"+
+		// 		                "</div>";
 
 
+		// 	 		});
 
+		// 	 		$('#cust_event_box').html(html);
+		// 	 		$('#list_date_box').css('display','block');
 
+		//  		}else{
+
+		//  			if(result['msg']=="no data"){
+
+		//  				html +="<h3 class='no-event'>No Event Available</h3>";
+
+		// 	 			$('#cust_event_box').html(html);
+
+		//  			}else{
+
+		//  				alert("failed");
+		//  			}
+		//  		}
+		//  	}
+		// })
+
+	 // }
 });
 
 
 function onscroll_getevent(para1){
 
 	console.log('onscroll called data is '+para1.scrollTop+" "+scroll_amount);
-
-
 	var loc_id = $("#list_top_select").val();
 	var event_type = $("#scroll-data-attr").attr('data-id');
-
-	console.log(para1.scrollTop);
 
 	if(para1.scrollTop > scroll_amount){
 
@@ -1650,6 +1768,11 @@ function marker_clicked_event(para1){
 function marker_clicked_offer(para1){
 
 	mainView.router.loadPage("offer.html?id="+para1);
+}
+
+function marker_clicked_liquor(para1){
+
+	mainView.router.loadPage("liquor.html?id="+para1);
 }
 
 
@@ -1748,7 +1871,7 @@ $(document).on('click','.get_offers',function(event){
 			       });
 
 			      marker.addListener('click', function() {
-			          marker_clicked_event(value.offer_id);
+			          marker_clicked_offer(value.offer_id);
 
 			      });
 
@@ -1873,7 +1996,7 @@ $(document).on('click','.get_liquors',function(event){
 			       });
 
 			      marker.addListener('click', function() {
-			          marker_clicked_event(value.shop_id);
+			          marker_clicked_liquor(value.shop_id);
 
 			      });
 
@@ -1911,6 +2034,8 @@ $(document).on('click','.get_map_data',function(event){
 
     $('.tab').removeClass('active-tab');
     $('.owl-item').removeClass('active-tab');
+    $('#whatshappening_map').removeClass('textgreen');
+
     $(this).addClass('active-tab');
 
    	 $('#map').html('<img style="margin: 25%;text-align:center;" width="50%" src="img/logo.png">');
@@ -2014,7 +2139,7 @@ $(document).on('click','.get_map_data',function(event){
 	 			if(result['msg']=="no data"){
 
 
-	 			  var fontcolor="#FFFFFF";
+	 			  var fontcolor="red";
 			      $('.active-tab').css('color',fontcolor);
 				  $('.active-tab').css('border-bottom','2px solid '+fontcolor);
 
@@ -2234,7 +2359,7 @@ function get_club_list(type){
 
 				    list += "<div data-id='"+value.club_id+"' class='card demo-card-header-pic go_to_club'>"+
 				            // "style='position:relative;margin: 0;border-bottom: 2px solid white;width:100%;'"+
-				              "<div style='background-image:url(img/card.jpg)' valign='bottom' class='card-header no-border'>"+
+				              "<div style='background-image:url(img/clubimage.jpg)' valign='bottom' class='card-header no-border'>"+
 				                    "<div style='position:absolute;top: 30px;right: 0;'>"+
 
 				                      "<div style='position: relative;color: white; margin-bottom: 10px;'>"+
@@ -2457,6 +2582,18 @@ function submit_review(){
 $(document).on('click', '.get-list-offers', function(event) {
 
 	event.preventDefault();
+	$('.active-tab').css('color','');
+    $('.active-tab').css('border-bottom','');
+    $('.labels').css('color','');
+
+    $('.tab').removeClass('active-tab');
+    $('.owl-item').removeClass('active-tab');
+
+    $('#whatshappening_list').removeClass('textgreen');
+
+    $(this).addClass('active-tab');
+
+
 
 	var loc_id = $("#list_top_select").val();
 
@@ -2474,6 +2611,10 @@ $(document).on('click', '.get-list-offers', function(event) {
 	 		console.log(result);
 
 	 		if(result['status']=="success"){
+
+	 		  var fontcolor=result['data'][0]['color'];
+		      $('.active-tab').css('color',fontcolor);
+			  $('.active-tab').css('border-bottom','2px solid '+fontcolor);
 
 	 			var html = "";
 		 		$.each(result['data'],function(key,value) {
@@ -2512,9 +2653,18 @@ $(document).on('click', '.get-list-offers', function(event) {
 
 
 $(document).on('click', '.get-list-liquor', function(event) {
-
 	event.preventDefault();
 
+	$('.active-tab').css('color','');
+    $('.active-tab').css('border-bottom','');
+    $('.labels').css('color','');
+
+    $('.tab').removeClass('active-tab');
+    $('.owl-item').removeClass('active-tab');
+    
+    $('#whatshappening_list').removeClass('textgreen');
+
+    $(this).addClass('active-tab');
 	// alert('clicked');
 
 	var loc_id = $("#list_top_select").val();
@@ -2529,6 +2679,12 @@ $(document).on('click', '.get-list-liquor', function(event) {
 	 		loc_id:loc_id,
 	 	},
 	 	success:function(result){
+
+
+	 		  var fontcolor=result['data'][0]['color'];
+		      $('.active-tab').css('color',fontcolor);
+			  $('.active-tab').css('border-bottom','2px solid '+fontcolor);
+
 
 	 		console.log(result);
 
