@@ -27,7 +27,6 @@ function check_mobile(mobile) {
 }
 
 
-
 // $(document).on('click', '#whatshappening_map', function(event) {
 
 //     $('.active-tab').css('color','');
@@ -491,7 +490,7 @@ function dec_table() {
 
 function update_type_gallery() {
 
-    navigator.camera.getPicture(updateprofile, function(message) {
+    navigator.camera.getPicture(update_profile, function(message) {
         alert('Try Again');
     }, {
         quality: 50,
@@ -503,7 +502,7 @@ function update_type_gallery() {
 
 function update_type_camera() {
 
-    navigator.camera.getPicture(updateprofile, function(message) {
+    navigator.camera.getPicture(update_profile, function(message) {
         alert('Try Again');
     }, {
         quality: 50,
@@ -514,9 +513,7 @@ function update_type_camera() {
 }
 
 
-function updateprofile(imageURI) {
-
-    myApp.closeModal('.profile_picker');
+function update_profile(imageURI) {
 
     var id = Lockr.get('id');
     var img_name = imageURI.substr(imageURI.lastIndexOf('/') + 1);
@@ -543,20 +540,17 @@ function updateprofile(imageURI) {
                 var ft = new FileTransfer();
                 ft.upload(imageURI, base_url + "upload_profile", win, fail, options);
 
-                // $('#profile_img').attr('src', 'http://casaestilo.in/taha/mp_admin/uploads/'+img_name); 
+                $('#profile_img').attr('src', 'http://casaestilo.in/taha/mp_admin/uploads/'+img_name); 
                 imageURI = "";
-
-                myApp.closeModal('.update_picker');
-                // mainView.router.loadPage('location.html');
                 myApp.alert("Profile Updated");
-
+                // mainView.router.loadPage('location.html');
 
             } else {
                 alert('failed');
             }
         })
         .fail(function() {
-            console.log("error");
+            console.log("Server Error");
         })
         .always(function() {
             console.log("complete");
@@ -731,8 +725,17 @@ function changedate() {
 
 
 function prompt_forgottextbox() {
+
     myApp.prompt('Enter your email id', function(value) {
         sendemail(value);
+    });
+}
+
+
+function prompt_redeem() {
+    
+    myApp.prompt('Enter your code', function(value) {
+        redeem(value);
     });
 }
 
@@ -766,3 +769,40 @@ function prompt_upload() {
         }]
     })
 }
+
+
+function prompt_update() {
+
+    myApp.modal({
+        title: 'Choose update type',
+        // text: 'Vivamus feugiat diam velit. Maecenas aliquet egestas lacus, eget pretium massa mattis non. Donec volutpat euismod nisl in posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae',
+        verticalButtons: true,
+        buttons: [{
+            text: 'Camera',
+            onClick: function() {
+
+                update_type_camera();
+                // myApp.alert('You clicked first button!')
+            }
+        }, {
+            text: 'Gallery',
+            onClick: function() {
+
+                update_type_gallery()
+                    // myApp.alert('You clicked second button!')
+            }
+        }, {
+            text: 'Cancel',
+            onClick: function() {
+
+
+                // myApp.alert('You clicked second button!')
+            }
+        }]
+    })
+}
+
+
+
+
+

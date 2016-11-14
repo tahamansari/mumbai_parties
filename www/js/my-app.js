@@ -119,7 +119,7 @@ function get_profile(id){
             // alert(result['data']['id']);
             // alert('img url is '+profile_img_path+result['data']['img_name']);
             $('#profile_img').attr('src', profile_img_path+result['data']['img_name']); 
-
+            $('#profile_img').attr('onclick', "prompt_update()");
 
         }else{
 
@@ -540,10 +540,26 @@ myApp.onPageInit('notification', function (page) {
 });
 
 
-myApp.onPageBack('index', function(page) {
+// myApp.onPageBack('index', function(page) {
 
-    alert('called');
+//     alert('called');
 
+// });
+
+myApp.onPageInit('invite', function (page) {
+    $('.navbar-inner').css('background','none');
+});
+
+myApp.onPageInit('redeem', function (page) {
+    $('.navbar-inner').css('background','none');
+    check_redeem();
+
+
+});
+
+
+myApp.onPageInit('mywallet', function (page) {
+    $('.navbar-inner').css('background','none');
 });
 
 

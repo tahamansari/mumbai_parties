@@ -36,9 +36,10 @@ a{
 
 .shareredeem{
 
-    background-color: #d0cdd3;
+    background-color: rgba(99,96,96,0.5);
     border: none;
     width: 150px;
+    color:white;
     padding: 10px;
 
 }
@@ -1647,15 +1648,10 @@ position: absolute;
 
 }
 
+
 /*.gm-style-pbc + div{
   /*z-index: 99!important;*/
 /*}*/
-
-/*.gmnoprint img{
-
-  position: relative;
-  z-index: 999!important;
-}*/
 
 
 .book-name{
@@ -1729,6 +1725,11 @@ position: absolute;
 
       background: none;
   top: 38%;
+}
+
+.gmnoprint{
+
+  /*z-index: 0!important;*/
 }
 
 .tabbar-fixed .page-content, .tabbar-through .page-content, .toolbar-fixed .page-content, .toolbar-through .page-content {
