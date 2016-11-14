@@ -542,8 +542,9 @@ function update_profile(imageURI) {
 
                 $('#profile_img').attr('src', 'http://casaestilo.in/taha/mp_admin/uploads/'+img_name); 
                 imageURI = "";
+
+                mainView.router.loadPage('location.html');
                 myApp.alert("Profile Updated");
-                // mainView.router.loadPage('location.html');
 
             } else {
                 alert('failed');
@@ -563,13 +564,15 @@ function win(r) {
     // console.log("Code = " + r.responseCode);
     // console.log("Response = " + r.response);
     // console.log("Sent = " + r.bytesSent);
-    // alert(r.response);
+    alert(r.response);
 }
 
 
 function fail(error) {
 
     // alert("An error has occurred: Code = "+error.code);
+    alert("Failed to update pic"+error);
+
 }
 
 

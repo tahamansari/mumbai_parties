@@ -541,9 +541,7 @@ myApp.onPageInit('notification', function (page) {
 
 
 // myApp.onPageBack('index', function(page) {
-
 //     alert('called');
-
 // });
 
 myApp.onPageInit('invite', function (page) {
@@ -553,12 +551,14 @@ myApp.onPageInit('invite', function (page) {
 myApp.onPageInit('redeem', function (page) {
     $('.navbar-inner').css('background','none');
     check_redeem();
-
-
 });
 
 
 myApp.onPageInit('mywallet', function (page) {
+    $('.navbar-inner').css('background','none');
+});
+
+myApp.onPageInit('offline', function (page) {
     $('.navbar-inner').css('background','none');
 });
 

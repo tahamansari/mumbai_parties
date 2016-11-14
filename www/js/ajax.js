@@ -194,6 +194,7 @@ $(document).on('click', '#register_button', function(event) {
                 Lockr.set("email", result.email);
 
                 Lockr.set("is_logged_in", true);
+
                 mainView.router.loadPage("location.html");
 
             } else {
@@ -209,8 +210,9 @@ $(document).on('click', '#register_button', function(event) {
         },
         error: function(jqXHR, exception) {
 
-            alert("No Internet Connection");
-            mainView.router.loadPage('offline.html');
+        	alert("Server Error");
+            // alert("No Internet Connection");
+            // mainView.router.loadPage('offline.html');
         }
     })
 
@@ -220,15 +222,15 @@ function s_win(r) {
 
     // alert("Image uploaded");
 
-    console.log("Code = " + r.responseCode);
-    console.log("Response = " + r.response);
-    console.log("Sent = " + r.bytesSent);
+    // console.log("Code = " + r.responseCode);
+    // console.log("Response = " + r.response);
+    // console.log("Sent = " + r.bytesSent);
     alert("success response is " + r.response);
 }
 
 function s_fail(error) {
 
-    alert("Failed to upload");
+    alert("Failed to upload Pic");
 
     // alert("An error has occurred: Code = "+error.code);
 }
