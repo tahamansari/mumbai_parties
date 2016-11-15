@@ -99,7 +99,7 @@ function onDeviceReady() {
                 navigator.app.exitApp();
             });
 
-        } else if (page.name == "location") {
+        } else if (page.name == "type") {
 
             if (Lockr.get('is_logged_in')) {
 

@@ -879,6 +879,10 @@ function get_initial_map_data(id) {
                         initial_marker_clicked_event(value.id);
                     });
 
+                    marker1.addListener('click', function() {
+                        initial_marker_clicked_event(value.id);
+                    });
+
                 });
 
             } else {
@@ -1896,6 +1900,16 @@ $(document).on('click', '.get_offers', function(event) {
 
                     });
 
+
+
+                    marker1.addListener('click', function() {
+                        marker_clicked_offer(value.offer_id);
+
+                    });
+
+
+                    
+
                 });
 
 
@@ -2023,6 +2037,11 @@ $(document).on('click', '.get_liquors', function(event) {
 
                     });
 
+                    marker1.addListener('click', function() {
+                        marker_clicked_liquor(value.shop_id);
+
+                    });
+
                 });
 
             } else {
@@ -2046,10 +2065,7 @@ $(document).on('click', '.get_liquors', function(event) {
 
 //revise
 $(document).on('click', '.get_map_data', function(event) {
-
-
     // alert('clicked');
-
 
     $('.active-tab').css('color', '');
     $('.active-tab').css('border-bottom', '');
@@ -2152,6 +2168,11 @@ $(document).on('click', '.get_map_data', function(event) {
                     });
 
                     marker.addListener('click', function() {
+                        marker_clicked_event(value.event_id);
+
+                    });
+
+                    marker1.addListener('click', function() {
                         marker_clicked_event(value.event_id);
 
                     });
