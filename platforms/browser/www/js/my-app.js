@@ -9,8 +9,8 @@ var myApp = new Framework7({
 
     modalTitle:"Mumbai Parties",
     swipeBackPage:false,
-    cache:false,
-    uniqueHistory:true,
+    // cache:false,
+    // uniqueHistory:true,
     // smartSelectSearchbar:true,
     // imagesLazyLoadPlaceholder: 'img/card.jpg',
     // imagesLazyLoadThreshold: 50,
@@ -22,6 +22,13 @@ var myApp = new Framework7({
     onAjaxComplete: function (xhr) {
         setTimeout(myFunction, 500);
     }
+});
+
+
+
+var mainView = myApp.addView('.view-main', {
+    
+    dynamicNavbar: true
 });
 
 function myFunction(){
@@ -81,7 +88,9 @@ function check_connection(){
     }else{
 
       if(Lockr.get('is_logged_in')){
-        mainView.router.loadPage('location.html');
+        // mainView.router.loadPage('location.html');
+        mainView.router.loadPage("type.html");
+
       }else{
         mainView.router.loadPage('index.html');
       }
@@ -89,10 +98,7 @@ function check_connection(){
 
 }
 
-var mainView = myApp.addView('.view-main', {
-    
-    dynamicNavbar: true
-});
+
 
 myApp.onPageInit('index', function (page) {
 
@@ -427,6 +433,8 @@ myApp.onPageInit('club', function (page) {
 
 myApp.onPageInit('search', function (page) {
 
+  $('.navbar-inner').css('background','url("img/topbg.png")');
+
   get_search();
 
 });
@@ -541,9 +549,7 @@ myApp.onPageInit('notification', function (page) {
 
 
 // myApp.onPageBack('index', function(page) {
-
 //     alert('called');
-
 // });
 
 myApp.onPageInit('invite', function (page) {
@@ -553,12 +559,14 @@ myApp.onPageInit('invite', function (page) {
 myApp.onPageInit('redeem', function (page) {
     $('.navbar-inner').css('background','none');
     check_redeem();
-
-
 });
 
 
 myApp.onPageInit('mywallet', function (page) {
+    $('.navbar-inner').css('background','none');
+});
+
+myApp.onPageInit('offline', function (page) {
     $('.navbar-inner').css('background','none');
 });
 

@@ -194,7 +194,10 @@ $(document).on('click', '#register_button', function(event) {
                 Lockr.set("email", result.email);
 
                 Lockr.set("is_logged_in", true);
-                mainView.router.loadPage("location.html");
+
+                // mainView.router.loadPage("location.html");
+                mainView.router.loadPage("type.html");
+
 
             } else {
 
@@ -209,8 +212,9 @@ $(document).on('click', '#register_button', function(event) {
         },
         error: function(jqXHR, exception) {
 
-            alert("No Internet Connection");
-            mainView.router.loadPage('offline.html');
+        	alert("Server Error");
+            // alert("No Internet Connection");
+            // mainView.router.loadPage('offline.html');
         }
     })
 
@@ -220,15 +224,15 @@ function s_win(r) {
 
     // alert("Image uploaded");
 
-    console.log("Code = " + r.responseCode);
-    console.log("Response = " + r.response);
-    console.log("Sent = " + r.bytesSent);
-    alert("success response is " + r.response);
+    // console.log("Code = " + r.responseCode);
+    // console.log("Response = " + r.response);
+    // console.log("Sent = " + r.bytesSent);
+    // alert("success response is " + r.response);
 }
 
 function s_fail(error) {
 
-    alert("Failed to upload");
+    alert("Failed to upload Pic");
 
     // alert("An error has occurred: Code = "+error.code);
 }
@@ -287,7 +291,10 @@ $(document).on('click', '#login_button', function(event) {
 
 
                 Lockr.set("is_logged_in", true);
-                mainView.router.loadPage("location.html");
+
+                // mainView.router.loadPage("location.html");
+                mainView.router.loadPage("type.html");
+
 
             } else {
 
@@ -860,7 +867,7 @@ function get_initial_map_data(id) {
                         map: map,
                         icon: img_url + value.image,
                         labelContent: value.name,
-                        labelAnchor: new google.maps.Point(22, 0),
+                        // labelAnchor: new google.maps.Point(22, 0),
                         labelClass: "labels", // the CSS class for the label
                         labelStyle: {
                             opacity: 0.75
@@ -2890,7 +2897,10 @@ function redeem(ref_code) {
             if (result['status'] == 'success') {
 
                 myApp.alert("Points Added");
-                mainView.router.loadPage('location.html');
+
+                // mainView.router.loadPage('location.html');
+                mainView.router.loadPage("type.html");
+
 
             } else {
 

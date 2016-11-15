@@ -1727,9 +1727,14 @@ position: absolute;
   top: 38%;
 }
 
-.gmnoprint{
+div.gmnoprint{
 
-  /*z-index: 0!important;*/
+  height: 0!important;
+}
+
+.gmnoprint img{
+
+  height: 0!important;
 }
 
 .tabbar-fixed .page-content, .tabbar-through .page-content, .toolbar-fixed .page-content, .toolbar-through .page-content {

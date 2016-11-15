@@ -67,7 +67,9 @@ function onDeviceReady() {
 
     if (Lockr.get("is_logged_in")) {
 
-        mainView.router.loadPage("location.html");
+        // mainView.router.loadPage("location.html");
+        mainView.router.loadPage("type.html");
+
         console.log("user is logged in");
 
     } else {
@@ -174,7 +176,10 @@ var mylogin = function() {
                     Lockr.set("type", "fb");
                     Lockr.set("is_logged_in", true);
 
-                    mainView.router.loadPage("location.html");
+                    // mainView.router.loadPage("location.html");
+
+                    mainView.router.loadPage("type.html");
+
 
                 } else {
 
@@ -241,7 +246,10 @@ var mylogin = function() {
                                                     Lockr.set("type", "fb");
                                                     Lockr.set("is_logged_in", true);
 
-                                                    mainView.router.loadPage("location.html");
+                                                    // mainView.router.loadPage("location.html");
+
+                                                    mainView.router.loadPage("type.html");
+
 
                                                 }else{
 
@@ -540,10 +548,14 @@ function update_profile(imageURI) {
                 var ft = new FileTransfer();
                 ft.upload(imageURI, base_url + "upload_profile", win, fail, options);
 
-                $('#profile_img').attr('src', 'http://casaestilo.in/taha/mp_admin/uploads/'+img_name); 
+                // $('#profile_img').attr('src', 'http://casaestilo.in/taha/mp_admin/uploads/'+img_name); 
                 imageURI = "";
-                myApp.alert("Profile Updated");
+
                 // mainView.router.loadPage('location.html');
+
+                mainView.router.loadPage("type.html");
+
+                myApp.alert("Profile Updated");
 
             } else {
                 alert('failed');
@@ -570,6 +582,8 @@ function win(r) {
 function fail(error) {
 
     // alert("An error has occurred: Code = "+error.code);
+    alert("Failed to update pic"+error);
+
 }
 
 
@@ -639,8 +653,11 @@ $(document).on('click', '.notify-toolbar', function() {
 
 $(document).on('click', '.home', function() {
 
+
     if (Lockr.get('is_logged_in')) {
-        mainView.router.loadPage('location.html');
+        // mainView.router.loadPage('location.html');
+        mainView.router.loadPage("type.html");
+
     } else {
         mainView.router.loadPage('index.html');
     }

@@ -195,7 +195,9 @@ $(document).on('click', '#register_button', function(event) {
 
                 Lockr.set("is_logged_in", true);
 
-                mainView.router.loadPage("location.html");
+                // mainView.router.loadPage("location.html");
+                mainView.router.loadPage("type.html");
+
 
             } else {
 
@@ -225,7 +227,7 @@ function s_win(r) {
     // console.log("Code = " + r.responseCode);
     // console.log("Response = " + r.response);
     // console.log("Sent = " + r.bytesSent);
-    alert("success response is " + r.response);
+    // alert("success response is " + r.response);
 }
 
 function s_fail(error) {
@@ -289,7 +291,10 @@ $(document).on('click', '#login_button', function(event) {
 
 
                 Lockr.set("is_logged_in", true);
-                mainView.router.loadPage("location.html");
+
+                // mainView.router.loadPage("location.html");
+                mainView.router.loadPage("type.html");
+
 
             } else {
 
@@ -862,7 +867,7 @@ function get_initial_map_data(id) {
                         map: map,
                         icon: img_url + value.image,
                         labelContent: value.name,
-                        labelAnchor: new google.maps.Point(22, 0),
+                        // labelAnchor: new google.maps.Point(22, 0),
                         labelClass: "labels", // the CSS class for the label
                         labelStyle: {
                             opacity: 0.75
@@ -2892,7 +2897,10 @@ function redeem(ref_code) {
             if (result['status'] == 'success') {
 
                 myApp.alert("Points Added");
-                mainView.router.loadPage('location.html');
+
+                // mainView.router.loadPage('location.html');
+                mainView.router.loadPage("type.html");
+
 
             } else {
 
