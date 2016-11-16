@@ -49,21 +49,22 @@
 
 
     <!-- fixed version -->
-    <!-- <plugin spec="https://github.com/leecrossley/cordova-plugin-directions.git#35b90f2" />
+    <plugin spec="https://github.com/leecrossley/cordova-plugin-directions.git#35b90f2" />
     <plugin spec="https://github.com/razorpay/razorpay-cordova.git#25de082" />
     <plugin spec="https://github.com/apache/cordova-plugin-network-information.git#09b46b2" />
     <plugin spec="https://github.com/apache/cordova-plugin-camera.git#d124e03" />
     <plugin spec="https://github.com/apache/cordova-plugin-file-transfer.git#a4031db" />
     <plugin name="com.phonegap.plugins.facebookconnect" source="pgb" spec="0.9.0" />
+
     <plugin name="cordova-plugin-console" spec="1.0.4" />
     <plugin name="cordova-plugin-social-message" spec="0.4.0" />
     <plugin name="cordova-plugin-statusbar" spec="1.0.1" />
-    <plugin name="cordova-plugin-whitelist" spec="1.2.2" /> -->
+    <plugin name="cordova-plugin-whitelist" spec="1.2.2" />
 
     
     
     
-    <plugin name="cordova-plugin-social-message" source="npm" />
+<!--     <plugin name="cordova-plugin-social-message" source="npm" />
     <plugin spec="https://github.com/leecrossley/cordova-plugin-directions.git" source="git"/>
     <plugin spec="https://github.com/razorpay/razorpay-cordova.git" />
 
@@ -72,19 +73,15 @@
     <plugin spec="https://github.com/apache/cordova-plugin-camera.git#rel/2.2.0" />
     <plugin spec="https://github.com/apache/cordova-plugin-file-transfer.git#rel/1.5.1" />
 
-    
-    
-
     <plugin name="com.phonegap.plugins.facebookconnect" spec="0.9.0" source="pgb">
-        <!-- old app id 908572929213032 -->
+        <param name="APP_ID" value="649298491886916" />
+        <param name="APP_NAME" value="mumbai parties" />
+    </plugin> -->
+
+            <!-- old app id 908572929213032 -->
         <!-- old app name Mumbai Parties -->
         
          <!-- new app id 649298491886916 -->
          <!-- new app name mumbai parties -->
-
-
-        <param name="APP_ID" value="649298491886916" />
-        <param name="APP_NAME" value="mumbai parties" />
-    </plugin>
 
 </widget>
