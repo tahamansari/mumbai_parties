@@ -11,6 +11,7 @@ var myApp = new Framework7({
     swipeBackPage:false,
     // cache:false,
     // uniqueHistory:true,
+    
     // smartSelectSearchbar:true,
     // imagesLazyLoadPlaceholder: 'img/card.jpg',
     // imagesLazyLoadThreshold: 50,
@@ -295,6 +296,9 @@ myApp.onPageInit('entitie', function (page) {
         var id = page.query.id; 
         $('#submit_review').attr('data-id', id);
         get_entitie(id);
+
+
+        
         
 });
 

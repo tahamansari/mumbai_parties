@@ -46,6 +46,20 @@
 <!--     <preference name="fullscreen" value="false" />
     <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize"/> -->
 
+
+
+    <!-- fixed version -->
+    <!-- <plugin spec="https://github.com/leecrossley/cordova-plugin-directions.git#35b90f2" />
+    <plugin spec="https://github.com/razorpay/razorpay-cordova.git#25de082" />
+    <plugin spec="https://github.com/apache/cordova-plugin-network-information.git#09b46b2" />
+    <plugin spec="https://github.com/apache/cordova-plugin-camera.git#d124e03" />
+    <plugin spec="https://github.com/apache/cordova-plugin-file-transfer.git#a4031db" />
+    <plugin name="com.phonegap.plugins.facebookconnect" source="pgb" spec="0.9.0" />
+    <plugin name="cordova-plugin-console" spec="1.0.4" />
+    <plugin name="cordova-plugin-social-message" spec="0.4.0" />
+    <plugin name="cordova-plugin-statusbar" spec="1.0.1" />
+    <plugin name="cordova-plugin-whitelist" spec="1.2.2" /> -->
+
     
     
     

@@ -80,6 +80,9 @@ function onDeviceReady() {
     document.addEventListener("backbutton", function(e) {
 
         e.preventDefault();
+
+        $.fancybox.close();
+        
         var page = myApp.getCurrentView().activePage;
         myApp.hideIndicator();
 

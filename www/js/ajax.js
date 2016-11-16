@@ -858,6 +858,9 @@ function get_initial_map_data(id) {
                         map: map,
                         icon: image,
                         optimized: false,
+                        labelAnchor: new google.maps.Point(-10, 20),
+                        labelContent: "hello",
+                        labelInBackground: false
 
 
                     });
@@ -867,11 +870,13 @@ function get_initial_map_data(id) {
                         map: map,
                         icon: img_url + value.image,
                         labelContent: value.name,
-                        // labelAnchor: new google.maps.Point(22, 0),
+                        labelAnchor: new google.maps.Point(-10, 20),
                         labelClass: "labels", // the CSS class for the label
                         labelStyle: {
                             opacity: 0.75
-                        }
+                        },
+                        labelInBackground: false    
+
                     });
 
 
@@ -907,30 +912,52 @@ function get_initial_map_data(id) {
 
 function get_entitie(id) {
 
+    var user_id = Lockr.get('id');
+
     $.ajax({
         url: base_url + "get_entitie/",
         type: 'POST',
         crossDomain: true,
         dataType: 'json',
         data: {
-            id: id
+            id: id,
+            user_id:user_id
         },
         success: function(result) {
 
+
+            console.log(result);
+
             if (result['status'] == "success") {
+                    // $("#entitie_image").css('background-image','url('+img_url+result['entitie']['image']+')');
 
-
-
-
-                // $("#entitie_image").css('background-image','url('+img_url+result['entitie']['image']+')');
-
-
-                var entitie_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>" +
+                    var entitie_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>" +
                     result['entitie']['name'] +
-                    "<br>" +
-                    "<i class='fa fa-star' aria-hidden='true'></i>" +
-                    "<i class='fa fa-star' aria-hidden='true'></i>" +
-                    "<i class='fa fa-star' aria-hidden='true'></i>" +
+                    "<br>";
+
+                    var mycount= result['reviews']['average']['avg'];
+
+                    // console.log('star count is '+mycount);
+
+                    entitie_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
+                    entitie_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
+                    entitie_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
+                    
+
+
+                    // for(var i=0;i<5;i++){
+
+                    //     if(mycount>i){
+                    //         entitie_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
+                    //     }else{
+                    //         entitie_heading += "<i class='fa fa-star' aria-hidden='true'></i>";
+                    //     }
+                    // }
+
+                    // entitie_heading += "<i class='fa fa-star' aria-hidden='true'></i>" +
+                    // "<i class='fa fa-star' aria-hidden='true'></i>" +
+                    // "<i class='fa fa-star' aria-hidden='true'></i>" +
+
                     "</h3>";
                 $("#entitie_heading").html(entitie_heading);
 
@@ -1015,29 +1042,43 @@ function get_entitie(id) {
                 }
 
                 var entitie_reviews = "";
-                if (result['reviews'] == "no data") {
+                if (result['reviews']['review'] == "no data") {
 
                     $("#entitie_reviews").html("No Reviews Available");
 
                 } else {
 
-                    $.each(result['reviews'], function(key, value) {
+                    $.each(result['reviews']['review'], function(key, value) {
 
                         entitie_reviews += "<p style='margin: 5px 0px;'>" + value.created_date + "</p>" +
                             "<span>" + value.name + "</span>" +
-                            "<span style='float:right'>" +
-                            "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>" +
-                            "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>" +
-                            "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>" +
-                            "<i class='fa fa-star' aria-hidden='true'></i>" +
-                            "<i class='fa fa-star' aria-hidden='true'></i>" +
-                            "</span>" +
+                                // "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>" +
+                                // "<i class='fa fa-star' aria-hidden='true'></i>" +
+                            "<span style='float:right'>";
+                            var star_count=value.star;
+                            for(var i=0;i<5;i++){
+                                if(star_count>i){
+                                    console.log(star_count);
+                                    entitie_reviews += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
+                                }else{
+                                    console.log(star_count);
+                                    entitie_reviews += "<i class='fa fa-star' aria-hidden='true'></i>";
+                                }
+                            }
+
+                            entitie_reviews += "</span>" +
                             "<p>" + value.description + "</p>" +
                             "<hr>";
 
                     })
 
                     $("#entitie_reviews").html(entitie_reviews);
+                }
+
+                if(result['reviews']['reviewed']=='1'){
+                    $('#add_review').css('display','none');
+                }else{
+                    $('#add_review').css('display','block');
                 }
 
 
@@ -2572,10 +2613,22 @@ function submit_review() {
 
     var user_id = Lockr.get('id');
     var user_name = Lockr.get('name');
-
     var entitie_id = $('#submit_review').attr('data-id');
     var star = $('#count').html();
     var description = $('#description').val();
+
+    if(star=="0"){
+            
+        alert("Rating Required");
+        return false;
+    }
+
+    if(description==""){
+            
+        alert("Description Required");
+        return false;
+    }
+
 
     $.ajax({
 
@@ -2593,23 +2646,32 @@ function submit_review() {
         })
         .done(function(result) {
 
-            var review = "";
+            var review = "";    
             if (result.status == "success") {
 
                 var review = "<p style='margin: 5px 0px;'>" + moment().format("YYYY/MM/DD") + "</p>" +
                     "<span>" + user_name + "</span>" +
-                    "<span style='float:right'>" +
-                    "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>" +
-                    "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>" +
-                    "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>" +
-                    "<i class='fa fa-star' aria-hidden='true'></i>" +
-                    "<i class='fa fa-star' aria-hidden='true'></i>" +
-                    "</span>" +
+                    "<span style='float:right'>";
+
+                    for(var i=0;i<5;i++){
+
+                        if(star>i){
+                            console.log("helllo"+star);
+                            review += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
+                        }else{
+                            console.log("hiii"+star);
+                            review += "<i class='fa fa-star' aria-hidden='true'></i>";
+                        }
+                    }
+
+                    review += "</span>" +
+
                     "<p>" + description + "</p>" +
                     "<hr>";
 
 
                 $("#entitie_reviews").append(review);
+                $("#add_review").css('display','none');
 
                 myApp.closeModal('.review_picker');
                 myApp.alert("Review Added");
