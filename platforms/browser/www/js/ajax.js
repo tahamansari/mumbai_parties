@@ -304,8 +304,9 @@ $(document).on('click', '#login_button', function(event) {
         },
         error: function(jqXHR, exception) {
 
-            alert("No Internet Connection");
-            mainView.router.loadPage('offline.html');
+            // alert("No Internet Connection");
+            // mainView.router.loadPage('offline.html');
+            alert('Server Error');
         }
     })
 
@@ -473,8 +474,10 @@ function get_top_location(id) {
         },
         error: function(jqXHR, exception) {
 
-            alert("No Internet Connection");
-            mainView.router.loadPage('offline.html');
+            // alert("No Internet Connection");
+            // mainView.router.loadPage('offline.html');
+
+            alert('Server Error');
         }
     })
 }
@@ -625,6 +628,10 @@ function get_owl_slider_list() {
                     itemsMobile: false // itemsMobile disabled - inherit from itemsTablet option
 
                 });
+
+                          $('#date-container').css('position','fixed');
+                          $('#date-container').css('top','55px');
+                          $('#date-container').css('z-index','9');
 
             } else {
 
@@ -912,6 +919,7 @@ function get_initial_map_data(id) {
 
 function get_entitie(id) {
 
+    console.log("entitie id is "+id);
     var user_id = Lockr.get('id');
 
     $.ajax({
@@ -925,50 +933,56 @@ function get_entitie(id) {
         },
         success: function(result) {
 
-
-            console.log(result);
+            console.log("Response is "+result);
 
             if (result['status'] == "success") {
                     // $("#entitie_image").css('background-image','url('+img_url+result['entitie']['image']+')');
 
-                    var entitie_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>" +
-                    result['entitie']['name'] +
-                    "<br>";
+                    var entitie_heading = "<h3 class='no-mar' style='color: yellow;'>" + result['entitie']['name'] + "</h3>";
 
-                    var mycount= result['reviews']['average']['avg'];
 
-                    // console.log('star count is '+mycount);
+                    if(result['reviews']!="no data"){
 
-                    entitie_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
-                    entitie_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
-                    entitie_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
+                        var mycount= result['reviews']['average']['avg'];
+                        for(var i=0;i<5;i++){
+                            console.log("i is "+i+"mycount is "+mycount);
+                            if(mycount>i){
+                                console.log('true');
+                                entitie_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
+                            }else{
+                                console.log('false');
+                                entitie_heading += "<i class='fa fa-star' aria-hidden='true'></i>";
+                            }
+                        }
+
+                    }else{
+
+                        for(var i=0;i<5;i++){
+                           
+                                entitie_heading += "<i class='fa fa-star' aria-hidden='true'></i>";
+                        }
+                    }
+
                     
-
-
-                    // for(var i=0;i<5;i++){
-
-                    //     if(mycount>i){
-                    //         entitie_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
-                    //     }else{
-                    //         entitie_heading += "<i class='fa fa-star' aria-hidden='true'></i>";
-                    //     }
-                    // }
 
                     // entitie_heading += "<i class='fa fa-star' aria-hidden='true'></i>" +
                     // "<i class='fa fa-star' aria-hidden='true'></i>" +
                     // "<i class='fa fa-star' aria-hidden='true'></i>" +
 
-                    "</h3>";
+
                 $("#entitie_heading").html(entitie_heading);
 
-                var entitie_call = "<br>...<i class='fa fa-phone' onclick='call(" + result['entitie']['bar_contact'] + ")' style='font-size: 30px;color: #03A9F4;' aria-hidden='true'></i>";
+                var entitie_call = "...<i class='fa fa-phone' onclick='call(" + result['entitie']['bar_contact'] + ")' style='font-size: 40px;color: #03A9F4;' aria-hidden='true'></i>";
                 $("#entitie_call").html(entitie_call);
 
                 var entitie_address = "<p>" + result['entitie']['address'] + "</p>";
                 $("#entitie_address").html(entitie_address);
 
-                var entitie_direction = "<i class='fa fa-map-marker'  onclick='get_direction(" + result['entitie']['latitude'] + "," + result['entitie']['longitude'] + ")' aria-hidden='true'></i><p clas='no-mar'>Get Direction</p>";
+                var entitie_direction = "<img onclick='get_direction(" + result['entitie']['latitude'] + "," + result['entitie']['longitude'] + ")' width='50px' src='img/direction.png'><p clas='no-mar'>Get Direction</p>";
                 $("#entitie_direction").html(entitie_direction);
+
+
+
 
                 var entitie_timming = "<p>Open from " + result['entitie']['open_hours'] + " to " + result['entitie']['closing_hours'] + "</p>";
                 $("#entitie_timming").html(entitie_timming);
@@ -1097,8 +1111,11 @@ function get_entitie(id) {
 
         },
         error: function(jqXHR, exception) {
-            alert("No Internet Connection");
-            mainView.router.loadPage('offline.html');
+
+            // alert("No Internet Connection");
+            // mainView.router.loadPage('offline.html');
+            alert('Server Error');
+
         }
     });
 }
@@ -1136,15 +1153,19 @@ function get_offer(id) {
 
 
 
-                var offer_call = "...<i class='fa fa-phone' onclick='call(" + result['offer']['bar_contact'] + ")' style='padding-top: 10px;font-size: 30px;color: #03A9F4;' aria-hidden='true'></i>";
+                var offer_call = "...<i class='fa fa-phone' onclick='call(" + result['offer']['bar_contact'] + ")' style='padding-top: 10px;font-size: 40px;color: #03A9F4;' aria-hidden='true'></i>";
                 $("#offer_call").html(offer_call);
 
                 var offer_entitie_address = "<h3 style='margin: 5px 0;color:rgb(78, 236, 78)'>" + result['offer']['name'] + "</h3>" +
                     "<p>" + result['offer']['address'] + "</p>";
                 $("#offer_entitie_address").html(offer_entitie_address);
 
-                var offer_direction = "<i class='fa fa-map-marker' onclick='get_direction(" + result['offer']['latitude'] + "," + result['offer']['longitude'] + ")' aria-hidden='true'></i><p clas='no-mar'>Get Direction</p>";
+                var offer_direction = "<img onclick='get_direction(" + result['offer']['latitude'] + "," + result['offer']['longitude'] + ")' width='50px' src='img/direction.png'><p clas='no-mar'>Get Direction</p>";
                 $("#offer_direction").html(offer_direction);
+
+
+
+
 
                 var offer_time = "Open from " + result['offer']['start_time'] + " to " + result['offer']['end_time'];
                 $("#offer_time").html(offer_time);
@@ -1254,13 +1275,31 @@ function get_event(id) {
 
                 // $("#event_image").css('color','red');
 
+                var star = result['event']['avg'];
 
-                var event_heading = "<h3 class='no-mar' style='color: yellow;padding: 10px;'>" +
+                var event_heading = "<h3 class='no-mar' style='color: yellow;'>" +
                     result['event']['event_name'] +
                     "</h3>";
+
+                    for(var i=0;i<5;i++){
+
+                        if(star>i){
+                            event_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
+                        }else{
+                            event_heading += "<i class='fa fa-star' aria-hidden='true'></i>";
+                        }
+                    }
+                   // event_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
+                   // event_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";                     
+                   // event_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";                     
+                   // event_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";                     
+                   // event_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";                     
+
+
+
                 $("#event_heading").html(event_heading);
 
-                var event_call = "...<i class='fa fa-phone' onclick='call(" + result['event']['bar_contact'] + ")' style='padding-top: 10px;font-size: 30px;color: #03A9F4;' aria-hidden='true'></i>";
+                var event_call = "...<i class='fa fa-phone' onclick='call(" + result['event']['bar_contact'] + ")' style='padding-top: 10px;font-size: 40px;color: #03A9F4;' aria-hidden='true'></i>";
                 $("#event_call").html(event_call);
 
                 var entitie_heading = "<h3 style='margin: 5px 0;color: #40e140;'>" + result['event']['name'] + "</h3>";
@@ -1269,13 +1308,16 @@ function get_event(id) {
                 var event_entitie_address = "<span>" + result['event']['address'] + "</span>";
                 $("#event_entitie_address").html(event_entitie_address);
 
-                var event_direction = "<i class='fa fa-map-marker' onclick='get_direction(" + result['event']['latitude'] + "," + result['event']['longitude'] + ")' aria-hidden='true'></i><p class='no-mar'>Get Direction<p>";
+                // var event_direction = "<i class='fa fa-map-marker'  aria-hidden='true'></i><p class='no-mar'>Get Direction<p>";
+                // $("#event_direction").html(event_direction);
+
+                var event_direction = "<img onclick='get_direction(" + result['event']['latitude'] + "," + result['event']['longitude'] + ")' width='50px' src='img/direction.png'><p class='no-mar'>Get Direction<p>";
                 $("#event_direction").html(event_direction);
 
                 var event_description = result['event']['description'];
                 $("#event_description").html(event_description);
 
-                var event_time = "Open from " + result['event']['time_event_start'] + " to " + result['event']['time_event_ends'];
+                var event_time = "Time from " + result['event']['time_event_start'] + " to " + result['event']['time_event_ends'];
                 $("#event_time").html(event_time);
 
                 var week_days = result['event']['weekly_base'];
@@ -1370,7 +1412,7 @@ function get_liquor(id) {
                     "</h3>";
                 $("#liquor_heading").html(liquor_heading);
 
-                var liquor_call = "...<i class='fa fa-phone' onclick='call(" + result['data']['shop_contact'] + ")' style='padding-top: 10px;font-size: 30px;color: #03A9F4;' aria-hidden='true'></i>";
+                var liquor_call = "...<i class='fa fa-phone' onclick='call(" + result['data']['shop_contact'] + ")' style='padding-top: 10px;font-size: 40px;color: #03A9F4;' aria-hidden='true'></i>";
                 $("#liquor_call").html(liquor_call);
 
                 // var liquor_heading = "<h3 style='margin: 5px 0;color: #40e140;'>"+result['data']['shop_name']+"</h3>";
@@ -1379,8 +1421,10 @@ function get_liquor(id) {
                 var liquor_address = "<span>" + result['data']['address'] + "</span>";
                 $("#liquor_address").html(liquor_address);
 
-                var liquor_direction = "<i class='fa fa-map-marker' onclick='get_direction(" + result['data']['latitute'] + "," + result['data']['longitute'] + ")' aria-hidden='true'></i><p class='no-mar'>Get Direction<p>";
+                var liquor_direction = "<img onclick='get_direction(" + result['data']['latitute'] + "," + result['data']['longitute'] + ")' width='50px' src='img/direction.png'><p class='no-mar'>Get Direction<p>";
                 $("#liquor_direction").html(liquor_direction);
+
+                
 
                 var liquor_description = result['data']['description'];
                 $("#liquor_description").html(liquor_description);
@@ -1520,6 +1564,9 @@ function get_event_type() {
 
                 $("#list_date_box").css('display', 'none');
 
+                $("#cust_event_box").css('padding-top', '50px');
+
+
 
             } else {
 
@@ -1536,8 +1583,10 @@ function get_event_type() {
         },
         error: function(jqXHR, exception) {
 
-            alert("No Internet Connection");
-            mainView.router.loadPage('offline.html');
+            // alert("No Internet Connection");
+            // mainView.router.loadPage('offline.html');
+            alert('Server Error');
+
         }
     })
 }
@@ -1605,6 +1654,8 @@ $(document).on('click', '.get-event-data', function(event) {
 
                 $('#cust_event_box').html(html);
                 $('#list_date_box').css('display', 'block');
+                $('#cust_event_box').css('padding-top', '90px');
+                
 
             } else {
 
@@ -2286,8 +2337,10 @@ $(document).on('click', '.get_map_data', function(event) {
         },
         error: function(jqXHR, exception) {
 
-            alert("No Internet Connection");
-            mainView.router.loadPage('offline.html');
+            // alert("No Internet Connection");
+            // mainView.router.loadPage('offline.html');
+            alert('Server Error');
+
         }
     })
 });
@@ -2319,8 +2372,10 @@ function get_location_map() {
         },
         error: function(jqXHR, exception) {
 
-            alert("No Internet Connection");
-            mainView.router.loadPage('offline.html');
+            // alert("No Internet Connection");
+            // mainView.router.loadPage('offline.html');
+            alert('Server Error');
+
         }
 
     })
@@ -2352,8 +2407,10 @@ function get_location_list() {
         },
         error: function(jqXHR, exception) {
 
-            alert("No Internet Connection");
-            mainView.router.loadPage('offline.html');
+            // alert("No Internet Connection");
+            // mainView.router.loadPage('offline.html');
+            alert('Server Error');
+
         }
 
     })
@@ -2500,8 +2557,10 @@ function get_club_list(type) {
         },
         error: function(jqXHR, exception) {
 
-            alert("No Internet Connection");
-            mainView.router.loadPage('offline.html');
+            // alert("No Internet Connection");
+            // mainView.router.loadPage('offline.html');
+            alert('Server Error');
+
         }
 
     })
@@ -2538,8 +2597,12 @@ function get_club(id) {
                 $('#club_name').html(club_name);
 
                 var cal_dir = "<i onclick='call(" + result['data']['contact'] + ")' class='fa fa-phone right call' aria-hidden='true'></i>" +
-                    "<i onclick='get_direction(" + result['data']['latitude'] + "," + result['data']['latitude'] + ")'  class='fa fa-map-marker right marker' aria-hidden='true'></i>";
+
+                    "<img  style='float: right;width: 35px;padding: 3px 0px;' onclick='get_direction(" + result['data']['latitude'] + "," + result['data']['latitude'] + ")' width='50px' src='img/direction.png'>";
                 $('#cal_dir').html(cal_dir);
+
+
+
 
 
                 $('#club_add').html(result['data']['address']);
@@ -2601,8 +2664,10 @@ function get_club(id) {
         },
         error: function(jqXHR, exception) {
 
-            alert("No Internet Connection");
-            mainView.router.loadPage('offline.html');
+            // alert("No Internet Connection");
+            // mainView.router.loadPage('offline.html');
+            alert('Server Error');
+
         }
 
     })

@@ -670,12 +670,17 @@ $(document).on('click', '.home', function() {
 function changedate() {
 
     myApp.showIndicator();
-
     var date = $('.date').val();
     $('.date-text').html(moment(date).format("Do MMM YYYY"));
     // id,eventtype,date
     var loc_id = Lockr.get('loc_id');
     var event_type = $('#scroll-data-attr').attr('data-id');
+
+
+    console.log('loc id is '+loc_id);
+    console.log('event type is '+event_type);
+    console.log('date is '+date);
+
 
     $.ajax({
 
@@ -717,9 +722,7 @@ function changedate() {
             } else {
 
                 if (result['msg'] == "no data") {
-
                     html += "<h3 class='no-event'>No Event Available</h3>";
-
                     $('#cust_event_box').html(html);
                     myApp.hideIndicator();
 

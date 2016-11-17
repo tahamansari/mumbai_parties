@@ -28,6 +28,11 @@ html,body{
   height: 100%;
 }
 
+
+.mycolor{
+  background-color: blue;
+}
+
 a{
 
   color:white;
@@ -404,7 +409,8 @@ a{
 }
 .demo-card-header-pic{
 
-  margin-bottom: 10px;
+  /*margin-bottom: 10px;*/
+  border-bottom: 3px solid white;
 }
 
 /*.top-select{
@@ -476,6 +482,7 @@ a{
     color: white;
     background-color: #515050;
     margin: 5px 5px;
+    padding: 10px 10px;
     
 
 }
@@ -691,7 +698,7 @@ a{
 
 .list-name{
 
-    color: #ffffff;
+  color: #ffffff;
     background-color: rgba(0, 0, 0, 0.61);
     width: 100%;
     padding: 5px 10px;
@@ -763,10 +770,9 @@ a{
 
 .call{
   
-      padding: 5px;
-    font-size: 20px;
+    padding: 5px 15px;
+    font-size: 35px;
     color: #36f336;
-
 }
 .marker{
 
@@ -1081,7 +1087,7 @@ font-smoothing: antialiased;
   
     background-color: #515050;
     color: white;
-    padding: 5px 10px;
+    padding: 10px 10px;
     margin: 5px;
 }
 
@@ -1466,6 +1472,8 @@ display: block;
 
 #tab-container-listview{
   
+  background-color: black;
+
 /*    position: fixed;
     top: 55px;
     z-index: 99;*/
@@ -1591,9 +1599,9 @@ position: absolute;
 
 .calender{
 
-    position: absolute;
+    position: fixed;
     right: 20px;
-    top: 12px;
+    top: 116px;
     font-size: 20px;
 }
 
@@ -1732,11 +1740,63 @@ div.gmnoprint{
   height: 0!important;
 }
 
+.ent-time{
+
+    background: #515050;
+    margin: 5px;
+}
+.content-block{
+  color: #e2dede;
+}
+#entitie_call{
+  padding: 10px 5px;
+}
 .gmnoprint img{
 
   height: 0!important;
 }
 
+#event_heading{
+  padding: 10px 10px;
+}
+
+.list-block .item-link .item-inner{
+  background-image:url('../img/down.png');
+  background-size: 30px 15px;
+}
+
+.picker-modal-inner p{
+  color:black;
+}
+
+.picker-modal-inner span{
+  color:black;
+}
+.list-block .accordion-item-expanded.media-item .accordion-item-toggle .item-title-row, .list-block .accordion-item-expanded.media-item>.item-link .item-title-row, .list-block.media-list .accordion-item-expanded .accordion-item-toggle .item-title-row, .list-block.media-list .accordion-item-expanded>.item-link .item-title-row, .list-block:not(.media-list) .accordion-item-expanded:not(.media-item) .accordion-item-toggle .item-inner, .list-block:not(.media-list) .accordion-item-expanded:not(.media-item)>.item-link .item-inner{
+
+  background-image:url('../img/up.png');
+  background-size: 30px 15px;
+
+}
+#cust_event_box{
+
+      /*padding-top: 90px;*/
+      padding-top: 50px;
+}
+/*.date-container{
+
+    position: fixed;
+    top: 55px;
+    z-index: 9;
+}
+*/
+
+
+#club_name{
+
+      font-size: 25px;
+    color: yellow;
+}
 .tabbar-fixed .page-content, .tabbar-through .page-content, .toolbar-fixed .page-content, .toolbar-through .page-content {
     padding-bottom: 55px;
 }

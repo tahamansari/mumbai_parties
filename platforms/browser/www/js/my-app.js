@@ -10,6 +10,9 @@ var myApp = new Framework7({
     modalTitle:"Mumbai Parties",
     swipeBackPage:false,
     // cache:false,
+
+    preloadPreviousPage:false,
+    
     // uniqueHistory:true,
     
     // smartSelectSearchbar:true,
@@ -103,7 +106,7 @@ function check_connection(){
 
 myApp.onPageInit('index', function (page) {
 
-    $('.navbar-inner').css('background','none');
+    //$('.navbar-inner').css('background','none');
 
 });
 
@@ -152,7 +155,7 @@ function get_profile(id){
 
 myApp.onPageInit('location', function (page) {
 
-    $('.navbar-inner').css('background','none');
+    //$('.navbar-inner').css('background','none');
 
     
     get_location();
@@ -396,6 +399,11 @@ myApp.onPageInit('listview', function (page) {
           get_top_location(id);
           get_event_type();
 
+          // $('#date-container').css('position','fixed');
+          // $('#date-container').css('top','55px');
+          // $('#date-container').css('z-index','9');
+
+
 });
 
 myApp.onPageInit('club_types', function (page) {
@@ -437,7 +445,7 @@ myApp.onPageInit('club', function (page) {
 
 myApp.onPageInit('search', function (page) {
 
-  $('.navbar-inner').css('background','url("img/topbg.png")');
+  // $('.navbar-inner').css('background','url("img/topbg.png")');
 
   get_search();
 
@@ -452,7 +460,7 @@ myApp.onPageInit('invite', function (page) {
 
 myApp.onPageInit('login', function (page) {
 
-  $('.navbar-inner').css('background','none');
+  //$('.navbar-inner').css('background','none');
 
 
   if(Lockr.get('email')){
@@ -469,7 +477,7 @@ myApp.onPageInit('login', function (page) {
 
 myApp.onPageInit('register', function (page) {
 
-  $('.navbar-inner').css('background','none');   
+  //$('.navbar-inner').css('background','none');   
 
 
 });
@@ -557,21 +565,21 @@ myApp.onPageInit('notification', function (page) {
 // });
 
 myApp.onPageInit('invite', function (page) {
-    $('.navbar-inner').css('background','none');
+    //$('.navbar-inner').css('background','none');
 });
 
 myApp.onPageInit('redeem', function (page) {
-    $('.navbar-inner').css('background','none');
+    //$('.navbar-inner').css('background','none');
     check_redeem();
 });
 
 
 myApp.onPageInit('mywallet', function (page) {
-    $('.navbar-inner').css('background','none');
+    //$('.navbar-inner').css('background','none');
 });
 
 myApp.onPageInit('offline', function (page) {
-    $('.navbar-inner').css('background','none');
+    //$('.navbar-inner').css('background','none');
 });
 
 
