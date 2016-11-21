@@ -10,6 +10,8 @@ var myApp = new Framework7({
     modalTitle:"Mumbai Parties",
     swipeBackPage:false,
     // cache:false,
+    swipePanel: 'left',
+
 
     preloadPreviousPage:false,
     

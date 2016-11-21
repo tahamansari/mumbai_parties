@@ -1605,16 +1605,26 @@ $(document).on('click', '.get-event-data', function(event) {
     $(this).addClass('active-tab');
 
 
-    console.log('scroll amount change to 1200');
+    // console.log('scroll amount change to 1200');
     scroll_amount = 1200;
     offset = 0;
-    console.log(scroll_amount);
+    // console.log(scroll_amount);
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    var curdate = year + "/" + month + "/" + day;
 
     var loc_id = $("#list_top_select").val();
     var event_type = $(this).attr("data-id");
 
-    $('#scroll-data-attr').attr('data-id', event_type);
+    console.log('loc id '+loc_id);
+    console.log('event type '+event_type);
+    console.log('date is '+curdate);
 
+    $('#scroll-data-attr').attr('data-id', event_type);
 
     $.ajax({
 
@@ -1624,7 +1634,8 @@ $(document).on('click', '.get-event-data', function(event) {
         data: {
 
             loc_id: loc_id,
-            event_type: event_type
+            event_type: event_type,
+            curdate:curdate
         },
         success: function(result) {
 
@@ -1638,7 +1649,7 @@ $(document).on('click', '.get-event-data', function(event) {
                 var count = 0;
                 $.each(result['data'], function(key, value) {
 
-                    console.log(count++);
+                    console.log('Start Date is '+value.event_start_date+' End Date is '+value.event_end_date);
 
                     html += "<div data-id=" + value.event_id + " class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 0px;width:100%'>" +
                         "<div style='background-image:url(" + img_url + value.image + ")' valign='bottom' class='card-header no-border'>" +
@@ -1674,6 +1685,10 @@ $(document).on('click', '.get-event-data', function(event) {
                     alert("failed");
                 }
             }
+        },
+        error:function(error){
+
+            alert('Server Error');
         }
     })
 
@@ -1797,10 +1812,36 @@ $(document).on('click', '.get-event-data', function(event) {
 function onscroll_getevent(para1) {
 
     console.log('onscroll called data is ' + para1.scrollTop + " " + scroll_amount);
-    var loc_id = $("#list_top_select").val();
-    var event_type = $("#scroll-data-attr").attr('data-id');
+
+
 
     if (para1.scrollTop > scroll_amount) {
+
+        var loc_id = $("#list_top_select").val();
+        var event_type = $("#scroll-data-attr").attr('data-id');
+
+
+        if($(".date").val()!=""){
+
+            var date = $(".date").val();
+
+        }else{
+
+                var dateObj = new Date();
+                var month = dateObj.getUTCMonth() + 1; //months from 1-12
+                var day = dateObj.getUTCDate();
+                var year = dateObj.getUTCFullYear();
+
+                var date = year + "/" + month + "/" + day;
+        }
+        
+
+
+        console.log('loc id '+loc_id);
+        console.log('event type '+event_type);
+        console.log('date is '+date);
+
+
 
         scroll_amount += 1200;
         offset += 11;
@@ -1818,7 +1859,8 @@ function onscroll_getevent(para1) {
 
                 loc_id: loc_id,
                 event_type: event_type,
-                offset: offset
+                offset: offset,
+                date:date
             },
             success: function(result) {
 
@@ -2171,6 +2213,14 @@ $(document).on('click', '.get_map_data', function(event) {
 
     $('#map').html('<img style="margin: 25%;text-align:center;" width="50%" src="img/logo.png">');
 
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    var curdate = year + "/" + month + "/" + day;
+
     var loc_id = $('#map_top_select').val();
     var event_type = $(this).attr('data-id');
 
@@ -2183,7 +2233,8 @@ $(document).on('click', '.get_map_data', function(event) {
         data: {
 
             loc_id: loc_id,
-            event_type: event_type
+            event_type: event_type,
+            curdate:curdate
         },
         success: function(result) {
 

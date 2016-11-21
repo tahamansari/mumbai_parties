@@ -1533,8 +1533,8 @@ input[type=date]::-webkit-calendar-picker-indicator:active {
 
 
     position: absolute;
-    right: 40px;
-    top: 7px;
+    right: 45px;
+    top: 5px;
     font-size: 14px;
 
 }

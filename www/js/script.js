@@ -670,15 +670,27 @@ $(document).on('click', '.home', function() {
 function changedate() {
 
     myApp.showIndicator();
+
     var date = $('.date').val();
     $('.date-text').html(moment(date).format("Do MMM YYYY"));
     // id,eventtype,date
+
+
+    // var dateObj = new Date();
+    // var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    // var day = dateObj.getUTCDate();
+    // var year = dateObj.getUTCFullYear();
+
+    // var curdate = year + "/" + month + "/" + day;
+
+
+
     var loc_id = Lockr.get('loc_id');
     var event_type = $('#scroll-data-attr').attr('data-id');
 
 
-    console.log('loc id is '+loc_id);
-    console.log('event type is '+event_type);
+    console.log('loc id '+loc_id);
+    console.log('event type '+event_type);
     console.log('date is '+date);
 
 
@@ -702,6 +714,9 @@ function changedate() {
 
 
                 $.each(result['data'], function(key, value) {
+
+                    console.log('Start Date is '+value.event_start_date+' End Date is '+value.event_end_date);
+
 
                     html += "<div data-id=" + value.event_id + " class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 0px;width:100%'>" +
                         "<div style='background-image:url(" + img_url + value.image + ")' valign='bottom' class='card-header no-border'>" +
