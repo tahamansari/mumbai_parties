@@ -767,6 +767,17 @@ function get_owl_slider_list() {
 function get_initial_map_data(id) {
 
 
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    var hour = dateObj.getHours();
+    var minuts = dateObj.getMinutes();
+    var seconds = dateObj.getSeconds();
+    
+    var curtime = hour +":"+ minuts +":"+ seconds;
+
     $('.active-tab').css('color', '');
     $('.active-tab').css('border-bottom', '');
     $('.labels').css('color', '');
@@ -775,7 +786,6 @@ function get_initial_map_data(id) {
     $('.owl-item').removeClass('active-tab');
 
     $("#whatshappening_map").addClass('textgreen');
-
 
     $('#map').html('<img style="margin: 25%;text-align:center;" width="50%" src="img/logo.png">');
 
@@ -788,7 +798,8 @@ function get_initial_map_data(id) {
         dataType: 'json',
         data: {
 
-            id: id
+            id: id,
+            curtime:curtime 
         },
         success: function(result) {
 
@@ -796,8 +807,10 @@ function get_initial_map_data(id) {
 
             if (result['status'] == "success") {
 
+                var zoomval = Number(result['center'][0]['zoom']);
+
                 var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 14,
+                    zoom: zoomval,
                     center: new google.maps.LatLng(result['center'][0]['latitute'], result['center'][0]['longitute']),
                     mapTypeId: google.maps.MapTypeId.ROADMAP,
                     disableDefaultUI: true
@@ -843,6 +856,9 @@ function get_initial_map_data(id) {
                 var marker, i;
 
                 $.each(result['data'], function(key, value) {
+
+
+                    console.log("opening "+value.open_hours+" closing "+value.closing_hours);
 
                     if (value.rating < 5) {
 
@@ -901,7 +917,59 @@ function get_initial_map_data(id) {
 
                 if (result['msg'] == "no data") {
 
-                    alert("no data");
+                    // alert("no data");
+
+                    var fontcolor = "red";
+                    $('.active-tab').css('color', fontcolor);
+                    $('.active-tab').css('border-bottom', '2px solid ' + fontcolor);
+
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 14,
+                        center: new google.maps.LatLng(19.0760, 72.8777),
+                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        disableDefaultUI: true
+                    });
+
+
+                    var styles = [{
+                        featureType: 'all',
+                        elementType: 'all',
+                        stylers: [{
+                            hue: '#0800ff'
+                        }, {
+                            invert_lightness: 'true'
+                        }, {
+                            saturation: -100
+                        }]
+                    }, {
+                        featureType: 'all',
+                        elementType: 'labels.icon',
+                        stylers: [{
+                            visibility: 'off'
+                        }]
+                    }, {
+                        featureType: 'all',
+                        elementType: 'labels.text',
+                        stylers: [{
+                            visibility: 'off'
+                        }]
+                    }, {
+                        featureType: 'road.arterial',
+                        elementType: 'labels',
+                        stylers: [{
+                            visibility: 'on'
+                        }]
+                    }, ];
+
+
+                    map.setOptions({
+                        styles: styles
+                    });
+
+
+
+
+
 
                 } else {
 
@@ -1615,7 +1683,13 @@ $(document).on('click', '.get-event-data', function(event) {
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
 
+    var hour = dateObj.getHours();
+    var minuts = dateObj.getMinutes();
+    var seconds = dateObj.getSeconds();
+    
+
     var curdate = year + "/" + month + "/" + day;
+    var curtime = hour +":"+ minuts +":"+ seconds;
 
     var loc_id = $("#list_top_select").val();
     var event_type = $(this).attr("data-id");
@@ -1635,7 +1709,8 @@ $(document).on('click', '.get-event-data', function(event) {
 
             loc_id: loc_id,
             event_type: event_type,
-            curdate:curdate
+            curdate:curdate,
+            curtime:curtime
         },
         success: function(result) {
 
@@ -2219,7 +2294,15 @@ $(document).on('click', '.get_map_data', function(event) {
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
 
+    var hour = dateObj.getHours();
+    var minuts = dateObj.getMinutes();
+    var seconds = dateObj.getSeconds();
+    
+
     var curdate = year + "/" + month + "/" + day;
+    var curtime = hour +":"+ minuts +":"+ seconds;
+
+
 
     var loc_id = $('#map_top_select').val();
     var event_type = $(this).attr('data-id');
@@ -2234,7 +2317,8 @@ $(document).on('click', '.get_map_data', function(event) {
 
             loc_id: loc_id,
             event_type: event_type,
-            curdate:curdate
+            curdate:curdate,
+            curtime:curtime
         },
         success: function(result) {
 
