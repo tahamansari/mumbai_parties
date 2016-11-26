@@ -857,7 +857,7 @@ function get_initial_map_data(id) {
 
                 $.each(result['data'], function(key, value) {
 
-
+                    console.log(key);
                     console.log("opening "+value.open_hours+" closing "+value.closing_hours);
 
                     if (value.rating < 5) {
@@ -965,10 +965,6 @@ function get_initial_map_data(id) {
                     map.setOptions({
                         styles: styles
                     });
-
-
-
-
 
 
                 } else {
@@ -1731,7 +1727,7 @@ $(document).on('click', '.get-event-data', function(event) {
                         "<h3 class='no-mar list-name'>" + value.event_name + "</h3>" +
                         "</div>" +
                         "<div class='card-footer color-white'>" +
-                        "<span class='footer-left'>@ " + value.name + "</span>" +
+                        "<span class='footer-left'>@ " + value.entity_name + "</span>" +
                         "<span class='footer-text'>" + value.time_event_start + " to " + value.time_event_ends + "</span>" +
                         "</div>" +
                         "</div>";
@@ -2326,13 +2322,15 @@ $(document).on('click', '.get_map_data', function(event) {
 
             if (result['status'] == "success") {
 
+                var zoomval = Number(result['center'][0]['zoom']);
+
                 var fontcolor = result['data'][0]['color'];
                 $('.active-tab').css('color', fontcolor);
                 $('.active-tab').css('border-bottom', '2px solid ' + fontcolor);
 
 
                 var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 14,
+                    zoom: zoomval,
                     center: new google.maps.LatLng(result['center'][0]['latitute'], result['center'][0]['longitute']),
                     mapTypeId: google.maps.MapTypeId.ROADMAP,
                     disableDefaultUI: true
@@ -2374,6 +2372,11 @@ $(document).on('click', '.get_map_data', function(event) {
 
                 $.each(result['data'], function(key, value) {
 
+
+
+                console.log(key);
+                console.log("opening "+value.time_event_start+" closing "+value.time_event_ends);  
+
                     marker = new google.maps.Marker({
                         position: new google.maps.LatLng(value.latitude, value.longitude),
                         map: map,
@@ -2384,7 +2387,7 @@ $(document).on('click', '.get_map_data', function(event) {
                         position: new google.maps.LatLng(value.latitude, value.longitude),
                         map: map,
                         icon: img_url + value.image,
-                        labelContent: value.name,
+                        labelContent: value.event_name,
                         // labelAnchor: new google.maps.Point(22, 0),
                         labelClass: "labels",
                         labelStyle: {
