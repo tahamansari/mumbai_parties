@@ -3111,7 +3111,11 @@ function check_redeem() {
 
                 if (result['data'] == "invalid") {
 
-                    $('#redeem_anchor').css('display', 'none');
+                    // $('#redeem_anchor').css('display', 'none');
+                    $('#redeem_anchor').html("REDEEMED");
+                    $('#redeem_anchor').attr("onclick","");
+
+
                 }
             } else {
 
