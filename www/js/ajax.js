@@ -875,32 +875,71 @@ function get_initial_map_data(id) {
                     }
 
 
-                    marker = new google.maps.Marker({
+                    if(value.status=="in"){
 
-                        position: new google.maps.LatLng(value.latitude, value.longitude),
-                        map: map,
-                        icon: image,
-                        optimized: false,
-                        labelAnchor: new google.maps.Point(-10, 20),
-                        labelContent: "hello",
-                        labelInBackground: false
+                        marker = new google.maps.Marker({
+
+                            position: new google.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: image,
+                            optimized: false,
+                            labelAnchor: new google.maps.Point(-10, 20),
+                            labelContent: "hello",
+                            labelInBackground: false
 
 
-                    });
+                        });
 
-                    var marker1 = new MarkerWithLabel({
-                        position: new google.maps.LatLng(value.latitude, value.longitude),
-                        map: map,
-                        icon: img_url + value.image,
-                        labelContent: value.name,
-                        labelAnchor: new google.maps.Point(-10, 20),
-                        labelClass: "labels", // the CSS class for the label
-                        labelStyle: {
-                            opacity: 0.75
-                        },
-                        labelInBackground: false    
+                        var marker1 = new MarkerWithLabel({
+                            position: new google.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: img_url + value.image,
+                            labelContent: value.name,
+                            labelAnchor: new google.maps.Point(-10, 20),
+                            labelClass: "labels", // the CSS class for the label
+                            labelStyle: {
+                                opacity: 0.75
+                            },
+                            labelInBackground: false    
 
-                    });
+                        });
+
+                    }else{
+
+                        marker = new google.maps.Marker({
+
+                            position: new google.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: casa_img_url + "party-meter1.gif",
+                            optimized: false,
+                            labelAnchor: new google.maps.Point(-10, 20),
+                            labelContent: "hello",
+                            labelInBackground: false
+
+
+                        });
+
+                        var marker1 = new MarkerWithLabel({
+                            position: new google.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: casa_img_url + "party-meter1.gif",
+                            labelContent: value.name,
+                            labelAnchor: new google.maps.Point(-10, 20),
+                            labelClass: "labels", // the CSS class for the label
+                            labelStyle: {
+                                opacity: 0.75
+                            },
+                            labelInBackground: false    
+
+                        });
+
+                    }
+
+
+                    
+
+
+
 
 
                     marker.addListener('click', function() {
@@ -2006,6 +2045,22 @@ function marker_clicked_liquor(para1) {
 
 $(document).on('click', '.get_offers', function(event) {
 
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    var hour = dateObj.getHours();
+    var minuts = dateObj.getMinutes();
+    var seconds = dateObj.getSeconds();
+    
+
+    var curdate = year + "/" + month + "/" + day;
+    var curtime = hour +":"+ minuts +":"+ seconds;
+
+
+
     $('.active-tab').css('color', '');
     $('.active-tab').css('border-bottom', '');
     $('.labels').css('color', '');
@@ -2026,6 +2081,9 @@ $(document).on('click', '.get_offers', function(event) {
         data: {
 
             loc_id: loc_id,
+            curdate:curdate,
+            curtime:curtime
+
         },
         success: function(result) {
 
@@ -2080,25 +2138,53 @@ $(document).on('click', '.get_offers', function(event) {
 
                 $.each(result['data'], function(key, value) {
 
-                    marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(value.latitude, value.longitude),
-                        map: map,
-                        icon: img_url + value.image,
-                    });
 
-                    var marker1 = new MarkerWithLabel({
-                        position: new google.maps.LatLng(value.latitude, value.longitude),
-                        map: map,
-                        icon: img_url + value.image,
-                        labelContent: value.offer_name,
-                        // labelAnchor: new google.maps.Point(22, 0),
-                        labelClass: "labels",
-                        labelStyle: {
-                            opacity: 0.75,
-                            color: fontcolor
-                        }
+                    if(value.status=="in"){
 
-                    });
+                        marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: img_url + value.image,
+                        });
+
+                        var marker1 = new MarkerWithLabel({
+                            position: new google.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: img_url + value.image,
+                            labelContent: value.offer_name,
+                            // labelAnchor: new google.maps.Point(22, 0),
+                            labelClass: "labels",
+                            labelStyle: {
+                                opacity: 0.75,
+                                color: fontcolor
+                            }
+
+                        });
+
+                    }else{
+
+                        marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            // icon: img_url + value.image,
+                        });
+
+                        var marker1 = new MarkerWithLabel({
+                            position: new google.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            // icon: img_url + value.image,
+                            labelContent: value.offer_name,
+                            // labelAnchor: new google.maps.Point(22, 0),
+                            labelClass: "labels",
+                            labelStyle: {
+                                opacity: 0.75,
+                                color: fontcolor
+                            }
+
+                        });
+
+                    }
+
 
                     marker.addListener('click', function() {
                         marker_clicked_offer(value.offer_id);
@@ -2123,7 +2209,54 @@ $(document).on('click', '.get_offers', function(event) {
 
                 if (result['msg'] == "no data") {
 
-                    alert("no data");
+                    var fontcolor = "red";
+                    $('.active-tab').css('color', fontcolor);
+                    $('.active-tab').css('border-bottom', '2px solid ' + fontcolor);
+
+                    // alert("no data");
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 14,
+                        center: new google.maps.LatLng(19.0760, 72.8777),
+                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        disableDefaultUI: true
+                    });
+
+
+                    var styles = [{
+                        featureType: 'all',
+                        elementType: 'all',
+                        stylers: [{
+                            hue: '#0800ff'
+                        }, {
+                            invert_lightness: 'true'
+                        }, {
+                            saturation: -100
+                        }]
+                    }, {
+                        featureType: 'all',
+                        elementType: 'labels.icon',
+                        stylers: [{
+                            visibility: 'off'
+                        }]
+                    }, {
+                        featureType: 'all',
+                        elementType: 'labels.text',
+                        stylers: [{
+                            visibility: 'off'
+                        }]
+                    }, {
+                        featureType: 'road.arterial',
+                        elementType: 'labels',
+                        stylers: [{
+                            visibility: 'on'
+                        }]
+                    }, ];
+
+
+                    map.setOptions({
+                        styles: styles
+                    });
+
 
                 } else {
 
@@ -2141,6 +2274,17 @@ $(document).on('click', '.get_offers', function(event) {
 
 
 $(document).on('click', '.get_liquors', function(event) {
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    var hour = dateObj.getHours();
+    var minuts = dateObj.getMinutes();
+    var seconds = dateObj.getSeconds();
+    
+    var curtime = hour +":"+ minuts +":"+ seconds;
 
     $('.active-tab').css('color', '');
     $('.active-tab').css('border-bottom', '');
@@ -2162,6 +2306,7 @@ $(document).on('click', '.get_liquors', function(event) {
         data: {
 
             loc_id: loc_id,
+            curtime:curtime
         },
         success: function(result) {
 
@@ -2216,6 +2361,11 @@ $(document).on('click', '.get_liquors', function(event) {
                 });
 
                 $.each(result['data'], function(key, value) {
+
+
+                console.log(key);
+                console.log("opening "+value.shop_open+" closing "+value.shop_close);
+
 
                     marker = new google.maps.Marker({
                         position: new google.maps.LatLng(value.latitute, value.longitute),
@@ -2375,18 +2525,27 @@ $(document).on('click', '.get_map_data', function(event) {
 
 
                 console.log(key);
-                console.log("opening "+value.time_event_start+" closing "+value.time_event_ends);  
+                console.log("opening "+value.time_event_start+" closing "+value.time_event_ends);
+
+
+
+
+
+                if(value.status=="in"){
 
                     marker = new google.maps.Marker({
                         position: new google.maps.LatLng(value.latitude, value.longitude),
                         map: map,
                         icon: img_url + value.image,
+                        // icon: casa_img_url + "party-meter1.gif",
                     });
 
                     var marker1 = new MarkerWithLabel({
                         position: new google.maps.LatLng(value.latitude, value.longitude),
                         map: map,
                         icon: img_url + value.image,
+                        // icon: casa_img_url + "party-meter1.gif",
+
                         labelContent: value.event_name,
                         // labelAnchor: new google.maps.Point(22, 0),
                         labelClass: "labels",
@@ -2396,6 +2555,38 @@ $(document).on('click', '.get_map_data', function(event) {
                         }
 
                     });
+
+                }else{
+
+
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(value.latitude, value.longitude),
+                        map: map,
+                        // icon: img_url + value.image,
+                    });
+
+                    var marker1 = new MarkerWithLabel({
+                        position: new google.maps.LatLng(value.latitude, value.longitude),
+                        map: map,
+                        // icon: img_url + value.image,
+                        labelContent: value.event_name,
+                        // labelAnchor: new google.maps.Point(22, 0),
+                        labelClass: "labels",
+                        labelStyle: {
+                            opacity: 0.75,
+                            color: fontcolor
+                        }
+
+                    });
+
+                }
+
+
+
+
+                    
+
+
 
                     marker.addListener('click', function() {
                         marker_clicked_event(value.event_id);
@@ -2897,6 +3088,23 @@ function submit_review() {
 $(document).on('click', '.get-list-offers', function(event) {
 
     event.preventDefault();
+
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    var hour = dateObj.getHours();
+    var minuts = dateObj.getMinutes();
+    var seconds = dateObj.getSeconds();
+    
+
+    var curdate = year + "/" + month + "/" + day;
+    var curtime = hour +":"+ minuts +":"+ seconds;
+
+
+
     $('.active-tab').css('color', '');
     $('.active-tab').css('border-bottom', '');
     $('.labels').css('color', '');
@@ -2908,8 +3116,6 @@ $(document).on('click', '.get-list-offers', function(event) {
 
     $(this).addClass('active-tab');
 
-
-
     var loc_id = $("#list_top_select").val();
 
     $.ajax({
@@ -2920,6 +3126,9 @@ $(document).on('click', '.get-list-offers', function(event) {
         data: {
 
             loc_id: loc_id,
+            curdate:curdate,
+            curtime:curtime
+
         },
         success: function(result) {
 
@@ -2952,7 +3161,16 @@ $(document).on('click', '.get-list-offers', function(event) {
 
                 if (result['msg'] == "no data") {
 
-                    alert("no data");
+                    // alert("no data");
+                     var fontcolor = "red";
+                    $('.active-tab').css('color', fontcolor);
+                    $('.active-tab').css('border-bottom', '2px solid ' + fontcolor);
+
+                    html += "<h3 class='no-event'>No Event Available</h3>";
+
+                    $('#cust_event_box').html(html);
+
+
 
                 } else {
 
@@ -2968,7 +3186,22 @@ $(document).on('click', '.get-list-offers', function(event) {
 
 
 $(document).on('click', '.get-list-liquor', function(event) {
+    
     event.preventDefault();
+
+
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    var hour = dateObj.getHours();
+    var minuts = dateObj.getMinutes();
+    var seconds = dateObj.getSeconds();
+    
+    var curtime = hour +":"+ minuts +":"+ seconds;
+
 
     $('.active-tab').css('color', '');
     $('.active-tab').css('border-bottom', '');
@@ -2992,6 +3225,7 @@ $(document).on('click', '.get-list-liquor', function(event) {
         data: {
 
             loc_id: loc_id,
+            curtime:curtime
         },
         success: function(result) {
 
@@ -3026,7 +3260,14 @@ $(document).on('click', '.get-list-liquor', function(event) {
 
                 if (result['msg'] == "no data") {
 
-                    alert("no data");
+                    // alert("no data");
+                    var fontcolor = "red";
+                    $('.active-tab').css('color', fontcolor);
+                    $('.active-tab').css('border-bottom', '2px solid ' + fontcolor);
+
+                    html += "<h3 class='no-event'>No Event Available</h3>";
+
+                    $('#cust_event_box').html(html);
 
                 } else {
 
