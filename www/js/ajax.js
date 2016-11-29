@@ -766,7 +766,6 @@ function get_owl_slider_list() {
 
 function get_initial_map_data(id) {
 
-
     var dateObj = new Date();
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
     var day = dateObj.getUTCDate();
@@ -3188,8 +3187,6 @@ $(document).on('click', '.get-list-offers', function(event) {
 $(document).on('click', '.get-list-liquor', function(event) {
     
     event.preventDefault();
-
-
 
     var dateObj = new Date();
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
