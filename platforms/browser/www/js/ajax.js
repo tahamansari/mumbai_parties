@@ -2,7 +2,9 @@ var base_url = "http://casaestilo.in/taha/mp_admin/index.php/Api/";
 var img_url = "http://mumbaiparties.com/assets/uploads/";
 
 var casa_img_url = "http://casaestilo.in/taha/mp_admin/assets/img/";
+
 // var profile_img_path = "http://localhost:8888/mp_back/mumbai_parties/www/img/uploads/";
+
 var profile_img_path = "http://casaestilo.in/taha/mp_admin/uploads/profile_pic/";
 
 
@@ -766,6 +768,16 @@ function get_owl_slider_list() {
 
 function get_initial_map_data(id) {
 
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    var hour = dateObj.getHours();
+    var minuts = dateObj.getMinutes();
+    var seconds = dateObj.getSeconds();
+    
+    var curtime = hour +":"+ minuts +":"+ seconds;
 
     $('.active-tab').css('color', '');
     $('.active-tab').css('border-bottom', '');
@@ -775,7 +787,6 @@ function get_initial_map_data(id) {
     $('.owl-item').removeClass('active-tab');
 
     $("#whatshappening_map").addClass('textgreen');
-
 
     $('#map').html('<img style="margin: 25%;text-align:center;" width="50%" src="img/logo.png">');
 
@@ -788,7 +799,8 @@ function get_initial_map_data(id) {
         dataType: 'json',
         data: {
 
-            id: id
+            id: id,
+            curtime:curtime 
         },
         success: function(result) {
 
@@ -796,8 +808,10 @@ function get_initial_map_data(id) {
 
             if (result['status'] == "success") {
 
+                var zoomval = Number(result['center'][0]['zoom']);
+
                 var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 14,
+                    zoom: zoomval,
                     center: new google.maps.LatLng(result['center'][0]['latitute'], result['center'][0]['longitute']),
                     mapTypeId: google.maps.MapTypeId.ROADMAP,
                     disableDefaultUI: true
@@ -844,6 +858,9 @@ function get_initial_map_data(id) {
 
                 $.each(result['data'], function(key, value) {
 
+                    console.log(key);
+                    console.log("opening "+value.open_hours+" closing "+value.closing_hours);
+
                     if (value.rating < 5) {
 
                         var image = casa_img_url + "party-meter1.gif";
@@ -859,32 +876,71 @@ function get_initial_map_data(id) {
                     }
 
 
-                    marker = new google.maps.Marker({
+                    if(value.status=="in"){
 
-                        position: new google.maps.LatLng(value.latitude, value.longitude),
-                        map: map,
-                        icon: image,
-                        optimized: false,
-                        labelAnchor: new google.maps.Point(-10, 20),
-                        labelContent: "hello",
-                        labelInBackground: false
+                        marker = new google.maps.Marker({
+
+                            position: new google.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: image,
+                            optimized: false,
+                            labelAnchor: new google.maps.Point(-10, 20),
+                            labelContent: "hello",
+                            labelInBackground: false
 
 
-                    });
+                        });
 
-                    var marker1 = new MarkerWithLabel({
-                        position: new google.maps.LatLng(value.latitude, value.longitude),
-                        map: map,
-                        icon: img_url + value.image,
-                        labelContent: value.name,
-                        labelAnchor: new google.maps.Point(-10, 20),
-                        labelClass: "labels", // the CSS class for the label
-                        labelStyle: {
-                            opacity: 0.75
-                        },
-                        labelInBackground: false    
+                        var marker1 = new MarkerWithLabel({
+                            position: new google.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: img_url + value.image,
+                            labelContent: value.name,
+                            labelAnchor: new google.maps.Point(-10, 20),
+                            labelClass: "labels", // the CSS class for the label
+                            labelStyle: {
+                                opacity: 0.75
+                            },
+                            labelInBackground: false    
 
-                    });
+                        });
+
+                    }else{
+
+                        marker = new google.maps.Marker({
+
+                            position: new google.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: casa_img_url + "party-meter1.gif",
+                            optimized: false,
+                            labelAnchor: new google.maps.Point(-10, 20),
+                            labelContent: "hello",
+                            labelInBackground: false
+
+
+                        });
+
+                        var marker1 = new MarkerWithLabel({
+                            position: new google.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: casa_img_url + "party-meter1.gif",
+                            labelContent: value.name,
+                            labelAnchor: new google.maps.Point(-10, 20),
+                            labelClass: "labels", // the CSS class for the label
+                            labelStyle: {
+                                opacity: 0.75
+                            },
+                            labelInBackground: false    
+
+                        });
+
+                    }
+
+
+                    
+
+
+
 
 
                     marker.addListener('click', function() {
@@ -901,7 +957,55 @@ function get_initial_map_data(id) {
 
                 if (result['msg'] == "no data") {
 
-                    alert("no data");
+                    // alert("no data");
+
+                    var fontcolor = "red";
+                    $('.active-tab').css('color', fontcolor);
+                    $('.active-tab').css('border-bottom', '2px solid ' + fontcolor);
+
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 14,
+                        center: new google.maps.LatLng(19.0760, 72.8777),
+                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        disableDefaultUI: true
+                    });
+
+
+                    var styles = [{
+                        featureType: 'all',
+                        elementType: 'all',
+                        stylers: [{
+                            hue: '#0800ff'
+                        }, {
+                            invert_lightness: 'true'
+                        }, {
+                            saturation: -100
+                        }]
+                    }, {
+                        featureType: 'all',
+                        elementType: 'labels.icon',
+                        stylers: [{
+                            visibility: 'off'
+                        }]
+                    }, {
+                        featureType: 'all',
+                        elementType: 'labels.text',
+                        stylers: [{
+                            visibility: 'off'
+                        }]
+                    }, {
+                        featureType: 'road.arterial',
+                        elementType: 'labels',
+                        stylers: [{
+                            visibility: 'on'
+                        }]
+                    }, ];
+
+
+                    map.setOptions({
+                        styles: styles
+                    });
+
 
                 } else {
 
@@ -951,7 +1055,7 @@ function get_entitie(id) {
                                 entitie_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
                             }else{
                                 console.log('false');
-                                entitie_heading += "<i class='fa fa-star' aria-hidden='true'></i>";
+                                entitie_heading += "<i class='fa fa-star-o' aria-hidden='true'></i>";
                             }
                         }
 
@@ -959,7 +1063,7 @@ function get_entitie(id) {
 
                         for(var i=0;i<5;i++){
                            
-                                entitie_heading += "<i class='fa fa-star' aria-hidden='true'></i>";
+                                entitie_heading += "<i class='fa fa-star-o' aria-hidden='true'></i>";
                         }
                     }
 
@@ -1076,7 +1180,7 @@ function get_entitie(id) {
                                     entitie_reviews += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
                                 }else{
                                     console.log(star_count);
-                                    entitie_reviews += "<i class='fa fa-star' aria-hidden='true'></i>";
+                                    entitie_reviews += "<i class='fa fa-star-o' aria-hidden='true'></i>";
                                 }
                             }
 
@@ -1286,7 +1390,7 @@ function get_event(id) {
                         if(star>i){
                             event_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
                         }else{
-                            event_heading += "<i class='fa fa-star' aria-hidden='true'></i>";
+                            event_heading += "<i class='fa fa-star-o' aria-hidden='true'></i>";
                         }
                     }
                    // event_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
@@ -1615,7 +1719,13 @@ $(document).on('click', '.get-event-data', function(event) {
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
 
+    var hour = dateObj.getHours();
+    var minuts = dateObj.getMinutes();
+    var seconds = dateObj.getSeconds();
+    
+
     var curdate = year + "/" + month + "/" + day;
+    var curtime = hour +":"+ minuts +":"+ seconds;
 
     var loc_id = $("#list_top_select").val();
     var event_type = $(this).attr("data-id");
@@ -1635,7 +1745,8 @@ $(document).on('click', '.get-event-data', function(event) {
 
             loc_id: loc_id,
             event_type: event_type,
-            curdate:curdate
+            curdate:curdate,
+            curtime:curtime
         },
         success: function(result) {
 
@@ -1656,7 +1767,7 @@ $(document).on('click', '.get-event-data', function(event) {
                         "<h3 class='no-mar list-name'>" + value.event_name + "</h3>" +
                         "</div>" +
                         "<div class='card-footer color-white'>" +
-                        "<span class='footer-left'>@ " + value.name + "</span>" +
+                        "<span class='footer-left'>@ " + value.entity_name + "</span>" +
                         "<span class='footer-text'>" + value.time_event_start + " to " + value.time_event_ends + "</span>" +
                         "</div>" +
                         "</div>";
@@ -1813,12 +1924,24 @@ function onscroll_getevent(para1) {
 
     console.log('onscroll called data is ' + para1.scrollTop + " " + scroll_amount);
 
-
-
     if (para1.scrollTop > scroll_amount) {
 
         var loc_id = $("#list_top_select").val();
         var event_type = $("#scroll-data-attr").attr('data-id');
+
+
+        var dateObj = new Date();
+        var month = dateObj.getUTCMonth() + 1; //months from 1-12
+        var day = dateObj.getUTCDate();
+        var year = dateObj.getUTCFullYear();
+
+        var hour = dateObj.getHours();
+        var minuts = dateObj.getMinutes();
+        var seconds = dateObj.getSeconds();
+        
+
+        var curdate = year + "/" + month + "/" + day;
+        var curtime = hour +":"+ minuts +":"+ seconds;
 
 
         if($(".date").val()!=""){
@@ -1827,12 +1950,8 @@ function onscroll_getevent(para1) {
 
         }else{
 
-                var dateObj = new Date();
-                var month = dateObj.getUTCMonth() + 1; //months from 1-12
-                var day = dateObj.getUTCDate();
-                var year = dateObj.getUTCFullYear();
-
                 var date = year + "/" + month + "/" + day;
+
         }
         
 
@@ -1840,6 +1959,7 @@ function onscroll_getevent(para1) {
         console.log('loc id '+loc_id);
         console.log('event type '+event_type);
         console.log('date is '+date);
+
 
 
 
@@ -1860,7 +1980,8 @@ function onscroll_getevent(para1) {
                 loc_id: loc_id,
                 event_type: event_type,
                 offset: offset,
-                date:date
+                date:date,
+                curtime:curtime
             },
             success: function(result) {
 
@@ -1935,6 +2056,22 @@ function marker_clicked_liquor(para1) {
 
 $(document).on('click', '.get_offers', function(event) {
 
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    var hour = dateObj.getHours();
+    var minuts = dateObj.getMinutes();
+    var seconds = dateObj.getSeconds();
+    
+
+    var curdate = year + "/" + month + "/" + day;
+    var curtime = hour +":"+ minuts +":"+ seconds;
+
+
+
     $('.active-tab').css('color', '');
     $('.active-tab').css('border-bottom', '');
     $('.labels').css('color', '');
@@ -1955,6 +2092,9 @@ $(document).on('click', '.get_offers', function(event) {
         data: {
 
             loc_id: loc_id,
+            curdate:curdate,
+            curtime:curtime
+
         },
         success: function(result) {
 
@@ -2009,25 +2149,53 @@ $(document).on('click', '.get_offers', function(event) {
 
                 $.each(result['data'], function(key, value) {
 
-                    marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(value.latitude, value.longitude),
-                        map: map,
-                        icon: img_url + value.image,
-                    });
 
-                    var marker1 = new MarkerWithLabel({
-                        position: new google.maps.LatLng(value.latitude, value.longitude),
-                        map: map,
-                        icon: img_url + value.image,
-                        labelContent: value.offer_name,
-                        // labelAnchor: new google.maps.Point(22, 0),
-                        labelClass: "labels",
-                        labelStyle: {
-                            opacity: 0.75,
-                            color: fontcolor
-                        }
+                    if(value.status=="in"){
 
-                    });
+                        marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: img_url + value.image,
+                        });
+
+                        var marker1 = new MarkerWithLabel({
+                            position: new google.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: img_url + value.image,
+                            labelContent: value.offer_name,
+                            // labelAnchor: new google.maps.Point(22, 0),
+                            labelClass: "labels",
+                            labelStyle: {
+                                opacity: 0.75,
+                                color: fontcolor
+                            }
+
+                        });
+
+                    }else{
+
+                        marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            // icon: img_url + value.image,
+                        });
+
+                        var marker1 = new MarkerWithLabel({
+                            position: new google.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            // icon: img_url + value.image,
+                            labelContent: value.offer_name,
+                            // labelAnchor: new google.maps.Point(22, 0),
+                            labelClass: "labels",
+                            labelStyle: {
+                                opacity: 0.75,
+                                color: fontcolor
+                            }
+
+                        });
+
+                    }
+
 
                     marker.addListener('click', function() {
                         marker_clicked_offer(value.offer_id);
@@ -2052,7 +2220,54 @@ $(document).on('click', '.get_offers', function(event) {
 
                 if (result['msg'] == "no data") {
 
-                    alert("no data");
+                    var fontcolor = "red";
+                    $('.active-tab').css('color', fontcolor);
+                    $('.active-tab').css('border-bottom', '2px solid ' + fontcolor);
+
+                    // alert("no data");
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 14,
+                        center: new google.maps.LatLng(19.0760, 72.8777),
+                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        disableDefaultUI: true
+                    });
+
+
+                    var styles = [{
+                        featureType: 'all',
+                        elementType: 'all',
+                        stylers: [{
+                            hue: '#0800ff'
+                        }, {
+                            invert_lightness: 'true'
+                        }, {
+                            saturation: -100
+                        }]
+                    }, {
+                        featureType: 'all',
+                        elementType: 'labels.icon',
+                        stylers: [{
+                            visibility: 'off'
+                        }]
+                    }, {
+                        featureType: 'all',
+                        elementType: 'labels.text',
+                        stylers: [{
+                            visibility: 'off'
+                        }]
+                    }, {
+                        featureType: 'road.arterial',
+                        elementType: 'labels',
+                        stylers: [{
+                            visibility: 'on'
+                        }]
+                    }, ];
+
+
+                    map.setOptions({
+                        styles: styles
+                    });
+
 
                 } else {
 
@@ -2070,6 +2285,17 @@ $(document).on('click', '.get_offers', function(event) {
 
 
 $(document).on('click', '.get_liquors', function(event) {
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    var hour = dateObj.getHours();
+    var minuts = dateObj.getMinutes();
+    var seconds = dateObj.getSeconds();
+    
+    var curtime = hour +":"+ minuts +":"+ seconds;
 
     $('.active-tab').css('color', '');
     $('.active-tab').css('border-bottom', '');
@@ -2091,6 +2317,7 @@ $(document).on('click', '.get_liquors', function(event) {
         data: {
 
             loc_id: loc_id,
+            curtime:curtime
         },
         success: function(result) {
 
@@ -2145,6 +2372,11 @@ $(document).on('click', '.get_liquors', function(event) {
                 });
 
                 $.each(result['data'], function(key, value) {
+
+
+                console.log(key);
+                console.log("opening "+value.shop_open+" closing "+value.shop_close);
+
 
                     marker = new google.maps.Marker({
                         position: new google.maps.LatLng(value.latitute, value.longitute),
@@ -2219,7 +2451,15 @@ $(document).on('click', '.get_map_data', function(event) {
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
 
+    var hour = dateObj.getHours();
+    var minuts = dateObj.getMinutes();
+    var seconds = dateObj.getSeconds();
+    
+
     var curdate = year + "/" + month + "/" + day;
+    var curtime = hour +":"+ minuts +":"+ seconds;
+
+
 
     var loc_id = $('#map_top_select').val();
     var event_type = $(this).attr('data-id');
@@ -2234,7 +2474,8 @@ $(document).on('click', '.get_map_data', function(event) {
 
             loc_id: loc_id,
             event_type: event_type,
-            curdate:curdate
+            curdate:curdate,
+            curtime:curtime
         },
         success: function(result) {
 
@@ -2242,13 +2483,15 @@ $(document).on('click', '.get_map_data', function(event) {
 
             if (result['status'] == "success") {
 
+                var zoomval = Number(result['center'][0]['zoom']);
+
                 var fontcolor = result['data'][0]['color'];
                 $('.active-tab').css('color', fontcolor);
                 $('.active-tab').css('border-bottom', '2px solid ' + fontcolor);
 
 
                 var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 14,
+                    zoom: zoomval,
                     center: new google.maps.LatLng(result['center'][0]['latitute'], result['center'][0]['longitute']),
                     mapTypeId: google.maps.MapTypeId.ROADMAP,
                     disableDefaultUI: true
@@ -2290,17 +2533,31 @@ $(document).on('click', '.get_map_data', function(event) {
 
                 $.each(result['data'], function(key, value) {
 
+
+
+                console.log(key);
+                console.log("opening "+value.time_event_start+" closing "+value.time_event_ends);
+
+
+
+
+
+                if(value.status=="in"){
+
                     marker = new google.maps.Marker({
                         position: new google.maps.LatLng(value.latitude, value.longitude),
                         map: map,
                         icon: img_url + value.image,
+                        // icon: casa_img_url + "party-meter1.gif",
                     });
 
                     var marker1 = new MarkerWithLabel({
                         position: new google.maps.LatLng(value.latitude, value.longitude),
                         map: map,
                         icon: img_url + value.image,
-                        labelContent: value.name,
+                        // icon: casa_img_url + "party-meter1.gif",
+
+                        labelContent: value.event_name,
                         // labelAnchor: new google.maps.Point(22, 0),
                         labelClass: "labels",
                         labelStyle: {
@@ -2309,6 +2566,38 @@ $(document).on('click', '.get_map_data', function(event) {
                         }
 
                     });
+
+                }else{
+
+
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(value.latitude, value.longitude),
+                        map: map,
+                        // icon: img_url + value.image,
+                    });
+
+                    var marker1 = new MarkerWithLabel({
+                        position: new google.maps.LatLng(value.latitude, value.longitude),
+                        map: map,
+                        // icon: img_url + value.image,
+                        labelContent: value.event_name,
+                        // labelAnchor: new google.maps.Point(22, 0),
+                        labelClass: "labels",
+                        labelStyle: {
+                            opacity: 0.75,
+                            color: fontcolor
+                        }
+
+                    });
+
+                }
+
+
+
+
+                    
+
+
 
                     marker.addListener('click', function() {
                         marker_clicked_event(value.event_id);
@@ -2556,7 +2845,7 @@ function get_club_list(type) {
 
                     list += "<div data-id='" + value.club_id + "' class='card demo-card-header-pic go_to_club'>" +
                         // "style='position:relative;margin: 0;border-bottom: 2px solid white;width:100%;'"+
-                        "<div style='background-image:url(img/clubimage.jpg)' valign='bottom' class='card-header no-border'>" +
+                        "<div style='background-image:url("+casa_img_url+value.image+")' valign='bottom' class='card-header no-border'>" +
                         "<div style='position:absolute;top: 30px;right: 0;'>" +
 
                         "<div style='position: relative;color: white; margin-bottom: 10px;'>" +
@@ -2644,6 +2933,10 @@ function get_club(id) {
 
             if (result['status'] == 'success') {
 
+
+                var club_img = result['data']['image'];
+                $('#club_img').css('background-image','url('+casa_img_url+result['data']['image']+')');
+
                 var club_name = result['data']['club_name'];
                 $('#club_name').html(club_name);
 
@@ -2651,9 +2944,6 @@ function get_club(id) {
 
                     "<img  style='float: right;width: 35px;padding: 3px 0px;' onclick='get_direction(" + result['data']['latitude'] + "," + result['data']['latitude'] + ")' width='50px' src='img/direction.png'>";
                 $('#cal_dir').html(cal_dir);
-
-
-
 
 
                 $('#club_add').html(result['data']['address']);
@@ -2776,7 +3066,7 @@ function submit_review() {
                             review += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
                         }else{
                             console.log("hiii"+star);
-                            review += "<i class='fa fa-star' aria-hidden='true'></i>";
+                            review += "<i class='fa fa-star-o' aria-hidden='true'></i>";
                         }
                     }
 
@@ -2810,6 +3100,23 @@ function submit_review() {
 $(document).on('click', '.get-list-offers', function(event) {
 
     event.preventDefault();
+
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    var hour = dateObj.getHours();
+    var minuts = dateObj.getMinutes();
+    var seconds = dateObj.getSeconds();
+    
+
+    var curdate = year + "/" + month + "/" + day;
+    var curtime = hour +":"+ minuts +":"+ seconds;
+
+
+
     $('.active-tab').css('color', '');
     $('.active-tab').css('border-bottom', '');
     $('.labels').css('color', '');
@@ -2821,8 +3128,6 @@ $(document).on('click', '.get-list-offers', function(event) {
 
     $(this).addClass('active-tab');
 
-
-
     var loc_id = $("#list_top_select").val();
 
     $.ajax({
@@ -2833,6 +3138,9 @@ $(document).on('click', '.get-list-offers', function(event) {
         data: {
 
             loc_id: loc_id,
+            curdate:curdate,
+            curtime:curtime
+
         },
         success: function(result) {
 
@@ -2865,7 +3173,16 @@ $(document).on('click', '.get-list-offers', function(event) {
 
                 if (result['msg'] == "no data") {
 
-                    alert("no data");
+                    // alert("no data");
+                     var fontcolor = "red";
+                    $('.active-tab').css('color', fontcolor);
+                    $('.active-tab').css('border-bottom', '2px solid ' + fontcolor);
+
+                    html += "<h3 class='no-event'>No Event Available</h3>";
+
+                    $('#cust_event_box').html(html);
+
+
 
                 } else {
 
@@ -2881,7 +3198,20 @@ $(document).on('click', '.get-list-offers', function(event) {
 
 
 $(document).on('click', '.get-list-liquor', function(event) {
+    
     event.preventDefault();
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    var hour = dateObj.getHours();
+    var minuts = dateObj.getMinutes();
+    var seconds = dateObj.getSeconds();
+    
+    var curtime = hour +":"+ minuts +":"+ seconds;
+
 
     $('.active-tab').css('color', '');
     $('.active-tab').css('border-bottom', '');
@@ -2905,6 +3235,7 @@ $(document).on('click', '.get-list-liquor', function(event) {
         data: {
 
             loc_id: loc_id,
+            curtime:curtime
         },
         success: function(result) {
 
@@ -2939,7 +3270,14 @@ $(document).on('click', '.get-list-liquor', function(event) {
 
                 if (result['msg'] == "no data") {
 
-                    alert("no data");
+                    // alert("no data");
+                    var fontcolor = "red";
+                    $('.active-tab').css('color', fontcolor);
+                    $('.active-tab').css('border-bottom', '2px solid ' + fontcolor);
+
+                    html += "<h3 class='no-event'>No Event Available</h3>";
+
+                    $('#cust_event_box').html(html);
 
                 } else {
 
@@ -3024,7 +3362,11 @@ function check_redeem() {
 
                 if (result['data'] == "invalid") {
 
-                    $('#redeem_anchor').css('display', 'none');
+                    // $('#redeem_anchor').css('display', 'none');
+                    $('#redeem_anchor').html("REDEEMED");
+                    $('#redeem_anchor').attr("onclick","");
+
+
                 }
             } else {
 

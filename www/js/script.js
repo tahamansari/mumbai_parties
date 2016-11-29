@@ -671,8 +671,22 @@ function changedate() {
 
     myApp.showIndicator();
 
-    var date = $('.date').val();
-    $('.date-text').html(moment(date).format("Do MMM YYYY"));
+    // var dateObj = new Date();
+    // var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    // var day = dateObj.getUTCDate();
+    // var year = dateObj.getUTCFullYear();
+
+    // var hour = dateObj.getHours();
+    // var minuts = dateObj.getMinutes();
+    // var seconds = dateObj.getSeconds();
+    
+
+    // var curdate = year + "/" + month + "/" + day;
+    // var curtime = hour +":"+ minuts +":"+ seconds;
+
+
+    // var date = $('.date').val();
+    // $('.date-text').html(moment(date).format("Do MMM YYYY"));
     // id,eventtype,date
 
 
@@ -685,13 +699,19 @@ function changedate() {
 
 
 
+
+
     var loc_id = Lockr.get('loc_id');
     var event_type = $('#scroll-data-attr').attr('data-id');
+    var date = $(".date").val();
+
 
 
     console.log('loc id '+loc_id);
     console.log('event type '+event_type);
     console.log('date is '+date);
+
+
 
 
     $.ajax({
@@ -704,6 +724,7 @@ function changedate() {
             loc_id: loc_id,
             event_type: event_type,
             date: date
+
         },
         success: function(result) {
 
@@ -717,26 +738,25 @@ function changedate() {
 
                     console.log('Start Date is '+value.event_start_date+' End Date is '+value.event_end_date);
 
-
                     html += "<div data-id=" + value.event_id + " class='card demo-card-header-pic get-event' style='margin: 0;margin-bottom: 0px;width:100%'>" +
                         "<div style='background-image:url(" + img_url + value.image + ")' valign='bottom' class='card-header no-border'>" +
                         "<h3 class='no-mar list-name'>" + value.event_name + "</h3>" +
                         "</div>" +
                         "<div class='card-footer color-white'>" +
-                        "<span class='footer-left'>@ " + value.name + "</span>" +
+                        "<span class='footer-left'>@ " + value.entity_name + "</span>" +
                         "<span class='footer-text'>" + value.time_event_start + " to " + value.time_event_ends + "</span>" +
                         "</div>" +
                         "</div>";
                 });
 
                 $('#cust_event_box').html(html);
-
                 myApp.hideIndicator();
 
 
             } else {
 
                 if (result['msg'] == "no data") {
+
                     html += "<h3 class='no-event'>No Event Available</h3>";
                     $('#cust_event_box').html(html);
                     myApp.hideIndicator();

@@ -2,7 +2,9 @@ var base_url = "http://casaestilo.in/taha/mp_admin/index.php/Api/";
 var img_url = "http://mumbaiparties.com/assets/uploads/";
 
 var casa_img_url = "http://casaestilo.in/taha/mp_admin/assets/img/";
+
 // var profile_img_path = "http://localhost:8888/mp_back/mumbai_parties/www/img/uploads/";
+
 var profile_img_path = "http://casaestilo.in/taha/mp_admin/uploads/profile_pic/";
 
 
@@ -1053,7 +1055,7 @@ function get_entitie(id) {
                                 entitie_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
                             }else{
                                 console.log('false');
-                                entitie_heading += "<i class='fa fa-star' aria-hidden='true'></i>";
+                                entitie_heading += "<i class='fa fa-star-o' aria-hidden='true'></i>";
                             }
                         }
 
@@ -1061,7 +1063,7 @@ function get_entitie(id) {
 
                         for(var i=0;i<5;i++){
                            
-                                entitie_heading += "<i class='fa fa-star' aria-hidden='true'></i>";
+                                entitie_heading += "<i class='fa fa-star-o' aria-hidden='true'></i>";
                         }
                     }
 
@@ -1178,7 +1180,7 @@ function get_entitie(id) {
                                     entitie_reviews += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
                                 }else{
                                     console.log(star_count);
-                                    entitie_reviews += "<i class='fa fa-star' aria-hidden='true'></i>";
+                                    entitie_reviews += "<i class='fa fa-star-o' aria-hidden='true'></i>";
                                 }
                             }
 
@@ -1388,7 +1390,7 @@ function get_event(id) {
                         if(star>i){
                             event_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
                         }else{
-                            event_heading += "<i class='fa fa-star' aria-hidden='true'></i>";
+                            event_heading += "<i class='fa fa-star-o' aria-hidden='true'></i>";
                         }
                     }
                    // event_heading += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
@@ -1922,12 +1924,24 @@ function onscroll_getevent(para1) {
 
     console.log('onscroll called data is ' + para1.scrollTop + " " + scroll_amount);
 
-
-
     if (para1.scrollTop > scroll_amount) {
 
         var loc_id = $("#list_top_select").val();
         var event_type = $("#scroll-data-attr").attr('data-id');
+
+
+        var dateObj = new Date();
+        var month = dateObj.getUTCMonth() + 1; //months from 1-12
+        var day = dateObj.getUTCDate();
+        var year = dateObj.getUTCFullYear();
+
+        var hour = dateObj.getHours();
+        var minuts = dateObj.getMinutes();
+        var seconds = dateObj.getSeconds();
+        
+
+        var curdate = year + "/" + month + "/" + day;
+        var curtime = hour +":"+ minuts +":"+ seconds;
 
 
         if($(".date").val()!=""){
@@ -1936,12 +1950,8 @@ function onscroll_getevent(para1) {
 
         }else{
 
-                var dateObj = new Date();
-                var month = dateObj.getUTCMonth() + 1; //months from 1-12
-                var day = dateObj.getUTCDate();
-                var year = dateObj.getUTCFullYear();
-
                 var date = year + "/" + month + "/" + day;
+
         }
         
 
@@ -1949,6 +1959,7 @@ function onscroll_getevent(para1) {
         console.log('loc id '+loc_id);
         console.log('event type '+event_type);
         console.log('date is '+date);
+
 
 
 
@@ -1969,7 +1980,8 @@ function onscroll_getevent(para1) {
                 loc_id: loc_id,
                 event_type: event_type,
                 offset: offset,
-                date:date
+                date:date,
+                curtime:curtime
             },
             success: function(result) {
 
@@ -2833,7 +2845,7 @@ function get_club_list(type) {
 
                     list += "<div data-id='" + value.club_id + "' class='card demo-card-header-pic go_to_club'>" +
                         // "style='position:relative;margin: 0;border-bottom: 2px solid white;width:100%;'"+
-                        "<div style='background-image:url(img/clubimage.jpg)' valign='bottom' class='card-header no-border'>" +
+                        "<div style='background-image:url("+casa_img_url+value.image+")' valign='bottom' class='card-header no-border'>" +
                         "<div style='position:absolute;top: 30px;right: 0;'>" +
 
                         "<div style='position: relative;color: white; margin-bottom: 10px;'>" +
@@ -2921,6 +2933,10 @@ function get_club(id) {
 
             if (result['status'] == 'success') {
 
+
+                var club_img = result['data']['image'];
+                $('#club_img').css('background-image','url('+casa_img_url+result['data']['image']+')');
+
                 var club_name = result['data']['club_name'];
                 $('#club_name').html(club_name);
 
@@ -2928,9 +2944,6 @@ function get_club(id) {
 
                     "<img  style='float: right;width: 35px;padding: 3px 0px;' onclick='get_direction(" + result['data']['latitude'] + "," + result['data']['latitude'] + ")' width='50px' src='img/direction.png'>";
                 $('#cal_dir').html(cal_dir);
-
-
-
 
 
                 $('#club_add').html(result['data']['address']);
@@ -3053,7 +3066,7 @@ function submit_review() {
                             review += "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>";
                         }else{
                             console.log("hiii"+star);
-                            review += "<i class='fa fa-star' aria-hidden='true'></i>";
+                            review += "<i class='fa fa-star-o' aria-hidden='true'></i>";
                         }
                     }
 

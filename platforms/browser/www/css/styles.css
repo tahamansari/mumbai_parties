@@ -41,11 +41,13 @@ a{
 
 .shareredeem{
 
-    background-color: rgba(99,96,96,0.5);
+    background-color: #ccc;
     border: none;
     width: 150px;
-    color:white;
+    color: #000000;
     padding: 10px;
+    margin: auto;
+    margin-bottom: 25px;
 
 }
 
@@ -1762,7 +1764,8 @@ div.gmnoprint{
 
 .list-block .item-link .item-inner{
   background-image:url('../img/down.png');
-  background-size: 30px 15px;
+  /*background-size: 30px 15px;*/
+      background-size: 20px 10px;
 }
 
 .picker-modal-inner p{
@@ -1775,7 +1778,8 @@ div.gmnoprint{
 .list-block .accordion-item-expanded.media-item .accordion-item-toggle .item-title-row, .list-block .accordion-item-expanded.media-item>.item-link .item-title-row, .list-block.media-list .accordion-item-expanded .accordion-item-toggle .item-title-row, .list-block.media-list .accordion-item-expanded>.item-link .item-title-row, .list-block:not(.media-list) .accordion-item-expanded:not(.media-item) .accordion-item-toggle .item-inner, .list-block:not(.media-list) .accordion-item-expanded:not(.media-item)>.item-link .item-inner{
 
   background-image:url('../img/up.png');
-  background-size: 30px 15px;
+  /*background-size: 30px 15px;*/
+      background-size: 20px 10px;
 
 }
 #cust_event_box{
@@ -1791,6 +1795,15 @@ div.gmnoprint{
 }
 */
 
+
+#fixed-search{
+
+      background: #1e1e1e;
+    position: fixed;
+    top: 50px;
+    z-index: 99;
+    width: 100%;
+}
 
 #club_name{
 
