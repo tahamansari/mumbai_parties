@@ -54,10 +54,17 @@
     <plugin spec="https://github.com/apache/cordova-plugin-camera.git#d124e03" />
     <plugin spec="https://github.com/apache/cordova-plugin-file-transfer.git#a4031db" />
 
-    <plugin name="com.phonegap.plugins.facebookconnect" source="pgb" spec="0.9.0">
+    <!-- v0.12.0 -->
+
+    <plugin spec="https://github.com/Wizcorp/phonegap-facebook-plugin.git#v0.12.0">
         <param name="APP_ID" value="649298491886916" />
         <param name="APP_NAME" value="mumbai parties" />
     </plugin>
+
+    <!-- <plugin name="com.phonegap.plugins.facebookconnect" source="pgb" spec="0.9.0">
+        <param name="APP_ID" value="649298491886916" />
+        <param name="APP_NAME" value="mumbai parties" />
+    </plugin> -->
 
     <plugin name="cordova-plugin-social-message" spec="0.4.0" />
     <plugin name="cordova-plugin-console" spec="1.0.4" />
