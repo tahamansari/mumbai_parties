@@ -1166,12 +1166,27 @@ function get_entitie(id) {
 
                 } else {
 
+                    var count=0;
                     $.each(result['reviews']['review'], function(key, value) {
 
-                        entitie_reviews += "<p style='margin: 5px 0px;'>" + value.created_date + "</p>" +
+                        // console.log(result['reviews']['review']);
+
+
+                        entitie_reviews += "<div id='rev_"+result['reviews']['entity_id']+"'><p style='margin: 5px 0px;'>" + value.created_date;
+
+                            if(count==0){
+
+                                if(result['reviews']['reviewed']== 1 && result['reviews']['id']==user_id){ 
+                                    // console.log("reviewed"+result['reviews']['reviewed']+" and id = "+result['reviews']['id']);
+                                     entitie_reviews += "<span  onclick='del_rev("+result['reviews']['entity_id']+")' style='float:right'><i class='fa fa-times' aria-hidden='true'></i></span>";
+                                     count++;
+                                }
+                            }
+                            entitie_reviews += "</p>" +
                             "<span>" + value.name + "</span>" +
                                 // "<i class='fa fa-star' style='color:yellow' aria-hidden='true'></i>" +
                                 // "<i class='fa fa-star' aria-hidden='true'></i>" +
+
                             "<span style='float:right'>";
                             var star_count=value.star;
                             for(var i=0;i<5;i++){
@@ -1186,7 +1201,7 @@ function get_entitie(id) {
 
                             entitie_reviews += "</span>" +
                             "<p>" + value.description + "</p>" +
-                            "<hr>";
+                            "<hr></div>";
 
                     })
 
@@ -1643,21 +1658,21 @@ function get_event_type() {
                     if (value.event_type == "Liquor") {
 
                         list += "<div class='col-50 list-box'>" +
-                            "<a data-id='" + value.id + "' class='get-list-liquor category'><img src='img/happyhours.jpg' width='100%' alt='img error'>" +
+                            "<a data-id='" + value.id + "' class='get-list-liquor category'><img src='"+casa_img_url+value.list_image+"' width='100%' height='150px'  alt='img error'>" +
                             "<div class='list-overlay'>" + value.event_type + "</div></a>" +
                             "</div>";
 
                     } else if (value.event_type == "Offers") {
 
                         list += "<div class='col-50 list-box'>" +
-                            "<a data-id='" + value.id + "' class='get-list-offers category'><img src='img/happyhours.jpg' width='100%' alt='img error'>" +
+                            "<a data-id='" + value.id + "' class='get-list-offers category'><img src='"+casa_img_url+value.list_image+"' width='100%' height='150px'  alt='img error'>" +
                             "<div class='list-overlay'>" + value.event_type + "</div></a>" +
                             "</div>";
 
                     } else {
 
                         list += "<div class='col-50 list-box'>" +
-                            "<a data-id='" + value.id + "' class='get-event-data category'><img src='img/happyhours.jpg' width='100%' alt='img error'>" +
+                            "<a data-id='" + value.id + "' class='get-event-data category'><img src='"+casa_img_url+value.list_image+"' width='100%' height='150px'  alt='img error'>" +
                             "<div class='list-overlay'>" + value.event_type + "</div></a>" +
                             "</div>";
                     }
@@ -3056,6 +3071,8 @@ function submit_review() {
             if (result.status == "success") {
 
                 var review = "<p style='margin: 5px 0px;'>" + moment().format("YYYY/MM/DD") + "</p>" +
+
+
                     "<span>" + user_name + "</span>" +
                     "<span style='float:right'>";
 
@@ -3081,6 +3098,8 @@ function submit_review() {
 
                 myApp.closeModal('.review_picker');
                 myApp.alert("Review Added");
+
+                mainView.router.refreshPage();
 
             } else {
 

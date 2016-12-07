@@ -24,23 +24,23 @@
             <!-- <img src="img/logo.png" width="150px">             -->
             <form id="register_form" action="#" method="#" accept-charset="utf-8">
                <div class="reg-input">
-                  <input name="name" type="text" placeholder="Name">
+                  <input class="transparent-input" name="name" type="text" placeholder="Name">
                   <i class="fa fa-user icon-font" aria-hidden="true"></i>
                </div>
                <div class="reg-input">
-                  <input name="email" id="email" type="email" placeholder="Email">
+                  <input class="transparent-input" name="email" id="email" type="email" placeholder="Email">
                   <i class="fa fa-envelope icon-font" aria-hidden="true"></i>
                </div>
                <div class="reg-input">
                   <i class="fa fa-lock icon-font" aria-hidden="true"></i>
-                  <input name="password" type="password" placeholder="Password">
+                  <input class="transparent-input" name="password" type="password" placeholder="Password">
                </div>
                <div class="reg-input">
-                  <input name="confirm_password" type="password" placeholder="Conform Password">
+                  <input class="transparent-input" name="confirm_password" type="password" placeholder="Conform Password">
                   <i class="fa fa-lock icon-font" aria-hidden="true"></i>
                </div>
                <div class="reg-input">
-                  <input id="age" name="age" onblur="check_age(this.id)" type="text" placeholder="Age">
+                  <input class="transparent-input" id="age" name="age" onblur="check_age(this.id)" type="text" placeholder="Age">
                   <i class="fa fa-calendar-o icon-font" aria-hidden="true"></i>
                </div>
                <div class="row reg-input cust-radio">
@@ -52,16 +52,19 @@
                   <input type='radio' name="gender" value='Female'  id='radio2'/>                    
                </div>
                <div class="reg-input">
-                  <input id='mobile' name="mobile" type="text" onblur="check_mobile(this.id)" placeholder="Mobile Number">
+                  <input class="transparent-input" id='mobile' name="mobile" type="text" onblur="check_mobile(this.id)" placeholder="Mobile Number">
                   <i style="font-size: xx-large;" class="fa fa-mobile icon-font" aria-hidden="true"></i>
                </div>
                <!-- id='profile_picker' -->
                <!-- data-picker=".upload_picker" class="open-picker" -->
-               <a href="#" >
+
+               <a href="#" style="position: relative;">
                   <!-- &nbsp &nbsp Upload a Photo -->
-                  <button class="upload_buttom" onclick="prompt_upload()">
+                  <!-- <button class="upload_buttom" onclick="prompt_upload()">
                      <p class="upload-para"><i class="fa fa-upload fa-2x" aria-hidden="true"></i></p>
-                  </button>
+                  </button> -->
+                  <img src="img/upload.png" style="position: absolute;left: 15px;width: 25px;top: -3px;">
+                  <input  onclick="prompt_upload()" class="upload-btn" type="submit" value="Profile Image">
                </a>
                <br>
                <!-- <div class="reg-input" style="text-align: center;">

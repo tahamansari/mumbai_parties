@@ -15,6 +15,9 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.mumbaiparties.mumbaiparties"
+        },
+        "cordova-plugin-social-message": {
+            "PACKAGE_NAME": "com.mumbaiparties.mumbaiparties"
         }
     },
     "dependent_plugins": {},
@@ -26,11 +29,20 @@
             "clobbers": [
                 "window.StatusBar"
             ]
+        },
+        {
+            "file": "plugins/cordova-plugin-social-message/www/socialmessage.js",
+            "id": "cordova-plugin-social-message.SocialMessage",
+            "pluginId": "cordova-plugin-social-message",
+            "clobbers": [
+                "socialmessage"
+            ]
         }
     ],
     "plugin_metadata": {
         "cordova-plugin-console": "1.0.3",
         "cordova-plugin-statusbar": "1.0.1",
-        "cordova-plugin-whitelist": "1.2.2"
+        "cordova-plugin-whitelist": "1.2.2",
+        "cordova-plugin-social-message": "0.4.0"
     }
 }

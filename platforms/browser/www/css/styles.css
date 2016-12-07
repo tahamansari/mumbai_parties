@@ -203,31 +203,34 @@ a{
 
 }
 
-input[type="text"]{
 
-  /*background-color: rgba(128, 128, 128, 0.7) !important;*/
+.transparent-input{
+
   background-color: rgba(99,96,96,0.5)!important;
   padding-left: 10px!important;
-  /*color: #f4f3f3!important;*/
   color: white;
-  /*color: black;*/
+}
+
+
+/*input[type="text"]{
+
+  background-color: rgba(99,96,96,0.5)!important;
+  padding-left: 10px!important;
+  color: white;
 }
 
 input[type="email"]{
 
-  /*background-color: rgba(128, 128, 128, 0.7) !important;*/
   background-color: rgba(99,96,96,0.5)!important;
   padding-left: 10px!important;
   color: #f4f3f3!important;
 }
 
 input[type="password"]{
-
-  /*background-color: rgba(128, 128, 128, 0.7) !important;*/
   background-color: rgba(99,96,96,0.5)!important;
   padding-left: 10px!important;
   color: #f4f3f3!important;
-}
+}*/
 
 .icon-font{
 
@@ -483,7 +486,8 @@ a{
 
     color: white;
     background-color: #515050;
-    margin: 5px 5px;
+    /*margin: 5px 5px;*/
+        margin: 4px 3px;
     padding: 10px 10px;
     
 
@@ -493,7 +497,8 @@ a{
 
     background-color: #515050;
     color: white;
-    margin: 5px 5px;
+    /*margin: 5px 5px;*/
+        margin: 4px 3px;
     font-weight: bold;
 
 }
@@ -588,14 +593,21 @@ a{
 
 .list-overlay{
 
+      background-color: rgba(28, 29, 31, 0.9);
+    color: #eaeaea;
+    width: 94%;
+    padding: 6px;
+    position: absolute;
+    bottom: 0px;
+    font-weight: bolder;
 
-    background-color: rgba(0, 0, 0, 0.66);
+/*    background-color: rgba(0, 0, 0, 0.66);
     color: white;
     width: 94%;
     padding: 6px;  
     position: absolute;
     bottom: 0px;
-    font-weight: 800;
+    font-weight: 800;*/
 
 }
 .owl-carousel .item {
@@ -1090,7 +1102,8 @@ font-smoothing: antialiased;
     background-color: #515050;
     color: white;
     padding: 10px 10px;
-    margin: 5px;
+    /*margin: 5px;*/
+        margin: 4px 3px;
 }
 
 .offer-text-box{
@@ -1136,7 +1149,8 @@ font-smoothing: antialiased;
     background-color: #515050;
     color: white;
     padding: 5px 10px;
-    margin: 5px;
+    /*margin: 5px;*/
+        margin: 4px 3px;
     font-size: 12px;
 }
 
@@ -1230,7 +1244,8 @@ font-smoothing: antialiased;
 
 #entitie_timming{
 
-  margin: 5px 0px;
+  /*margin: 5px 0px;*/
+      margin: 4px 3px;
 
 }
 
@@ -1239,6 +1254,7 @@ font-smoothing: antialiased;
     border-bottom: 2px solid #848282;
     width: 100%;
     margin: 0;
+
     /* margin-bottom: 5px; */
 
 }
@@ -1745,7 +1761,9 @@ div.gmnoprint{
 .ent-time{
 
     background: #515050;
-    margin: 5px;
+    /*margin: 5px;*/
+        /*margin: 4px 3px;*/
+        margin: 2px 3px;
 }
 .content-block{
   color: #e2dede;
@@ -1795,6 +1813,12 @@ div.gmnoprint{
 }
 */
 
+.address-container{
+
+      margin-right: 80px;
+    margin-top: 10px;
+}
+
 
 #fixed-search{
 
@@ -1803,6 +1827,19 @@ div.gmnoprint{
     top: 50px;
     z-index: 99;
     width: 100%;
+}
+
+.upload-btn{
+
+ background: #5d5d5d;
+    border: none;
+    color: white;
+    height: 40px;
+    width: 70%;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 4px;
+
 }
 
 #club_name{

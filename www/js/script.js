@@ -86,6 +86,9 @@ function onDeviceReady() {
         var page = myApp.getCurrentView().activePage;
         myApp.hideIndicator();
 
+
+        // mainView.router.refreshPage();
+
         if (page.name == "offline") {
 
             myApp.confirm('would you like to exit app.', function() {
@@ -617,9 +620,52 @@ function upload_type_camera() {
 }
 
 
+
+function del_rev(entity_id){
+
+
+    console.log("entitie id is "+entity_id);
+    // return false;
+
+     myApp.confirm('Are you sure?', 'Mumbai Parties', function () {
+
+        $.ajax({
+
+            type:'POST',
+            url:base_url+"del_rev",
+            dataType:'json',
+            data:{
+                entity_id:entity_id
+            },
+            success:function(result){
+
+                if(result['status']=='success'){
+                    // var data = $('')
+                    myApp.alert('Deleted');
+                    $('#rev_'+entity_id).css('display','none');
+
+
+                    mainView.router.refreshPage();
+
+                }
+            },
+            error:function(err){
+
+
+            }
+
+        });
+
+
+        // myApp.alert('You clicked Ok button');
+    });
+}
+
 function uploadprofile(imageURI) {
 
     // myApp.closeModal('.upload_picker');
+
+    $('.upload-btn').val('Uploaded');
     Lockr.set('imageURI', imageURI);
 
 }
