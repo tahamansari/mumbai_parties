@@ -1,8 +1,8 @@
-var base_url = "http://casaestilo.in/taha/mp_admin/index.php/Api/";
+var base_url = "http://mumbaiparties.com/mp_admin/index.php/Api/";
 var img_url = "http://mumbaiparties.com/assets/uploads/";
+var casa_img_url = "http://mumbaiparties.com/mp_admin/assets/img/";
+var profile_img_path = "http://mumbaiparties.com/mp_admin/uploads/profile_pic/";
 
-var casa_img_url = "http://casaestilo.in/taha/mp_admin/assets/img/";
-var profile_img_path = "http://casaestilo.in/taha/mp_admin/uploads/profile_pic/";
 
 // Initialize app
 var myApp = new Framework7({
