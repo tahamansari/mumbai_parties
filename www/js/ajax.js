@@ -804,6 +804,7 @@ function get_initial_map_data(id) {
 
             if (result['status'] == "success") {
 
+
                 var zoomval = Number(result['center'][0]['zoom']);
 
                 var map = new google.maps.Map(document.getElementById('map'), {
@@ -812,8 +813,6 @@ function get_initial_map_data(id) {
                     mapTypeId: google.maps.MapTypeId.ROADMAP,
                     disableDefaultUI: true
                 });
-
-
 
                 var styles = [{
                     featureType: 'all',
@@ -845,109 +844,255 @@ function get_initial_map_data(id) {
                     }]
                 }, ];
 
-
                 map.setOptions({
                     styles: styles
                 });
 
-                var marker, i;
-
                 $.each(result['data'], function(key, value) {
-
-                    console.log(key);
-                    console.log("opening "+value.open_hours+" closing "+value.closing_hours);
-
                     if (value.rating < 5) {
-
                         var image = casa_img_url + "party-meter1.gif";
-
                     } else if (value.rating < 10) {
-
                         var image = casa_img_url + "party-meter2.gif";
-
                     } else {
-
                         var image = casa_img_url + "party-meter3.gif";
-
                     }
 
-
-                    if(value.status=="in"){
+                    if (value.status == "in") {
 
                         marker = new google.maps.Marker({
-
                             position: new google.maps.LatLng(value.latitude, value.longitude),
                             map: map,
                             icon: image,
-                            optimized: false,
                             labelAnchor: new google.maps.Point(-10, 20),
-                            labelContent: "hello",
                             labelInBackground: false
-
-
                         });
 
                         var marker1 = new MarkerWithLabel({
                             position: new google.maps.LatLng(value.latitude, value.longitude),
                             map: map,
-                            icon: img_url + value.image,
+                            icon: image,
                             labelContent: value.name,
                             labelAnchor: new google.maps.Point(-10, 20),
-                            labelClass: "labels", // the CSS class for the label
+                            labelClass: "labels",
                             labelStyle: {
                                 opacity: 0.75
                             },
-                            labelInBackground: false    
-
+                            labelInBackground: false
                         });
 
-                    }else{
 
+                        // marker = new google.maps.Marker({
+                        //     position: new google.maps.LatLng(value.latitude, value.longitude),
+                        //     map: map,
+                        //     icon: image,
+                        // });
+
+                        // var marker1 = new MarkerWithLabel({
+                        //     position: new google.maps.LatLng(value.latitude, value.longitude),
+                        //     map: map,
+                        //     icon: image,
+                        //     labelContent: value.name,
+                        //     labelClass: "labels",
+                        // });
+                    } else {
                         marker = new google.maps.Marker({
-
                             position: new google.maps.LatLng(value.latitude, value.longitude),
                             map: map,
-                            icon: casa_img_url + "party-meter1.gif",
-                            optimized: false,
+                            icon: image,
                             labelAnchor: new google.maps.Point(-10, 20),
-                            labelContent: "hello",
                             labelInBackground: false
-
-
                         });
 
                         var marker1 = new MarkerWithLabel({
                             position: new google.maps.LatLng(value.latitude, value.longitude),
                             map: map,
-                            icon: casa_img_url + "party-meter1.gif",
+                            icon: image,
                             labelContent: value.name,
                             labelAnchor: new google.maps.Point(-10, 20),
-                            labelClass: "labels", // the CSS class for the label
+                            labelClass: "labels",
                             labelStyle: {
                                 opacity: 0.75
                             },
-                            labelInBackground: false    
+                            labelInBackground: false
 
                         });
 
+                        // marker = new google.maps.Marker({
+                        //     position: new google.maps.LatLng(value.latitude, value.longitude),
+                        //     map: map,
+                        //     icon: image,
+                        // });
+
+                        // var marker1 = new MarkerWithLabel({
+                        //     position: new google.maps.LatLng(value.latitude, value.longitude),
+                        //     map: map,
+                        //     labelContent: value.name,
+                        //     icon: image,
+                        //     labelClass: "labels",
+                        // });
                     }
-
-
-                    
-
-
-
-
 
                     marker.addListener('click', function() {
                         initial_marker_clicked_event(value.id);
+
                     });
 
                     marker1.addListener('click', function() {
                         initial_marker_clicked_event(value.id);
                     });
-
                 });
+
+
+                // var zoomval = Number(result['center'][0]['zoom']);
+
+                // var map = new google.maps.Map(document.getElementById('map'), {
+                //     zoom: zoomval,
+                //     center: new google.maps.LatLng(result['center'][0]['latitute'], result['center'][0]['longitute']),
+                //     mapTypeId: google.maps.MapTypeId.ROADMAP,
+                //     disableDefaultUI: true
+                // });
+
+
+
+                // var styles = [{
+                //     featureType: 'all',
+                //     elementType: 'all',
+                //     stylers: [{
+                //         hue: '#0800ff'
+                //     }, {
+                //         invert_lightness: 'true'
+                //     }, {
+                //         saturation: -100
+                //     }]
+                // }, {
+                //     featureType: 'all',
+                //     elementType: 'labels.icon',
+                //     stylers: [{
+                //         visibility: 'off'
+                //     }]
+                // }, {
+                //     featureType: 'all',
+                //     elementType: 'labels.text',
+                //     stylers: [{
+                //         visibility: 'off'
+                //     }]
+                // }, {
+                //     featureType: 'road.arterial',
+                //     elementType: 'labels',
+                //     stylers: [{
+                //         visibility: 'on'
+                //     }]
+                // }, ];
+
+
+                // map.setOptions({
+                //     styles: styles
+                // });
+
+                // var marker, i;
+
+                // $.each(result['data'], function(key, value) {
+
+                //     console.log(key);
+                //     console.log("opening "+value.open_hours+" closing "+value.closing_hours);
+
+                //     if (value.rating < 5) {
+
+                //         var image = casa_img_url + "party-meter1.gif";
+
+                //     } else if (value.rating < 10) {
+
+                //         var image = casa_img_url + "party-meter2.gif";
+
+                //     } else {
+
+                //         var image = casa_img_url + "party-meter3.gif";
+
+                //     }
+
+
+                //     if(value.status=="in"){
+
+                //         marker = new google.maps.Marker({
+
+                //             position: new google.maps.LatLng(value.latitude, value.longitude),
+                //             map: map,
+                //             icon: image,
+                //             optimized: false,
+                //             labelAnchor: new google.maps.Point(-10, 20),
+                //             // labelContent: "hello",
+                //             labelInBackground: false,
+                //              draggable:false
+
+
+                //         });
+
+                //         var marker1 = new MarkerWithLabel({
+                //             position: new google.maps.LatLng(value.latitude, value.longitude),
+                //             map: map,
+                //             icon: img_url + value.image,
+                //             labelContent: value.name,
+                //             labelAnchor: new google.maps.Point(-10, 20),
+                //             labelClass: "labels", // the CSS class for the label
+                //             labelStyle: {
+                //                 opacity: 0.75
+                //             },
+                //             labelInBackground: false,
+                //              draggable:false    
+
+                //         });
+
+                //     }else{
+
+                //         marker = new google.maps.Marker({
+
+                //             position: new google.maps.LatLng(value.latitude, value.longitude),
+                //             map: map,
+                //             icon: img_url + "party-meter1.gif",
+                //             optimized: false,
+                //             labelAnchor: new google.maps.Point(-10, 20),
+                //             labelContent: "hello",
+                //             labelInBackground: false
+
+
+                //         });
+
+                //         var marker1 = new MarkerWithLabel({
+                //             position: new google.maps.LatLng(value.latitude, value.longitude),
+                //             map: map,
+                //             icon: casa_img_url + "party-meter1.gif",
+                //             labelContent: value.name,
+                //             labelAnchor: new google.maps.Point(-10, 20),
+                //             labelClass: "labels", // the CSS class for the label
+                //             labelStyle: {
+                //                 opacity: 0.75
+                //             },
+                //             labelInBackground: false    
+
+                //         });
+
+                //     }
+
+
+                    
+                //     $('img').on('click',function(){
+
+                //         alert('hello');
+
+                //     });
+
+
+
+
+                //     marker.addListener('click', function() {
+                //         initial_marker_clicked_event(value.id);
+                //     });
+
+                //     marker1.addListener('click', function() {
+                //         initial_marker_clicked_event(value.id);
+                //     });
+
+                // });
 
             } else {
 
