@@ -1514,6 +1514,11 @@ $(document).on('click', '.get-liquor', function(event) {
 
 function get_event(id) {
 
+
+    console.log('indicator show');
+    myApp.showIndicator();  
+
+
     $.ajax({
 
         type: 'POST',
@@ -1643,6 +1648,14 @@ function get_event(id) {
             }
         }
     });
+
+
+
+
+// myApp.hideIndicator();
+
+
+
 
 }
 
